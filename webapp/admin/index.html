@@ -1,0 +1,46 @@
+<!-- 
+/**
+ *  index.html
+ *
+ * (C) Copyright IBM Corp. 2005
+ *
+ * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+ * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
+ * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
+ *
+ * You can obtain a current copy of the Common Public License from
+ * http://www.opensource.org/licenses/cpl1.0.php
+ *
+ * Author:     Michael Bauschert
+ *
+ * Contributors:
+ *
+ */
+-->
+
+
+<html>
+<head>
+<!--  
+	  <meta http-equiv="refresh" content="0;index.jsf">
+	  
+	  Redirect via meta Tag is not working so this is done by submitting the form 
+	  Internet Explorer cannot handle the login via meta-tag in jsf context: The accesslog:
+	  127.0.0.1 - - [17/Jul/2006:17:21:14 +0200] "GET /wbemsmt-webapp/ HTTP/1.1" 304 -
+	  304 means "NOT MODIFIED" - the IE just displays the page and that means that a redirect is done
+	  which return itself again a 304 - that leads to a indefinite loop.
+-->
+<script>
+function submitForm()
+{
+	document.forms[0].submit();
+}
+</script>
+
+</head>
+<body onload="submitForm()">
+<font face="arial"><a id="link" href="index.adminjsf">Redirecting to Sblim Wbemsmt Tasklauncher Administration. Click here if Redirect is not working...</a></font>
+<form action="index.adminjsf"> 
+</form>
+</body>
+</html>

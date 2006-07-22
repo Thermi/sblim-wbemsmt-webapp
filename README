@@ -1,0 +1,99 @@
+/* --------------------------------------------------------------------------*/
+README
+
+(C) Copyright IBM Corp. 2006
+
+THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
+CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
+
+You can obtain a current copy of the Common Public License from
+http://www.opensource.org/licenses/cpl1.0.php
+
+Author:       Michael Bauschert <michael.bauschert@de.ibm.com>
+Date  :	      07/20/2006
+
+Contributors: Marius Kreis <marius@nulldevice.org>
+
+/* --------------------------------------------------------------------------*/
+
+SBLIM WBEMSMT Tasklauncher webapp README
+----------------------------------------
+
+Introduction
+------------
+
+The wbemsmt-webapp package provides the tasklauncher web application for wbemsmt based management tasks.
+
+
+Source Package Contents
+-----------------------
+
+./README		    This file
+./build.xml         Apache Ant build file
+./java/*            Contains the java(tm) source files
+./webapp/*			The web application files
+
+
+General Requirements
+--------------------
+In order to build, install and operate this package you will need a 
+Java SDK or Run Time Environment of version 1.5 or higher, depending on
+whether you build binaries from sources or use the pre-built binaries (JAR
+file).
+
+Sun Java SDK/JRE:
+For users of the Sun Java packages, the following package is required to be 
+adapted into the CLASSPATH environment variable:
+ - xerces    http://xml.apache.org/xerces2-j
+
+IBM Java SDK/JRE:
+Because the IBM Java packages include already the xerces package, no further
+requirements need to be resolved.
+
+
+Building and Installing the webapp
+----------------------------------
+As a requirement for building this package, Apache Ant 
+(http://ant.apache.org) needs to be setup properly. We would like to recommend
+a Apache Ant version 1.6.5 or higher. (Lower versions might also work properly
+here)
+
+The build process is based on Apache Ant, so it is very easy to build the 
+this component. 
+
+An Ant build.xml file is in place which supports specific targets. 
+Call ant with the option -projecthelp to get the information which targets are supported.
+  
+The execution of the build process is very easy. Once, Apache Ant is setup 
+properly on your system, just execute 'ant <target>' in the 'basedir' directory.
+The output will be written into a new created directory named 'target'. That's all.
+
+Build-time Prerequisites
+------------------------
+The Binaries of the CVS Modules:
+- wbemsmt-tools-bl 
+- wbemsmt-tools-eui 
+- wbemsmt-tools-wizard-framework
+- wbemsmt-cim-schema-bl
+
+Third-Party Libraries (and their dependent jar-Files):
+- sblim-cim-client from http://www.sblim.org/
+- MyFaces 1.1.3 and Tomahawk 1.1.3 or later from http://myfaces.apache.org/
+- XMLBeans from http://xmlbeans.apache.org/
+- Jakarta-Commons Collections from http://jakarta.apache.org/commons/collections/
+- Jakarta-Commons Lang from http://jakarta.apache.org/commons/lang/
+- Jakarta-Commons Cli from http://jakarta.apache.org/commons/cli/
+- Apache Struts 1.2.9 or later from http://struts.apache.org/
+- tomcat5-servlet-2.4-api from http://www.apache.org/
+
+Additional Run-time Prerequisites
+---------------------------------
+- the above build-time preqrequisites
+- Apache Tomcat 5.5. or later from http://tomcat.apache.org/ and all its prerequisites
+ 
+Contacting the WBEMSMT Project
+------------------------------ 
+To report weird behavior and bugs or suggestions and help contact the sblim project by sending email to the sblim-devel
+mailing list at sblim-devel@lists.sourceforge.net. 
+

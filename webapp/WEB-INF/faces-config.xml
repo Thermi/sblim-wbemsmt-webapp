@@ -1,0 +1,234 @@
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN" "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+<!-- 
+/**
+ *  faces-config.xsd
+ *
+ * (C) Copyright IBM Corp. 2005
+ *
+ * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+ * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
+ * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
+ *
+ * You can obtain a current copy of the Common Public License from
+ * http://www.opensource.org/licenses/cpl1.0.php
+ *
+ * Author:     Marius Kreis
+ *
+ * Contributors: Michael.Bauschert@de.ibm.com
+ *
+ */
+-->
+<faces-config>
+    <application>
+    	<message-bundle>org.sblim.wbemsmt.webapp.jsf.webapp_messages</message-bundle>
+		<navigation-handler>org.sblim.wbemsmt.webapp.jsf.NavigationHandler</navigation-handler>
+        <view-handler>org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppViewHandlerImpl</view-handler>
+        
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>de</supported-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+    </application>
+	<lifecycle>
+	</lifecycle>
+	
+	<render-kit>
+		<renderer>
+		<component-family>javax.faces.Panel</component-family>
+		<renderer-type>org.apache.myfaces.Popup</renderer-type>
+		<renderer-class>org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppContextMenuRenderer</renderer-class>
+		</renderer>
+	</render-kit>
+
+    <managed-bean>
+        <managed-bean-name>treeSelector</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.TreeSelectorBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>taskLauncherController</property-name>
+			<value>#{taskLauncherController}</value>
+		</managed-property>
+    </managed-bean>
+		
+    <managed-bean>
+        <managed-bean-name>messageHandler</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.MessageHandlerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>objectActionController</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>treeSelector</property-name>
+			<value>#{treeSelector}</value>
+		</managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>menueController</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.MenueControllerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>treeSelector</property-name>
+			<value>#{treeSelector}</value>
+		</managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>admin</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.admin.AdminBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+        
+    <managed-bean>
+        <managed-bean-name>loginCheck</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.LoginCheckBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>taskLauncherController</property-name>
+			<value>#{taskLauncherController}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginView</property-name>
+			<value>login</value>
+		</managed-property>
+		<managed-property>
+			<property-name>startView</property-name>
+			<value>start</value>
+		</managed-property>
+		<managed-property>
+			<property-name>logoutView</property-name>
+			<value>login</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginFilename</property-name>
+			<value>/workspace-intern/login.bin</value>
+		</managed-property>
+		<managed-property>
+			<property-name>treeSelector</property-name>
+			<value>#{treeSelector}</value>
+		</managed-property>
+		
+    </managed-bean>
+	
+    <managed-bean>
+        <managed-bean-name>taskLauncherController</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.tasklauncher.TaskLauncherController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>taskLauncherConfigFilename</property-name>
+			<value>taskLauncherConfig.xml</value>
+		</managed-property>
+		<managed-property>
+			<property-name>slpLoader</property-name>
+			<value>#{slpLoader}</value>
+		</managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>slpLoader</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.tools.slp.SLPDummyLoader</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>localeManager</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.LocaleManagerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+				<!-- 
+		<managed-property>
+			<property-name>resourceBundle</property-name>
+			<list-entries>
+				<value>dns:messages</value>
+				<value>dns:messagesDns</value>
+				<value>samba:messages</value>
+				<value>samba:messagesSamba</value>
+			</list-entries>
+		</managed-property>
+				 -->
+    </managed-bean>
+    		
+	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>showproperties</from-outcome>
+            <to-view-id>/properties.tiles</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>showcustomtree</from-outcome>
+            <to-view-id>/customtree.tiles</to-view-id>
+        </navigation-case>
+    </navigation-rule>	
+	
+	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>start</from-outcome>
+            <to-view-id>/index.tiles</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+	
+	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>wizardPage</from-outcome>
+            <to-view-id>/wizardPage.tiles</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>cimomLogin</from-outcome>
+            <to-view-id>/cimomLogin.tiles</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>cimomLogout</from-outcome>
+            <to-view-id>/cimomLogout.tiles</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+   	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>editPage</from-outcome>
+            <to-view-id>/editPage.tiles</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+   	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>help</from-outcome>
+            <to-view-id>/helpPage.tiles</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+   	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>adminHost</from-outcome>
+            <to-view-id>/admin/adminHost.adminjsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+   	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>adminService</from-outcome>
+            <to-view-id>/admin/adminService.adminjsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+ 		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/login.jsf</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

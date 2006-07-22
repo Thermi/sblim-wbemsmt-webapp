@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v5.5"/>
+	<classpathentry kind="var" path="M2_REPO/myfaces/myfaces-jsf-api/1.0.9/myfaces-jsf-api-1.0.9.jar"/>
+	<classpathentry exported="true" kind="src" path="/wbemsmt-samba-bl2"/>
+	<classpathentry exported="true" kind="src" path="/wbemsmt-samba-eui-common"/>
+	<classpathentry exported="true" kind="src" path="/wbemsmt-samba-eui-jsf"/>
+	<classpathentry kind="src" path="/sf-wbemsmt-tools-bl"/>
+	<classpathentry kind="src" path="/sf-wbemsmt-tools-eui"/>
+	<classpathentry exported="true" kind="src" path="/wbemsmt-tools-wizard-framework"/>
+	<classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/xerces/xerces/1.4.4/xerces-1.4.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/sblim/sblim-wbemsmt-cim-schema-bl-2.9/0.1.1/sblim-wbemsmt-cim-schema-bl-2.9-0.1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/sblim/sblim-cim-client/1.2.7/sblim-cim-client-1.2.7.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-cli/commons-cli/1.0/commons-cli-1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-fileupload/commons-fileupload/1.0/commons-fileupload-1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-digester/commons-digester/1.5/commons-digester-1.5.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-chain/commons-chain/1.0/commons-chain-1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/oro/oro/2.0.8/oro-2.0.8.jar"/>
+	<classpathentry kind="var" path="M2_REPO/xml-resolver/xml-resolver/1.1/xml-resolver-1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/sblim/wbemsmt-tools-bl-launcher-config/0.2.1/wbemsmt-tools-bl-launcher-config-0.2.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/struts/struts/1.2.7/struts-1.2.7.jar"/>
+	<classpathentry kind="var" path="M2_REPO/myfaces/myfaces-api/1.1.3/myfaces-api-1.1.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/myfaces/myfaces-impl/1.1.3/myfaces-impl-1.1.3.jar"/>
+	<classpathentry kind="var" path="M2_REPO/xmlbeans/xbean/2.1.0/xbean-2.1.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/xmlbeans/xmlbeans-jsr173-api/2.0-dev/xmlbeans-jsr173-api-2.0-dev.jar"/>
+	<classpathentry kind="var" path="M2_REPO/myfaces/tomahawk/1.1.3/tomahawk-1.1.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Sun JDK 1.4.2_09"/>
+	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
+</classpath>
