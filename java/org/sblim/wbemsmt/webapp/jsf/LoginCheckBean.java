@@ -182,6 +182,11 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
     	return this.presetSelection;
     }
     
+    public void setPresetSelect(HtmlSelectOneMenu menue)
+    {
+    	
+    }
+    
     public void presetChange(ValueChangeEvent e)
     {
     	selectedValue = ((Integer) e.getNewValue()).intValue();
