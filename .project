@@ -3,12 +3,11 @@
 	<name>wbemsmt-webapp</name>
 	<comment></comment>
 	<projects>
-		<project>wbemsmt-samba-bl2</project>
-		<project>wbemsmt-samba-eui-common</project>
-		<project>wbemsmt-samba-eui-jsf</project>
 		<project>wbemsmt-tools-wizard-framework</project>
 		<project>sf-wbemsmt-tools-bl</project>
 		<project>sf-wbemsmt-tools-eui</project>
+		<project>wbemsmt-tools-bl</project>
+		<project>wbemsmt-tools-eui</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
