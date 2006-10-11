@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.login.LoginCheck;
 import org.sblim.wbemsmt.tools.beans.BeanNameConstants;
+import org.sblim.wbemsmt.tools.beans.BeanNameConstants.BeanNameConstant;
 import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 
 /**
@@ -126,30 +126,33 @@ public class AuthorizationFilter implements Filter
     }
 
 	private void switchRuntimeMode(HttpSession session, String currentMode, String newMode) {
-		
-		//makes it sense to make the switch
+
+		//makes it sense to make the switch ?
 		if (!newMode.equals(currentMode))
 		{
 			session.getServletContext().log("Switch Runtime mode from  " + currentMode + " to " + newMode);
-
 			session.setAttribute(RuntimeUtil.RUNTIME_MODE,newMode);
-			TaskLauncherController controller = (TaskLauncherController)session.getAttribute(BeanNameConstants.TASKLAUNCHER_CONTROLLER.getName());
-			if (controller != null && controller.getTaskLauncherConfig() != null)
-			{
-				controller.getTaskLauncherConfig().reload(newMode);
-			}
-			LoginCheck lc = (LoginCheck) session.getAttribute(BeanNameConstants.LOGIN_CHECK.getName());
-			if (lc != null)
-			{
-				lc.reloadLoginSettings();
-			}
-			MenueControllerBean mc = (MenueControllerBean) session.getAttribute(BeanNameConstants.MENUE_CONTROLLER.getName());
-			if (mc != null)
-			{
-				mc.setFlags(newMode);
-			}
+			
+			//Removing the Beans from Session ensures that the ManagedBeanFacility creates new objects of the managed beans if needed
+			removeIfExisting(session, BeanNameConstants.TASKLAUNCHER_CONTROLLER);
+			removeIfExisting(session, BeanNameConstants.LOGIN_CHECK);
+			removeIfExisting(session, BeanNameConstants.MENUE_CONTROLLER);
 		}
 
+		
+	}
+
+	/**
+	 * Remove the bean from session
+	 * @param session
+	 * @param bean
+	 */
+	private void removeIfExisting(HttpSession session, BeanNameConstant bean) {
+		
+		if (session.getAttribute(bean.getName()) != null)
+		{
+			session.removeAttribute(bean.getName());
+		}
 		
 	}
 
