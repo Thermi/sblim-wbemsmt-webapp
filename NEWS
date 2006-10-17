@@ -1,0 +1,8 @@
+Changes in 0.2.2-1 :
+==============================================================================
+
+- #1574472  Cleanup for client projects
+- #1575096  Tasklauncher: NPE switching from AdminConsole to Login
+- #1574472  Cleanup for client projects
+- #1573746  Preset handling for Login
+

@@ -1,0 +1,27 @@
+// =========================================================================
+// new in version 0.2.2-1 :
+
+2006-10-11 11:57  mbauschert
+
+	* .settings/org.eclipse.wst.validation.prefs: FIX [ 1574472 ]
+	  Cleanup for client projects
+
+2006-10-11 10:03  mbauschert
+
+	* java/org/sblim/wbemsmt/webapp/jsf/AuthorizationFilter.java: FIX [
+	  1575096 ] Tasklauncher: NPE switching from AdminConsole to Login
+
+2006-10-10 14:55  mbauschert
+
+	* .classpath, .project, .settings/.component: FIX [ 1574472 ]
+	  Cleanup for client projects
+
+2006-10-09 15:54  mbauschert
+
+	* webapp/WEB-INF/.cvsignore: [no log message]
+
+2006-10-09 15:52  mbauschert
+
+	* java/org/sblim/wbemsmt/webapp/jsf/LoginCheckBean.java: Fix [
+	  1573746 ] Preset handling for Login
+

@@ -21,7 +21,7 @@
         Build file for SBLIM wbemsmt-webapp package
     </description>
 	
-    <property name="Manifest.version"    value="0.2.1"/>
+    <property name="Manifest.version"    value="0.2.2"/>
     <property name="Manifest.release"    value="1"/>
     <property name="Manifest.title"      value="WBEM-SMT: Web Based Task Launcher"/>
     <property name="Manifest.url"        value="http://sblim.sourceforge.net"/>
@@ -127,7 +127,7 @@
 
     <target name="package-bin" depends="clean, build-war" description="Package binaries into tar ball">
         <mkdir dir="${basedir}/${build.output.tars.dir}"/>
-        <tar destfile="${basedir}/${build.output.tars.dir}/sblim-${ant.project.name}-${Manifest.version}-${Manifest.release}-bin.tar.bz2"
+        <tar destfile="${basedir}/${build.output.tars.dir}/sblim-${ant.project.name}-${Manifest.version}-bin.tar.bz2"
              compression="bzip2" longfile="${tar.longfile}">
           <tarfileset
             dir="${basedir}"
@@ -150,7 +150,7 @@
 
     <target name="package-src" description="Package sources into tar ball">
         <mkdir dir="${basedir}/${build.output.tars.dir}"/>
-        <tar destfile="${basedir}/${build.output.tars.dir}/sblim-${ant.project.name}-${Manifest.version}-${Manifest.release}-src.tar.bz2"
+        <tar destfile="${basedir}/${build.output.tars.dir}/sblim-${ant.project.name}-${Manifest.version}-src.tar.bz2"
              compression="bzip2"
              longfile="${tar.longfile}">
           <tarfileset
