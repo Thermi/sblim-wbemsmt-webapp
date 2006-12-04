@@ -20,6 +20,7 @@
 package org.sblim.wbemsmt.webapp.jsf;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,7 +31,9 @@ import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-public class MessageHandlerBean  extends WbemsmtWebAppBean
+import org.sblim.wbemsmt.bl.Cleanup;
+
+public class MessageHandlerBean  extends WbemsmtWebAppBean implements Cleanup
 {
 	private Map images = new HashMap();
 	private Map colors = new HashMap();
@@ -84,5 +87,14 @@ public class MessageHandlerBean  extends WbemsmtWebAppBean
 			}
 		}
 		
-	}	
+		Collections.sort(messages,new FacesMessagesComparator());
+	}
+	
+	public void cleanup() {
+		messages.clear();
+		images.clear();
+		colors.clear();
+		
+	}
+	
 }

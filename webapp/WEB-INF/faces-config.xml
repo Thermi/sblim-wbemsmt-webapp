@@ -31,6 +31,9 @@
 		</locale-config>
     </application>
 	<lifecycle>
+		<phase-listener>
+			org.sblim.wbemsmt.webapp.jsf.ManagedBeanInitializer
+		</phase-listener>
 	</lifecycle>
 	
 	<render-kit>
@@ -42,12 +45,31 @@
 	</render-kit>
 
     <managed-bean>
+        <managed-bean-name>taskLauncherController</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.tasklauncher.TaskLauncherController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>slpLoader</property-name>
+			<value>#{slpLoader}</value>
+		</managed-property>
+<!-- 
+		<managed-property>
+			<property-name>configFilename</property-name>
+			<value>D:/temp/test.xml</value>
+		</managed-property> -->
+    </managed-bean>
+
+    <managed-bean>
         <managed-bean-name>treeSelector</managed-bean-name>
         <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.TreeSelectorBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>taskLauncherController</property-name>
 			<value>#{taskLauncherController}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>expandAll</property-name>
+			<value>false</value>
 		</managed-property>
     </managed-bean>
 		
@@ -75,14 +97,17 @@
 			<property-name>treeSelector</property-name>
 			<value>#{treeSelector}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>useSlp</property-name>
+			<value>false</value>
+		</managed-property>
+		<managed-property>
+			<property-name>testMode</property-name>
+			<value>false</value>
+		</managed-property>
+		
     </managed-bean>
     
-    <managed-bean>
-        <managed-bean-name>admin</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.admin.AdminBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-        
     <managed-bean>
         <managed-bean-name>loginCheck</managed-bean-name>
         <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.LoginCheckBean</managed-bean-class>
@@ -115,23 +140,23 @@
     </managed-bean>
 	
     <managed-bean>
-        <managed-bean-name>taskLauncherController</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.tasklauncher.TaskLauncherController</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-		<managed-property>
-			<property-name>taskLauncherConfigFilename</property-name>
-			<value>taskLauncherConfig.xml</value>
-		</managed-property>
-		<managed-property>
-			<property-name>slpLoader</property-name>
-			<value>#{slpLoader}</value>
-		</managed-property>
-    </managed-bean>
-
-    <managed-bean>
         <managed-bean-name>slpLoader</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.tools.slp.SLPDummyLoader</managed-bean-class>
+	    <managed-bean-class>org.sblim.wbemsmt.tools.slp.SLPDummyLoader</managed-bean-class>
+		<!--<managed-bean-class>org.sblim.wbemsmt.tools.slp.SblimSLPClientSLPLoader</managed-bean-class> -->
         <managed-bean-scope>application</managed-bean-scope>
+		<managed-property>
+			<property-name>sleepInterval</property-name>
+			<value>1000</value>
+		</managed-property>
+	    <!-- A List of Strings for InetAddress.getByName
+	    that specify the directory agents to look for. -->
+		<managed-property>
+			<property-name>directoryAgentAdresses</property-name>
+			<list-entries>
+				<value-class>java.lang.String</value-class>
+				<value>9.152.5.16</value>
+			</list-entries>
+		</managed-property>
     </managed-bean>
     
     <managed-bean>
@@ -150,6 +175,20 @@
 		</managed-property>
 				 -->
     </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>admin</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.admin.AdminBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>slpLoader</property-name>
+			<value>#{slpLoader}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>taskLauncherController</property-name>
+			<value>#{taskLauncherController}</value>
+		</managed-property>
+    </managed-bean>    		
     		
 	<navigation-rule>
 	    <navigation-case>
@@ -217,6 +256,13 @@
 	    <navigation-case>
             <from-outcome>adminService</from-outcome>
             <to-view-id>/admin/adminService.adminjsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+   	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>adminIndex</from-outcome>
+            <to-view-id>/admin/index.adminjsf</to-view-id>
         </navigation-case>
     </navigation-rule>
 

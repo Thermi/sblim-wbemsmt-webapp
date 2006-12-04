@@ -99,6 +99,19 @@ TABLE.langAndVersion
 	vertical-align:middle;	
 }
 
+TD.messagesImage
+{
+	width: 0%;
+	vertical-align: middle;
+}
+
+TD.messagesSummary
+{
+	width: 100%;
+	vertical-align: middle;
+}
+
+
 </style>
 </head>
 <body>
@@ -115,7 +128,7 @@ TABLE.langAndVersion
 <h:selectOneMenu binding="#{loginCheck.presetSelect}" valueChangeListener="#{loginCheck.presetChange}" disabled="#{loginCheck.loginDisabled}" onchange="submit();" style="width:300px"/>
 </h:form>
 		
-<h:form>
+<h:form id="connectFields">
 <h:panelGrid columns="5">
 
 	<h:outputText value="#{messages.hostname}"/>
@@ -124,14 +137,18 @@ TABLE.langAndVersion
 	<h:outputText value="#{messages.user}"/>
 	<h:outputText value="#{messages.password}"/>
 
-	<h:inputText value="#{loginCheck.hostname}" disabled="#{loginCheck.loginDisabled}" style="width:300px"/>
-	<h:inputText value="#{loginCheck.port}" disabled="#{loginCheck.loginDisabled}" size="5"/>
-	<h:inputText value="#{loginCheck.namespace}" disabled="#{loginCheck.loginDisabled}"/>
-	<h:inputText value="#{loginCheck.username}" disabled="#{loginCheck.loginDisabled}"/>
-	<h:inputSecret value="#{loginCheck.password}" redisplay="true" disabled="#{loginCheck.loginDisabled}"/>
+	<h:inputText value="#{loginCheck.hostname}" disabled="#{loginCheck.loginDisabled}" style="width:300px" id="host"/>
+	<h:inputText value="#{loginCheck.port}" disabled="#{loginCheck.loginDisabled}" size="5" id="port"/>
+	<h:inputText value="#{loginCheck.namespace}" disabled="#{loginCheck.loginDisabled}"  id="namespace"/>
+	<h:inputText value="#{loginCheck.username}" disabled="#{loginCheck.loginDisabled}"  id="username"/>
+	<h:inputSecret value="#{loginCheck.password}" redisplay="true" disabled="#{loginCheck.loginDisabled}"  id="password"/>
 
 </h:panelGrid>
-<h:commandButton value="#{messages.login}" actionListener="#{loginCheck.login}" action="#{loginCheck.loginAction}" disabled="#{loginCheck.loginDisabled}"/>
+<h:panelGroup  rendered="#{menueController.useSlp}">
+<h:selectBooleanCheckbox  value="#{loginCheck.useSlp}"></h:selectBooleanCheckbox><h:outputText value="#{messages.useSlp}"  id="useSlp"/>
+</h:panelGroup>
+<f:verbatim><br><br></f:verbatim>
+<h:commandButton value="#{messages.login}" actionListener="#{loginCheck.login}" action="#{loginCheck.loginAction}" disabled="#{loginCheck.loginDisabled}" id="login"/>
 <br>
 <%@ include file="include_errorHandling.jsp" %>
 </h:form>
@@ -145,11 +162,11 @@ TABLE.langAndVersion
 <f:verbatim>&nbsp;</f:verbatim>
 </h:panelGroup>
 <h:panelGrid columns="2" columnClasses="lang,version" styleClass="langAndVersion"> 
-	<h:form>
+	<h:form id="langform">
 		<h:panelGroup><f:verbatim>&nbsp;</f:verbatim></h:panelGroup>
 		<h:panelGroup>
-		<h:commandLink actionListener="#{localeManager.setEnglish}"><h:graphicImage url="/images/us.gif" style="border:0px"/></h:commandLink>
-		<h:commandLink actionListener="#{localeManager.setGerman}"><h:graphicImage url="/images/de.gif" style="border:0px"/></h:commandLink>
+		<h:commandLink actionListener="#{localeManager.setEnglish}" id="en" ><h:graphicImage url="/images/us.gif" style="border:0px"/></h:commandLink>
+		<h:commandLink actionListener="#{localeManager.setGerman}" id="de"><h:graphicImage url="/images/de.gif" style="border:0px"/></h:commandLink>
 		</h:panelGroup>
 	</h:form>
 	<h:outputText value="#{messages.version}: #{objectActionController.currentVersion}"/>

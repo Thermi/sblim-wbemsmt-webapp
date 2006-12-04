@@ -14,7 +14,7 @@
   *
   * Contributors: 
   * 
-  * Description: TODO
+  * Description: a service (task) within the admin console
   * 
   */
 package org.sblim.wbemsmt.webapp.jsf.admin;

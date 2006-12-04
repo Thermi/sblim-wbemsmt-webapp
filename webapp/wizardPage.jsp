@@ -23,7 +23,9 @@
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
 
 	<h:panelGrid id="wizardPanel" binding="#{objectActionController.currentWizard.currentPanel.inputFieldContainer}"/>
-	<h:commandButton value="#{messages.button_previous}" action="#{objectActionController.currentWizard.back}" disabled="#{objectActionController.currentWizard.backButtonDisabled}" />
-	<h:commandButton value="#{messages.button_next}" action="#{objectActionController.currentWizard.next}" disabled="#{objectActionController.currentWizard.nextButtonDisabled}" />
-	<h:commandButton value="#{messages.button_finish}" action="#{objectActionController.currentWizard.finish}" disabled="#{objectActionController.currentWizard.finishButtonDisabled}"/>
-	<h:commandButton value="#{messages.button_cancel}" action="#{objectActionController.currentWizard.cancel}" disabled="#{objectActionController.currentWizard.cancelButtonDisabled}"/>
+	<h:panelGrid id="wizardButtons" cellpadding="2" cellspacing="2" columns="4" width="0%">
+	<h:commandButton id="prev" styleClass="wizardButton" value="#{messages.button_previous}" action="#{objectActionController.currentWizard.back}" disabled="#{objectActionController.currentWizard.backButtonDisabled}" />
+	<h:commandButton id="next" styleClass="wizardButton" value="#{messages.button_next}" action="#{objectActionController.currentWizard.next}" disabled="#{objectActionController.currentWizard.nextButtonDisabled}" />
+	<h:commandButton id="finish" styleClass="wizardButton" value="#{messages.button_finish}" action="#{objectActionController.currentWizard.finish}" disabled="#{objectActionController.currentWizard.finishButtonDisabled}"/>
+	<h:commandButton id="cancel" styleClass="wizardButton" value="#{messages.button_cancel}" action="#{objectActionController.currentWizard.cancel}" disabled="#{objectActionController.currentWizard.cancelButtonDisabled}"/>
+	</h:panelGrid>

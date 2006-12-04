@@ -29,6 +29,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.myfaces.custom.navmenu.NavigationMenuItem;
 import org.apache.myfaces.custom.tree2.HtmlTree;
+import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.tree.ITreeSelector;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
@@ -39,11 +40,11 @@ import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 
 
 
-public class TreeSelectorBean extends TreeSelector implements ITreeSelector
+public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cleanup
 {
     public static final String TREE_SELECTION_ACTION = "treeselect_";
     
-    private static final Logger logger = TaskLauncherController.getLogger();
+    private static final Logger logger = Logger.getLogger(TreeSelectorBean.class.getName());
     
     private HashMap treeBackerMap;
     private NavigationMenuItem[] menuItems;
@@ -52,6 +53,11 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector
     private JsfTreeNode selectedNode;
     
     private String currentOutcome;
+    /**
+     * Set by the ManagedBeanFacilty to define if the Tree will be expanded after loading
+     * 
+     */
+    private boolean expandAll = false;
     
     public TreeSelectorBean()
     {
@@ -222,10 +228,12 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector
         int i=0;
         for (Iterator iter = factories.keySet().iterator(); iter.hasNext();) {
 			String name = (String) iter.next();
-            menuItems[i] = new NavigationMenuItem(name, this.TREE_SELECTION_ACTION + name);
+            menuItems[i] = new NavigationMenuItem(name, TreeSelectorBean.TREE_SELECTION_ACTION + name);
             i++;
             logger.log(Level.INFO, "Adding TreeBacker \"" + name + "\"");
-            this.treeBackerMap.put(name, new TreeBacker((TaskLauncherTreeFactory) factories.get(name)));
+            TreeBacker treeBacker = new TreeBacker((TaskLauncherTreeFactory) factories.get(name));
+            treeBacker.setExpandAll(expandAll);
+			this.treeBackerMap.put(name, treeBacker);
         }
     }
     
@@ -263,7 +271,22 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector
 		getCurrentTreeBacker().expandAll();
 	}
 
+	public void cleanup()
+	{
+		treeBackerMap.clear();
+	}
 
+
+	public boolean isExpandAll() {
+		return expandAll;
+	}
+
+
+	public void setExpandAll(boolean expandAll) {
+		this.expandAll = expandAll;
+	}
+
+	
     
     
     

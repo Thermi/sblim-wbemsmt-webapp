@@ -27,6 +27,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.sblim.wbem.client.CIMClient;
+import org.sblim.wbemsmt.bl.Cleanup;
+import org.sblim.wbemsmt.bl.adapter.AbstractBaseCimAdapter;
 import org.sblim.wbemsmt.exception.ModelLoadException;
 import org.sblim.wbemsmt.exception.ObjectDeletionException;
 import org.sblim.wbemsmt.exception.ObjectNotFoundException;
@@ -39,7 +41,7 @@ import org.sblim.wbemsmt.tools.jsf.TabbedPane;
 import org.sblim.wbemsmt.tools.wizard.jsf.IWizardController;
 import org.sblim.wbemsmt.tools.wizard.jsf.JSFWizardBase;
 
-public class ObjectActionControllerBean  implements IObjectActionController, IWizardController {
+public class ObjectActionControllerBean  implements IObjectActionController, IWizardController, Cleanup {
 
 //	private boolean canDelete;
 //	private boolean canCreate;
@@ -50,6 +52,7 @@ public class ObjectActionControllerBean  implements IObjectActionController, IWi
 	private JSFWizardBase currentWizard;
 	private HtmlPanelGrid currentEditor;
 	private Map editBeans = new HashMap();
+	private Map adapter = new HashMap();
 	private String selectedTabId = "undefined";
 	private TabbedPane tabbedPane;
 	private int selectedTabIndex;
@@ -184,7 +187,23 @@ public class ObjectActionControllerBean  implements IObjectActionController, IWi
 	{
 		return FacesContext.getCurrentInstance().getExternalContext().getInitParameter(KEY_VERSION);
 	}
+
+	public Map getAdapter() {
+		return adapter;
+	}
+
+	public void setAdapter(Map adapter) {
+		this.adapter = adapter;
+	}
 	
+	public void addAdapter(String key, AbstractBaseCimAdapter adapter)
+	{
+		this.adapter.put(key, adapter);
+	}
+	public void cleanup() {
+		editBeans.clear();
+		adapter.clear();
+	}
 	
 	
 }

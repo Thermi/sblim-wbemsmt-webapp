@@ -1,0 +1,34 @@
+Multiple Hosts Support
+------------------------------------------------------------------------------
+
+The default behavior when starting the client is to connect to one host. To 
+connect to multiple hosts simultaneously, do the following:
+
+1) Add the following to /usr/share/tomcat5/conf/tomcat-users.xml :
+   <role rolename="tasklauncher-admin"/> 
+   before any <user username=...> statement.
+
+2) Edit /usr/share/tomcat5/conf/tomcat-users.xml and add the tasklauncher-admin
+   role to a user to grant admin authority, such as:
+   <user username="admin" password="admin" roles="admin,manager,tasklauncher-admin"/> 
+
+3) If Tomcat does not run as user tomcat, change the file access properties of all the files and directories
+   in the /etc/sblim-wbemsmt so that the non-tomcat user has write access to it 
+
+4) start Tomcat via /etc/init.d/tomcat5 start
+
+5) In order to map the task with multiple target hosts containing the server
+   code, go to:
+   http://hostname:8080/sblim-wbemsmt-webapp/admin (where hostname needs to be
+   replaced by the hostname of the system on which the above client packages 
+   were installed). Please login with the user data from 2) above.
+
+6) Add multiple hosts and relation to Tasks with "Edit Hosts". Map the tasks to
+   the host by clicking the tasks check-box. 
+
+7) Go to: http://hostname:8080/sblim-wbemsmt-webapp/loginMulti.jsf
+
+8) The login screen is displayed once the displayed host is clicked.
+
+9) Logout by selecting the host and then pressing <logout>
+

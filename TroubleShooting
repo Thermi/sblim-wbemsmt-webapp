@@ -1,0 +1,28 @@
+Trouble shooting
+------------------------------------------------------------------------------
+
+The following list contains information about the problems that have been
+recognized as the most frequent:
+
+P: EXT_ERR_UNABLE_TO_CONNECT
+S: The CIMOM such as OpenPegasus needs to be running: > service tog-pegasus start
+
+P: EXT_ERR_AUTHENTICATION
+S: The correct CIMOM OpenPegasus CIM user/password needs to be entered on the login 
+   page
+
+P: SEVERE: Exception sending context initialized event to listener instance of
+   class org.apache.myfaces.webapp.StartupServletContextListener
+   java.lang.NoClassDefFoundError: 
+                    org/apache/myfaces/application/jsp/JspTilesViewHandlerImpl
+S: Need to replace your current tomahawk-1.1.2.jar with the new 
+   tomahawk-1.1.3.jar and update the link in /usr/share/java accordingly.
+
+P: Connection refused while connecting to hostname
+S: Tomcat needs to be running: > service tomcat5 start
+   Firewall needs to be enabled for inbound connections on port 8080 and 5988
+   
+P: After a period of inactivity the WBEM-SMT login panel is displayed
+S: The session timeout value in 
+   <sblim-wbemsmt-[task]-dir>/WEB-INF/web.xml is set to 30 minutes. If this is
+   too small change it.

@@ -40,11 +40,13 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
-import org.sblim.wbem.cim.CIMException;
+import org.apache.commons.lang.StringUtils;
 import org.sblim.wbem.cim.CIMNameSpace;
 import org.sblim.wbem.client.CIMClient;
 import org.sblim.wbem.client.PasswordCredential;
 import org.sblim.wbem.client.UserPrincipal;
+import org.sblim.wbemsmt.bl.Cleanup;
+import org.sblim.wbemsmt.exception.LoginException;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
@@ -52,22 +54,18 @@ import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.CimomData;
 import org.sblim.wbemsmt.tasklauncher.login.LoginCheck;
 import org.sblim.wbemsmt.tools.jsf.JsfUtil;
-import org.sblim.wbemsmt.tools.resources.WbemSmtResourceBundle;
 import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 
 
 
-public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
+public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Cleanup
 {
-    /**
+    public static final String SESSION_ATTRIBUTE_USE_SLP = "useSlp";
+
+	/**
      * This logger is used to create internal log entries
      */
 	private static final Logger logger = Logger.getLogger("org.sblim.wbemsmt.tasklauncher.jsf");
-    
-    /**
-     * This Logger is used to create FacesMessages
-     */
-    private static final Logger facesLogger = TaskLauncherController.getLogger();
     
     private static final String HIDDEN_PASSWORD = "*****";
     
@@ -79,10 +77,9 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
                    port,
                    password,
                    hostname,
-                   namespace,
-                   name;
+                   namespace;
     private Vector presets;
-    private String lastLoginMessage = null;
+    private boolean useSlp;
     
     private TaskLauncherController taskLauncherController;
     private TreeSelectorBean treeSelector;
@@ -101,8 +98,6 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
 
 	private CimomData cimomData;
 
-
-	private Object lastLoginException;
 
 	private CimomData selection;
 
@@ -129,37 +124,55 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
     	return presetValues;    	
     }
 
+    public void setPresetValues(List presets) {
+    	//do nothing but fullfill the java beans convention for use with lwc
+	}
+
+    
+	public boolean isUseSlp() {
+		return useSlp;
+	}
+
+	public void setUseSlp(boolean useSlp) {
+		this.useSlp = useSlp;
+	}
+
 	private void fillPresets()
     {
 		//a config file was found and loaded
-    	if (this.taskLauncherController.getTaskLauncherConfig() != null)
-    	{
-    		this.presets = this.taskLauncherController.getTaskLauncherConfig().getCimomData();
-    		presetValues.clear();
-    		
-    		for(int i=0; i<presets.size(); i++)
-    		{
-    			TaskLauncherConfig.CimomData cimom = (CimomData) presets.get(i);
-    			logger.log(Level.INFO, "filling preset " + cimom.getName());
-    			presetValues.add(new SelectItem("" + i,cimom.getName()));
-    		}
-    		
-    		if(presets.size() > selectedValue)
-    		{
-    			setValuesFromCimomData((CimomData) presets.get(selectedValue),true);
-    			selection = (CimomData) presets.get(selectedValue);
-    		}
-    		else
-    		{
-    			selection = null;
-    		}
-    		
-    		loginDisabled = !this.taskLauncherController.getTaskLauncherConfig().getHasConfiguration();
-    	}
-    	else
-    	{
-    		loginDisabled = true;
-    	}
+    	try {
+			if (this.taskLauncherController.getTaskLauncherConfig() != null)
+			{
+				this.presets = this.taskLauncherController.getTaskLauncherConfig().getCimomData();
+				presetValues.clear();
+				
+				for(int i=0; i<presets.size(); i++)
+				{
+					TaskLauncherConfig.CimomData cimom = (CimomData) presets.get(i);
+					logger.log(Level.INFO, "filling preset " + cimom.getHostname());
+					presetValues.add(new SelectItem("" + i,cimom.getHostname()));
+				}
+				
+				if(presets.size() > selectedValue)
+				{
+					setValuesFromCimomData((CimomData) presets.get(selectedValue),true);
+					selection = (CimomData) presets.get(selectedValue);
+				}
+				else
+				{
+					selection = null;
+				}
+				
+				loginDisabled = !this.taskLauncherController.getTaskLauncherConfig().getHasConfiguration();
+			}
+			else
+			{
+				loginDisabled = true;
+			}
+		} catch (WbemSmtException e) {
+			logger.log(Level.SEVERE,"Cannot load Config ",e);
+			loginDisabled = true;
+		}
     }
     
 
@@ -167,9 +180,13 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
 		return loginDisabled;
 	}
 
-    public String getLoginDisabledMsg() {
-		String msg = bundle.getString("loginDisabled", new Object[]{new File(TaskLauncherConfig.getConfigFile()).getAbsolutePath()});
+    public String getLoginDisabledMsg() throws WbemSmtException {
+		String msg = bundle.getString("loginDisabled", new Object[]{new File(taskLauncherController.getTaskLauncherConfig().getConfigFile()).getAbsolutePath()});
 		return msg;
+	}
+
+    public void setLoginDisabledMsg(String msg) {
+    	//do nothing but fullfill the java beans convention for use with lwc
 	}
 
     public void setLoginDisabled(boolean presetDisabled) {
@@ -182,11 +199,11 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
     	return this.presetSelection;
     }
     
-    public void setPresetSelect(HtmlSelectOneMenu menue)
+    public void setPresetSelect(HtmlSelectOneMenu menu)
     {
-    	
+        this.presetSelection = menu;
     }
-    
+
     public void presetChange(ValueChangeEvent e)
     {
     	selectedValue = ((Integer) e.getNewValue()).intValue();
@@ -206,50 +223,49 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
     	this.hostname = data.getHostname();
     	this.namespace = data.getNamespace();
     	this.port = ""+data.getPort();
-    	this.name = data.getName();
     }
     
-    private CIMClient createCIMClient(boolean setCimClient) throws WbemSmtException
+    private CIMClient createCIMClient(boolean setCimClient) throws LoginException
     {
-		lastLoginMessage = null;
-    	lastLoginException = null;
-    	
         CIMClient cimClient;
         try
         {
         	username = username == null ? "" : username; 
-        	password = password == null ? "" : password; 
+        	password = StringUtils.isEmpty(password) ? " " : password; 
         	hostname = hostname == null ? "" : hostname; 
         	port = port == null ? "" : port; 
         	namespace = namespace == null ? "" : namespace; 
         	
         	String url = "HTTP://" + hostname + ":" + port.trim() + namespace.trim();
+        	
+        	logger.info("Coonecting to " + url + " with user " + username);
+        	
             cimClient = new CIMClient(new CIMNameSpace(url), new UserPrincipal(username.trim()), new PasswordCredential(password.toCharArray()));
             Enumeration enumeration = cimClient.enumerateClasses();
             if(enumeration == null)
             {
-            	lastLoginMessage = bundle.getString("noElementsFound");
-            	return null;
+            	throw new LoginException(bundle.getString("cannot.connect.noElementsFound"));
             }
         }
         catch(Exception e)
         {
-        	lastLoginException = e;
-            logger.log(Level.SEVERE, "Error connecting server " + hostname,e);
-            if (e instanceof CIMException) {
-				CIMException exception = (CIMException) e;
-            	lastLoginMessage = exception.getID();
+            if (e instanceof LoginException) {
+            	LoginException exception = (LoginException) e;
+            	throw exception;
 			}
             else
             {
-            	lastLoginMessage = e.getMessage() != null ? e.getMessage() : bundle.getString("noOrEmptyMessage");
+            	throw new LoginException(bundle.getString("internal.error"),e);
             }
-            return null;
         }
         if (setCimClient)
         {
-        	this.taskLauncherController.setCimClient(name, cimClient);
-        	treeSelector.setTaskLauncherController(name,taskLauncherController);
+        	try {
+				this.taskLauncherController.init(hostname, cimClient,useSlp);
+				treeSelector.setTaskLauncherController(hostname,taskLauncherController);
+			}catch (WbemSmtException e) {
+				throw new LoginException(bundle.getString("internal.error"),e);
+			}
         }
         return cimClient;
     }
@@ -266,26 +282,16 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
 		}
     }
     
-    public void login() throws WbemSmtException
+    public void login() throws LoginException
     {
         // authenticating user
         //HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         
     	this.cimClient = this.createCIMClient(true); 
     	
-        if(this.cimClient != null)
-        {
-            logger.log(Level.INFO, "connection ok, good authentication, cimclient created");
-            this.loggedIn = true;
-            logger.log(Level.INFO, "loggin in user: " + this.username);
-        }
-        else
-        {
-            logger.log(Level.INFO, "cannot connect");
-            this.loggedIn = false;
-			logger.log(Level.SEVERE, "Error connecting server " + hostname + ":" + port + " and namespace " + namespace + " with user " + username,lastLoginException);
-			facesLogger.log(Level.SEVERE,bundle.getString("cannotLoginToHostFull",new Object[]{hostname+ ":" + port,namespace,username}) + " " + bundle.getString("reason") + " " +  lastLoginMessage);
-        }
+        logger.log(Level.INFO, "connection ok, good authentication, cimclient created");
+        this.loggedIn = true;
+        logger.log(Level.INFO, "loggin in user: " + this.username);
     }
     
     
@@ -336,22 +342,15 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
     {
     	try {
 			CimomTreeNode treeNode = (CimomTreeNode)treeSelector.getSelectedTaskLauncherTreeNode();
+			treeNode.setSlpLoader(useSlp ? taskLauncherController.getSlpLoader() : null);
 			setValuesFromCimomData(treeNode.getCimomData(),false);
 			CIMClient client = createCIMClient(false);
-			if (client != null)
-			{
-				treeNode.setCimClient(client);
-				treeNode.getCimomData().setUser(username);
-				treeNode.updateName();
-				treeNode.buildTree();
-				treeNode.readSubnodes(true);
-				return startView;
-			}
-			else
-			{
-				FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getString("cannotLoginToHost",new Object[]{treeNode.getCimomData().getInfo()}),lastLoginMessage));
-				return "cimomLogin";
-			}
+			treeNode.setCimClient(client);
+			treeNode.getCimomData().setUser(username);
+			treeNode.updateName();
+			treeNode.buildTree();
+			treeNode.readSubnodes(true);
+			return startView;
 		} catch (WbemSmtException e) {
 			JsfUtil.handleException(e);
 			return startView;
@@ -440,7 +439,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
         this.logoutView = logoutView;
     }
 
-    public void setTaskLauncherController(TaskLauncherController controller)
+    public void setTaskLauncherController(TaskLauncherController controller) throws WbemSmtException
     {
         this.taskLauncherController = controller;
         fillPresets();
@@ -465,14 +464,14 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
                        new FileInputStream(f)));
  	        TaskLauncherConfig.CimomData data = (TaskLauncherConfig.CimomData)d.readObject();
 			
-			Vector configs = taskLauncherController.getTaskLauncherConfig().getTreeConfigData(data.getName());
+			Vector configs = taskLauncherController.getTaskLauncherConfig().getTreeConfigDataByHostname(data.getHostname());
 			data.setTreeConfigs(configs);
 			setValuesFromCimomData(data,true);
 			this.password = (String) d.readObject();
 			d.close();
 			login();
 		} catch (Exception e) {
-			e.printStackTrace();
+			JsfUtil.handleException(e);
 		}
     	if (loggedIn)
     	{
@@ -487,9 +486,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
     public String multiWithoutLogin()
     {
 		try {
-			
 			this.cimClient = null;
-			
 			taskLauncherController.createTreeFactoriesMultiHost();
 			treeSelector.setTaskLauncherController(TaskLauncherController.NAME_FOR_MULTI_CIMOM_TREE,taskLauncherController);
 			//neded to get a standard tree with all the CIMOMs
@@ -497,7 +494,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
 			treeSelector.getCurrentTreeBacker().updateTree();
 			loggedIn = true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			JsfUtil.handleException(e);
 		}
     	if (loggedIn)
     	{
@@ -509,7 +506,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
     	}
     }
 
-	public void reloadLoginSettings() {
+	public void reloadLoginSettings() throws WbemSmtException {
 		fillPresets();
 	}
 
@@ -520,6 +517,10 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
 	 */
 	public CIMClient getCimClient() {
 		return cimClient;
+	}
+	
+	public void setCimClient(CIMClient cimClient) {
+		this.cimClient = cimClient;
 	}
 
 	public void setCimomData(CimomData cimomData) {
@@ -533,6 +534,17 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck
 	public String getCimomName() {
 		return cimomData.getInfo();
 	}
+	
+	public void setCimomName()
+	{
+    	//do nothing but fullfill the java beans convention for use with lwc
+	}
+
+	public void cleanup() {
+		treeSelector = null;		
+		taskLauncherController = null;
+	}
+	
 	
 	
 	

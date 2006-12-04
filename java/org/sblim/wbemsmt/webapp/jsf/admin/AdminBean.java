@@ -14,14 +14,13 @@
   *
   * Contributors: 
   * 
-  * Description: TODO
+  * Description: Managed Bean for the JSF tasklauncher admin console
   * 
   */
 package org.sblim.wbemsmt.webapp.jsf.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -29,34 +28,42 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIParameter;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 
-import org.apache.xmlbeans.XmlException;
 import org.sblim.wbemsmt.exception.WbemSmtException;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TasklauncherconfigDocument;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.CimomDocument.Cimom;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigDocument.Treeconfig;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigReferenceDocument.TreeconfigReference;
+import org.sblim.wbemsmt.tools.jsf.JsfUtil;
+import org.sblim.wbemsmt.tools.slp.SLPLoader;
+import org.sblim.wbemsmt.tools.slp.SLPUtil;
 import org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppBean;
 
 public class AdminBean extends WbemsmtWebAppBean {
 
 	private List hostTable;
-	private List serviceTable;
+	private List serviceXmls;
 	private TasklauncherconfigDocument taskLauncherDoc;
 	private File loadedFile;
+    private TaskLauncherController taskLauncherController;
+	
+	/**
+	 * True if the slp config is shown
+	 */
+	private boolean slpMode = false;
 	
 	public final static String NEW_HOST = "<enter new Hostname>";
 	public final static String NEW_SERVICE = "<enter file for new service>";
 	
-	private String newService = NEW_SERVICE;
+	private String newService = null;
 	
 	protected static final Logger logger = Logger.getLogger(AdminBean.class.getName());
+	protected static final Logger facesMsgLogger = TaskLauncherController.getLoggerFacesMessages();
 	
+	private SLPLoader slpLoader;
+	private Treeconfig[] treeconfigArray;
 	/**
 	 * @throws WbemSmtException 
 	 * 
@@ -67,27 +74,55 @@ public class AdminBean extends WbemsmtWebAppBean {
 		init();
 		
 	}
+	
+	public SLPLoader getSlpLoader() {
+		return slpLoader;
+	}
 
-	private void init() throws WbemSmtException {
-		loadedFile = new File(TaskLauncherConfig.getConfigFile());
+	public void setSlpLoader(SLPLoader slpLoader) {
+		this.slpLoader = slpLoader;
+	}
+	
+	
+
+	public boolean isSlpMode() {
+		return slpMode;
+	}
+
+	public void setSlpMode(boolean slpMode) {
+		this.slpMode = slpMode;
+	}
+
+	public void init() throws WbemSmtException {
 		
-		logger.info("Loading config from " + loadedFile.getAbsolutePath());
-
-		if (loadedFile.exists())
+		if (taskLauncherController != null)
 		{
-			try {
-				taskLauncherDoc = TasklauncherconfigDocument.Factory.parse(loadedFile);
-			} catch (Exception e) {
-				logger.log(Level.SEVERE,"Cannot load config from " + loadedFile.getAbsolutePath(),e);
-				taskLauncherDoc = TasklauncherconfigDocument.Factory.newInstance();
-			} 
+			loadedFile = new File(taskLauncherController.getTaskLauncherConfig().getConfigFile());
+			
+			logger.info("Loading config from " + loadedFile.getAbsolutePath());
+			
+			if (loadedFile.exists())
+			{
+				try {
+					taskLauncherDoc = TasklauncherconfigDocument.Factory.parse(loadedFile);
+					treeconfigArray = taskLauncherController.getTaskLauncherConfig().getTasklauncherConfigDoc().getTasklauncherconfig().getTreeconfigArray();
+				} catch (Exception e) {
+					throw new WbemSmtException("Cannot load config from " + loadedFile.getAbsolutePath(),e);
+				} 
+			}
+			else
+			{
+				throw new WbemSmtException("Cannot load config from " + loadedFile.getAbsolutePath() + " File doesn't exist");
+			}
+			hostTable = null;
+			slpMode = false;
 		}
-		else
-		{
-			taskLauncherDoc = TasklauncherconfigDocument.Factory.newInstance();
-		}
-		hostTable = null;
-		serviceTable = null;
+	}
+	
+	public String reloadFromFile() throws WbemSmtException
+	{
+		init();
+		return "";
 	}
 	
 	public String saveHost()
@@ -96,7 +131,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 			for (int i=hostTable.size()-1; i >= 0 ; i--)
 			{
 				HostEntry hostEntry = (HostEntry) hostTable.get(i);
-				if (hostEntry.isNew() && !NEW_HOST.equals(hostEntry.hostname))
+				if ((hostEntry.isNew() || hostEntry.isAddToFile()) && !NEW_HOST.equals(hostEntry.hostname))
 				{
 					logger.info("Creating new host " + hostEntry.getHostname());
 					Cimom cimom = taskLauncherDoc.getTasklauncherconfig().addNewCimom();
@@ -106,7 +141,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 					updateCimom(cimom, hostEntry);
 
 					//add a new Host
-					hostTable.add(new HostEntry(getServices()));				
+					hostTable.add(new HostEntry(taskLauncherController.getTaskLauncherConfig(), getServices()));				
 				}
 				else if (hostEntry.getCimom() != null)
 				{
@@ -125,10 +160,42 @@ public class AdminBean extends WbemsmtWebAppBean {
 		return "adminHost";
 	}
 
+	public String saveSelectedSlpHosts()
+	{
+		try {
+			
+			List newHosts = new ArrayList();
+			
+			for (int i=hostTable.size()-1; i >= 0 ; i--)
+			{
+				HostEntry hostEntry = (HostEntry) hostTable.get(i);
+				if (hostEntry.isAddToFile())
+				{
+					logger.info("Added host from slp: " + hostEntry.getHostname());
+					addMessage(FacesMessage.SEVERITY_INFO,bundle.getString("addedHostFromSlp",new Object[]{hostEntry.getHostname()}));
+					newHosts.add(hostEntry);				
+				}
+			}
+			//reload from file
+			init();
+			//add the hosts
+			//the last element is the "enter a new host" - host. Add the newHosts before that one
+			List hosts = getHostTable();
+			Object addNewHostItem = hosts.remove(hosts.size()-1);
+			hosts.addAll(newHosts);
+			hosts.add(addNewHostItem);
+			
+			//save the hosts
+			saveHost();
+		} catch (Exception e) {
+			handleSaveException(e);
+		}
+		return "adminHost";
+	}
+
 	private void updateCimom(Cimom cimom, HostEntry hostEntry) {
 		
 		cimom.setHostname(hostEntry.getHostname());
-		cimom.setName(hostEntry.getHostname());
 		cimom.setNamespace(hostEntry.getNamespace());
 		cimom.setPort(hostEntry.port);
 		cimom.setUser(hostEntry.user);
@@ -157,6 +224,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 				if (hostEntry.isDelete())
 				{
 					logger.info("Deleting host " + hostEntry.getHostname());
+					addMessage(FacesMessage.SEVERITY_INFO,bundle.getString("removedHost", new Object[]{hostEntry.getHostname()}));
 					taskLauncherDoc.getTasklauncherconfig().removeCimom(i);
 					hostTable.remove(i);
 				}
@@ -171,129 +239,53 @@ public class AdminBean extends WbemsmtWebAppBean {
 		return "adminHost";
 	}
 
-	public String deleteServices()
-	{
-		try {
-			for (int i=serviceTable.size()-1; i >= 0 ; i--)
-			{
-				ServiceEntry entry = (ServiceEntry) serviceTable.get(i);
-				if (entry.isDelete())
-				{
-					String taskName = entry.getName();
-					logger.info("Deleting host " + taskName);
-					taskLauncherDoc.getTasklauncherconfig().removeTreeconfig(i);
-					serviceTable.remove(i);
-					
-					
-					Cimom[] cimomArray = taskLauncherDoc.getTasklauncherconfig().getCimomArray();
-					for (int j = 0; j < cimomArray.length; j++) {
-						Cimom cimom = cimomArray[j];
-						TreeconfigReference[] treeconfigReferenceArray = cimom.getTreeconfigReferenceArray();
-						for (int k = treeconfigReferenceArray.length-1; k >= 0; k--) {
-							TreeconfigReference reference = treeconfigReferenceArray[k];
-							if (reference.getName().equals(taskName))
-							{
-								cimom.removeTreeconfigReference(k);
-							}
-						}
-					}
-					
-				}
-			}
-			save();
-			init();
-		} catch (Exception e) {
-			handleSaveException(e);
-		}
-		return "adminService";
-	}
-
 	private void save() throws IOException
 	{
 		logger.info("saving changes to " + loadedFile.getAbsolutePath());
 		taskLauncherDoc.save(loadedFile);
 	}
 
-	public String addService()
-	{
-		try {
-				String name = newService;
-				if (!NEW_SERVICE.equals(name))
-				{
-					//read in the new File
-					try {
-						logger.info("Creating new Task with file " + name);
-						if (!name.startsWith("/"))
-						{
-							name = "/" + name;
-						}
-						InputStream resourceAsStream = getClass().getResourceAsStream(name);
-						if (resourceAsStream != null)
-						{
-							TasklauncherconfigDocument newConfig = TasklauncherconfigDocument.Factory.parse(resourceAsStream);
-							Treeconfig[] newTreeconfigArray = newConfig.getTasklauncherconfig().getTreeconfigArray();
-							if (newTreeconfigArray.length == 1)
-							{
-								Treeconfig newTreeConfig = taskLauncherDoc.getTasklauncherconfig().addNewTreeconfig();
-								newTreeConfig.set(newTreeconfigArray[0]);
-								newService = NEW_SERVICE;
-								save();
-							}
-							else
-							{
-								FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getString("fileNotRead.notOneElementFound"),null));
-							}
-						}
-						else
-						{
-							logger.log(Level.SEVERE,"Cannot load Task-Config from " + name + " Resource not found.");
-							FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR,bundle.getString("fileNotRead.notfound"),null));
-						}
-					} catch (Exception e) {
-						handleSaveException(e);
-					} 		
-			}
-			init();
-		} catch (Exception e) {
-			handleSaveException(e);
-		}
-		return "adminService";
-	}
-	
 	public List getHostTable()
 	{
 		if (hostTable == null)
 		{
 			hostTable = new ArrayList();
-			String[] services = getServices();
-			
-			Cimom[] cimomArray = taskLauncherDoc.getTasklauncherconfig().getCimomArray();
-			for (int i = 0; i < cimomArray.length; i++) {
-				Cimom cimom = cimomArray[i];
-				hostTable.add(new HostEntry(cimom,services));
+			try {
+				String[] services = getServices();
+				
+				Cimom[] cimomArray = taskLauncherDoc.getTasklauncherconfig().getCimomArray();
+				for (int i = 0; i < cimomArray.length; i++) {
+					Cimom cimom = cimomArray[i];
+					hostTable.add(new HostEntry(taskLauncherController.getTaskLauncherConfig(), cimom,services));
+				}
+				if (!slpMode)
+				{
+					hostTable.add(new HostEntry(taskLauncherController.getTaskLauncherConfig(),services));
+				}
+			} catch (WbemSmtException e) {
+				JsfUtil.handleException(e);
 			}
-			hostTable.add(new HostEntry(services));
 		}
 		return hostTable;
 	}
 
-	public List getServiceTable()
+	public List getHostTableForDisplay()
 	{
-		if (serviceTable == null)
+		List result = getHostTable();
+		if (result.size() > 0)
 		{
-			serviceTable = new ArrayList();
-			Treeconfig[] treeConfigArray = taskLauncherDoc.getTasklauncherconfig().getTreeconfigArray();
-			for (int i = 0; i < treeConfigArray.length; i++) {
-				Treeconfig treeConfig = treeConfigArray[i];
-				serviceTable.add(new ServiceEntry(treeConfig.getName(),treeConfig.getFilename()));
+			HostEntry entry = (HostEntry) result.get(result.size()-1);
+			if (entry.getHostname().equals(NEW_HOST))
+			{
+				result.remove(result.size()-1);
 			}
 		}
-		return serviceTable;
+		hostTable  = null;
+		return result;
 	}
 	
-	public String[] getServices()
+	public String[] getServices() throws WbemSmtException
 	{
-		 Treeconfig[] treeconfigArray = taskLauncherDoc.getTasklauncherconfig().getTreeconfigArray();
 		 String[] result = new String[treeconfigArray.length];
 		 for (int i = 0; i < treeconfigArray.length; i++) {
 			Treeconfig treeconfig = treeconfigArray[i];
@@ -312,12 +304,35 @@ public class AdminBean extends WbemsmtWebAppBean {
 
 	private void handleSaveException(Exception e) {
 		logger.log(Level.SEVERE,"Cannot save to file " + loadedFile.getAbsolutePath(),e);
-		TaskLauncherController.getLogger().log(Level.SEVERE,bundle.getString("cannotsave"));
+		TaskLauncherController.getLoggerFacesMessages().log(Level.SEVERE,bundle.getString("cannotsave"));
 	}
 	
-	public boolean isAdminEnabled()
+	
+	public List getServiceXmls() {
+		if (serviceXmls == null || serviceXmls.size() == 0)
+		{
+			serviceXmls = new ArrayList();
+			
+			try {
+				File[] taskXMLs = taskLauncherController.getTaskLauncherConfig().getTaskXMLs();
+				for (int i = 0; i < taskXMLs.length; i++) {
+					serviceXmls.add(new SelectItem(taskXMLs[i].getAbsolutePath()));
+				}
+			
+			} catch (Exception e1) {
+				logger.log(Level.SEVERE,"Cannot task-config.xmls ",e1);
+			}
+		}
+		return serviceXmls;
+	}
+
+	public void setServiceXmls(List serviceXmls) {
+		this.serviceXmls = serviceXmls;
+	}
+
+	public boolean isAdminEnabled() throws WbemSmtException
 	{
-		File f = new File (TaskLauncherConfig.getConfigFile());
+		File f = new File (taskLauncherController.getTaskLauncherConfig().getConfigFile());
 		if (f.exists())
 		{
 			try {
@@ -330,10 +345,39 @@ public class AdminBean extends WbemsmtWebAppBean {
 		return false;
 	}
 	
-    public String getAdminDisabledMsg() {
-		String msg = bundle.getString("adminDisabled", new Object[]{new File(TaskLauncherConfig.getConfigFile()).getAbsolutePath()});
+    public String getAdminDisabledMsg() throws WbemSmtException {
+		String msg = bundle.getString("adminDisabled", new Object[]{new File(taskLauncherController.getTaskLauncherConfig().getConfigFile()).getAbsolutePath()});
 		return msg;
 	}
 	
+    public String loadSlpConfiguration()
+    {
+		if (slpLoader.getCanFindHosts())
+		{
+	    	TasklauncherconfigDocument result = SLPUtil.readFromSlp(slpLoader,taskLauncherDoc.getTasklauncherconfig().getTreeconfigArray());
+			
+			//reload the displayed hosts
+			hostTable = null;
+			taskLauncherDoc = result;
+			slpMode = true;
+		}
+		else
+		{
+			facesMsgLogger.info(bundle.getString("cannot.load.slp.conf"));
+		}
+    	return "";
+    }
+
+	public TaskLauncherController getTaskLauncherController() {
+		return taskLauncherController;
+	}
+
+	public void setTaskLauncherController (
+			TaskLauncherController taskLauncherController) throws WbemSmtException {
+		this.taskLauncherController = taskLauncherController;
+		init();
+	}
+   
+    
 }
 

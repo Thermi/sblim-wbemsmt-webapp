@@ -33,15 +33,15 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.apache.myfaces.custom.tree2.TreeNode;
-import org.sblim.wbem.tasklauncher.ITaskLauncherUiTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.CIMClassNode;
 import org.sblim.wbemsmt.tasklauncher.CIMInstanceNode;
 import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
+import org.sblim.wbemsmt.tasklauncher.ITaskLauncherUiTreeNode;
+import org.sblim.wbemsmt.tasklauncher.SimpleTextTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherContextMenu;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherDelegaterTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeConfigTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
@@ -58,12 +58,12 @@ import org.sblim.wbemsmt.tools.resources.WbemSmtResourceBundle;
  */
 public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode, Cloneable, LocaleChangeListener, ITaskLauncherUiTreeNode
 {
-	private static final String[] DEFAULT_BUNDLES = new String[]{"messages","org.sblim.wbem.tasklauncher.jsf.webapp_messages"};
+	private static final String[] DEFAULT_BUNDLES = new String[]{"messages","org.sblim.wbemsmt.webapp.jsf.webapp_messages"};
 
 	public static final String FACET_TREENODE = "treenode";
 	
     static final long serialVersionUID = 457634609347534L;
-    private static final Logger logger = TaskLauncherController.getLogger();
+    private static final Logger logger = Logger.getLogger(JsfTreeNode.class.getName());
     
     private boolean leaf;
     private String description,
@@ -76,8 +76,6 @@ public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode,
     private TaskLauncherTreeNode taskLauncherTreeNode;
     private boolean eventListenerFlag = false;
     private boolean customEventListenerFlag = false;
-
-	private Object parent2;
 
     public JsfTreeNode()
     {
@@ -110,7 +108,7 @@ public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode,
         ILocaleManager manager = (ILocaleManager) BeanNameConstants.LOCALE_MANAGER.getBoundValue(FacesContext.getCurrentInstance());
         localeChanged(manager.getCurrentLocale());
 
-        logger.log(Level.INFO, "Reading subnodes of node " + this.description);
+        logger.log(Level.FINE, "Reading subnodes of node " + this.description);
     	
     	
         // clone the data we use to avoid concurrent modify exceptions
@@ -381,10 +379,6 @@ public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode,
     	System.err.println("processMenueItem");
     }
 
-    //TODO remove
-	public void addParent(Object parent) {
-		parent2 = parent;
-	}
 
 	public String getPopupTrigger()
 	{
@@ -405,12 +399,17 @@ public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode,
 	public void localeChanged(Locale newLocale) {
 		
 		boolean translate = false;
+
+		/**
+		 * decide which types of nodes are translated
+		 */
 		
 		if (getTaskLauncherTreeNode() instanceof CIMClassNode) { translate = true; }
 		else if (getTaskLauncherTreeNode() instanceof CIMInstanceNode) {/*do nothing */}
 		else if (getTaskLauncherTreeNode() instanceof TaskLauncherTreeConfigTreeNode) {/*do nothing */}
 		else if (getTaskLauncherTreeNode() instanceof TaskLauncherDelegaterTreeNode) {/*do nothing */}
 		else if (getTaskLauncherTreeNode() instanceof CimomTreeNode) {/*do nothing */}
+		else if (getTaskLauncherTreeNode() instanceof SimpleTextTreeNode) {/*do nothing */}
 		else if (getTaskLauncherTreeNode() instanceof TaskLauncherTreeNode) { translate = true; }
 		
 		if (translate)
@@ -466,4 +465,14 @@ public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode,
 		}
 		return -1;
 	}
+
+	public boolean isEnabled() {
+		return taskLauncherTreeNode.isEnabled();
+	}
+
+	public void setEnabled(boolean enabled) {
+		taskLauncherTreeNode.setEnabled(enabled);
+	}
+	
+	
 }

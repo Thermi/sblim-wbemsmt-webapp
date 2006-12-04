@@ -14,7 +14,7 @@
   *
   * Contributors: 
   * 
-  * Description: TODO
+  * Description: Control the look of the menue, disabling menueitemss
   * 
   */
 package org.sblim.wbemsmt.webapp.jsf;
@@ -22,9 +22,10 @@ package org.sblim.wbemsmt.webapp.jsf;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 
-public class MenueControllerBean {
+public class MenueControllerBean  implements Cleanup {
 
 	private TreeSelectorBean treeSelector;
 
@@ -39,11 +40,13 @@ public class MenueControllerBean {
 		createEnabled,
 		reloadEnabled,
 		signedOnTextEnabled,
-		viewEnabled;
+		viewEnabled,
+		useSlp;
 
 	private boolean multiHost;
 	private boolean embeddedHost;
 	private boolean singleHost;
+	private boolean testMode;
 	
 	public MenueControllerBean()
 	{
@@ -66,7 +69,7 @@ public class MenueControllerBean {
 		pasteSubnodeEnabled = false;
 		deleteEnabled = false;
 		createEnabled = false;
-		reloadEnabled = multiHost || singleHost;
+		reloadEnabled = false;// moved to admin-area multiHost || singleHost;
 		viewEnabled = false;
 		signedOnTextEnabled = !multiHost;
 	}
@@ -148,7 +151,9 @@ public class MenueControllerBean {
 	}
 
 	public void setReloadEnabled(boolean reloadEnabled) {
-		this.reloadEnabled = reloadEnabled;
+		//moved to admin area
+		//this.reloadEnabled = reloadEnabled;
+		throw new RuntimeException("Cannot set reloadEnabled-Flag");
 	}
 
 	public boolean isViewEnabled() {
@@ -174,6 +179,36 @@ public class MenueControllerBean {
 	public void setSignedOnTextEnabled(boolean signedOnTextEnabled) {
 		this.signedOnTextEnabled = signedOnTextEnabled;
 	}
+
+	public boolean isEmbeddedHost() {
+		return embeddedHost;
+	}
+
+	public void setEmbeddedHost(boolean embeddedHost) {
+		this.embeddedHost = embeddedHost;
+	}
+
+	public boolean isUseSlp() {
+		return useSlp;
+	}
+
+	public void setUseSlp(boolean useSlp) {
+		this.useSlp = useSlp;
+	}
+
+	public void cleanup() {
+		treeSelector = null;
+	}
+
+	public boolean isTestMode() {
+		return testMode;
+	}
+
+	public void setTestMode(boolean testMode) {
+		this.testMode = testMode;
+	}
+	
+
 	
 	
 	

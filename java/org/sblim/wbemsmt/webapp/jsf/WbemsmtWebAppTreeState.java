@@ -25,14 +25,12 @@ import java.util.logging.Logger;
 
 import org.apache.myfaces.custom.tree2.TreeState;
 import org.sblim.wbemsmt.exception.WbemSmtException;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
-import org.sblim.wbemsmt.tools.jsf.JsfUtil;
 
 public class WbemsmtWebAppTreeState implements TreeState {
 
 	
-    private static final Logger logger = TaskLauncherController.getLogger();
+    private static final Logger logger = Logger.getLogger(WbemsmtWebAppTreeState.class.getName());
 
     private static final long serialVersionUID = 1L;
 	private final TreeState state;

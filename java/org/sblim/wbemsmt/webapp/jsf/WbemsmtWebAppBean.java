@@ -21,9 +21,11 @@ package org.sblim.wbemsmt.webapp.jsf;
 
 import java.util.Locale;
 
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
 import org.sblim.wbemsmt.tools.beans.BeanNameConstants;
+import org.sblim.wbemsmt.tools.jsf.JsfUtil;
 import org.sblim.wbemsmt.tools.resources.ILocaleManager;
 import org.sblim.wbemsmt.tools.resources.LocaleChangeListener;
 import org.sblim.wbemsmt.tools.resources.ResourceBundleManager;
@@ -45,5 +47,9 @@ public abstract class WbemsmtWebAppBean
 			}
 		});
     	
+	}
+
+	public void addMessage(Severity severity, String message) {
+		JsfUtil.addMessage(severity,message);
 	}
 }

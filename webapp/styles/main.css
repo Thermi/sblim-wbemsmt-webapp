@@ -48,6 +48,13 @@ a.contextInHeader
 	color:black;			
 }
  
+a.footerLink
+{
+	text-decoration: none;
+	color:black;			
+	vertical-align: top;
+}
+
 a.event
 {
 	text-decoration: none;
@@ -57,6 +64,12 @@ a.contextMenue
 {
 	text-decoration: none;
 	color:white;			
+}
+
+a.admin
+{
+	text-decoration: none;
+	color:#4477bb;			
 }
 
 A
@@ -161,7 +174,7 @@ TD.messagesSummary
 
 .evenRow
 {
-	background-color: #eeeeee;
+	background-color: ##F0F0F0;
 }
 
 .oddRow
@@ -265,6 +278,20 @@ table.buttons
 	background-color: #FFFFFF;
 }
 
+input {
+	border:1px;
+	border-style:solid;
+	padding-left:2px;
+	border-color:#9F9999;
+}
+
+select {
+	border:1px;
+	border-style:solid;
+	border-color:#9F9999;
+}
+
+
 .outerTable {
 	border-width:1px;
 	border-color:C0C0C0;	
@@ -275,20 +302,46 @@ table.buttons
 	border-color:C0C0C0;	
 }
 
-.childTable {
+.childTable
+{
 	border-width:0px;
 	border-color:C0C0C0;	
+}
+.singleLineChildTable
+{
+	border-width:0px;
+	border-color:C0C0C0;	
+}
+
+.multiLineChildTable
+{
+        border:none;
+cellspacing:0px;
+border-spacing:0px;
 }
 
 .tableHeader
 {
 	text-align:left;	
 }
-
 .multiLineContent
 {
 	vertical-align:middle;
 	text-align:left;	
+        padding-left:3px;
+        padding-right:3px;
+        padding-top:3px;
+        padding-bottom:3px;
+}
+
+.multiLineRowEven
+{
+	background-color:#FFFFFF;
+}
+
+.multiLineRowOdd
+{
+	background-color:#DBDBDB;
 }
 
 .tableFooter
@@ -300,4 +353,25 @@ table.buttons
 .tableFooterIcon
 {
 	width:0%;
+}
+
+.fill100
+{
+	width:100%;
+}
+
+.fill0
+{
+	width:0%;
+}
+
+.wizardButton
+{
+	height:25px;
+	width:70px;
+}
+
+.treeDisabled
+{
+	color: #C0C0C0;
 }

@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.component.html.HtmlPanelGrid;
@@ -35,12 +34,11 @@ import org.sblim.wbem.cim.CIMObject;
 import org.sblim.wbem.cim.CIMProperty;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.tasklauncher.CIMInstanceNode;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 
 public class ShowPropertiesAction implements ActionListener, java.io.Serializable
 {
     private static final long serialVersionUID = 54644547768L;
-    private static final Logger logger = TaskLauncherController.getLogger();
+    private static final Logger logger = Logger.getLogger(ShowPropertiesAction.class.getName());
     
     private CIMInstanceNode instanceNode;
     private String panelId;
@@ -67,7 +65,6 @@ public class ShowPropertiesAction implements ActionListener, java.io.Serializabl
     public void processAction(ActionEvent actionEvent)
             throws AbortProcessingException
     {
-        UIComponent   component = actionEvent.getComponent();
         FacesContext  facesContext = FacesContext.getCurrentInstance();
         UIViewRoot    root = facesContext.getViewRoot();
         HtmlPanelGrid panel = (HtmlPanelGrid) root.findComponent(panelId);

@@ -14,7 +14,7 @@
   *
   * Contributors: 
   * 
-  * Description: TODO
+  * Description: Service within a host in the admin console
   * 
   */
 package org.sblim.wbemsmt.webapp.jsf.admin;
@@ -23,6 +23,8 @@ public class ServiceInHost
 {
 	String service;
 	boolean enabled;
+	boolean installed;
+	boolean configured;
 
 	ServiceInHost(String service)
 	{
@@ -44,6 +46,23 @@ public class ServiceInHost
 	public void setService(String service) {
 		this.service = service;
 	}
+
+	public boolean isInstalled() {
+		return installed;
+	}
+
+	public void setInstalled(boolean installed) {
+		this.installed = installed;
+	}
+
+	public boolean isConfigured() {
+		return configured;
+	}
+
+	public void setConfigured(boolean configured) {
+		this.configured = configured;
+	}
+	
 	
 	
 }

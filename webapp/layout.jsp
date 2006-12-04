@@ -28,7 +28,7 @@
 <html>
 <head>
 <link href="styles/main.css" rel="stylesheet" type="text/css">
-<h:outputText escape="false" value="<title>#{messages.webAppTitle}</title>"/>
+<h:outputText id="title" escape="false" value="<title>#{messages.webAppTitle}</title>"/>
 </head>
 <body>
 <h:form id="mainForm">
@@ -45,16 +45,18 @@
 	</h:panelGroup>
 </h:panelGrid>
 </h:form>
-<h:panelGrid columns="2" columnClasses="lang,version" styleClass="langAndVersion"> 
+<h:panelGrid columns="2" columnClasses="lang,version" styleClass="langAndVersion" id="langgrid"> 
 	<h:form id="langform">
-		<h:panelGroup>
-			<h:commandLink actionListener="#{localeManager.setEnglish}"><h:graphicImage url="/images/us.gif" style="border:0px"/></h:commandLink>
-			<h:commandLink actionListener="#{localeManager.setGerman}"><h:graphicImage url="/images/de.gif" style="border:0px"/></h:commandLink>
+		<h:panelGroup id="langGroup">
+			<h:commandLink id="en" actionListener="#{localeManager.setEnglish}"><h:graphicImage url="/images/us.gif" style="border:0px"/></h:commandLink>
+			<h:commandLink id="de" actionListener="#{localeManager.setGerman}"><h:graphicImage url="/images/de.gif" style="border:0px"/></h:commandLink>
 			<f:verbatim>&nbsp;&nbsp;</f:verbatim>
-			<h:outputText style="vertical-align:top" value="#{messages.loggedInAs} #{loginCheck.username}@#{loginCheck.hostname}#{loginCheck.namespace}" rendered="#{menueController.signedOnTextEnabled}"></h:outputText>
+			<h:outputText id="loggedInText" style="vertical-align:top" value="#{messages.loggedInAs} #{loginCheck.username}@#{loginCheck.hostname}#{loginCheck.namespace}" rendered="#{menueController.signedOnTextEnabled}"></h:outputText>
+			<f:verbatim>&nbsp;&nbsp;</f:verbatim>
+			<h:commandLink id="link_1_logout" value="logout" action="#{loginCheck.logoutAction}"  rendered="#{menueController.fileEnabled && menueController.testMode}" styleClass="footerLink"/>
 		</h:panelGroup>
 	</h:form>
-	<h:outputText value="#{messages.version}: #{objectActionController.currentVersion}"/>
+	<h:outputText id="version" value="#{messages.version}: #{objectActionController.currentVersion}"/>
 </h:panelGrid>
 </f:view>
 </body>

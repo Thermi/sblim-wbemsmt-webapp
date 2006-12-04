@@ -27,21 +27,16 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.application.Application;
-import javax.faces.component.UICommand;
-import javax.faces.component.html.HtmlPanelGroup;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.apache.myfaces.custom.tree2.TreeModel;
 import org.apache.myfaces.custom.tree2.TreeModelBase;
-import org.apache.myfaces.custom.tree2.TreeState;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherContextMenu;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherDelegaterTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeFactory;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
@@ -60,7 +55,7 @@ import org.sblim.wbemsmt.tools.resources.WbemSmtResourceBundle;
  */
 public class TreeBacker implements TaskLauncherTreeNodeEventListener
 {
-    private static final String SYSTEM_PROPERTY_TASKLAUNCHER_ADD_EXPAND_ALL = "TASKLAUNCHER_ADD_EXPAND_ALL";
+    private static final String SYSTEM_PROPERTY_TASKLAUNCHER_ADD_EXPAND_ALL = "tasklauncher.add.expand.all";
 
 
 	public static final String CONTEXT_MENUES = "ContextMenues";
@@ -80,18 +75,19 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
     private HtmlTree tree;
     
     private boolean treeUpdated = false;
+    
+    /**
+     * Set this value to true if the tree should be displayed will all nodes expanded
+     */
+    private boolean expandAll = false;
 
 
 
 	private ArrayList menuList = new ArrayList();
 
 
-	private List contextMenuPanels;
-
 	protected WbemSmtResourceBundle bundle = ResourceBundleManager.getResourceBundle(FacesContext.getCurrentInstance(),getClass().getClassLoader());
 
-
-	private HtmlPanelGroup contextMenuPanel;
 
 
 	private Set menuIds = new HashSet();
@@ -105,12 +101,6 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
     }
 
 	private void addListener() {
-		
-		FacesContext fc = FacesContext.getCurrentInstance();
-		Application app = fc.getApplication();
-
-		UICommand expandControl = tree.getExpandControl();
-        System.err.println(expandControl);
 	}
     
     public TreeBacker(TaskLauncherTreeFactory treeFactory)
@@ -178,23 +168,8 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
         	this.jsfRootNode = new JsfTreeNode(JsfTreeNode.FACET_TREENODE, taskLauncherRootNode.getName(), false, taskLauncherRootNode);
             
             jsfRootNode.getChildren().clear();
-            
-            
-//            try {
-//            	DnsCimAdapter adapter = (DnsCimAdapter)CimAdapterFactory.getInstance().getAdapter(DnsCimAdapter.class,FacesContext.getCurrentInstance());
-//            	adapter.reLoad(treeFactory);
-//			} catch (ModelLoadException e) {
-//				 logger.log(Level.SEVERE, "Cannot init adapter",e);
-//			}
         }
-        /*
-        try {
-			DnsCimAdapter.getInstance().reLoad(treeFactory);
-		} catch (ModelLoadException e) {
-			e.printStackTrace();
-			logger.log(Level.SEVERE,"Cannot reload Adapter ");
-		}
-		*/
+
         this.treeModel = new TreeModelBase(this.jsfRootNode);
         
         initTreeState();
@@ -202,7 +177,8 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
         if(this.treeFactory != null)
         {
             this.taskLauncherRootNode.readSubnodes(true);
-        	if ("true".equalsIgnoreCase(System.getProperty(TreeBacker.SYSTEM_PROPERTY_TASKLAUNCHER_ADD_EXPAND_ALL,"false")))
+        	if (expandAll || 
+        		"true".equalsIgnoreCase(System.getProperty(TreeBacker.SYSTEM_PROPERTY_TASKLAUNCHER_ADD_EXPAND_ALL,"false")))
         	{
         		List childs = taskLauncherRootNode.getSubnodes(false);
         		for (Iterator iter = childs.iterator(); iter.hasNext();) {
@@ -277,6 +253,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 		if (event.getType() == TaskLauncherTreeNodeEvent.TYPE_REFRESHED)
 		{
 			treeModified = true;
+			logger.finest("Tree is modified " + treeModified);
 			initMenuList();
 			initTreeState();
 			//refreshContextMenu();
@@ -339,10 +316,15 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 		}
 	}
 
+	public boolean isExpandAll() {
+		return expandAll;
+	}
+
+	public void setExpandAll(boolean expandAll) {
+		this.expandAll = expandAll;
+	}
 
 
-	//	public boolean isTreeModified() {
-//		return treeModified;
-//	}
+	
 	
 }

@@ -25,12 +25,11 @@ import java.util.logging.Logger;
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListenerImpl;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
 
 public class RenameEventListener extends TaskLauncherTreeNodeEventListenerImpl
 {
-    private static final Logger logger = TaskLauncherController.getLogger();
+    private static final Logger logger = Logger.getLogger(RenameEventListener.class.getName());
     private static final String PROPERTIES_PANEL_ID = "submenu";
     private String panelID = PROPERTIES_PANEL_ID;
     
@@ -49,6 +48,7 @@ public class RenameEventListener extends TaskLauncherTreeNodeEventListenerImpl
     private void processParameters()
     {
     	this.panelID = (parameters.containsKey("panel_id")) ? parameters.getProperty("panel_id") : PROPERTIES_PANEL_ID;
+    	logger.finest("processing with panelID " + panelID );
     }
 
     public String processEvent(TaskLauncherTreeNodeEvent event)

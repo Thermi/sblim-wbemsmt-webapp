@@ -24,8 +24,6 @@ import java.util.logging.Logger;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.el.EvaluationException;
-import javax.faces.el.PropertyNotFoundException;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
@@ -33,19 +31,13 @@ import javax.faces.event.ActionListener;
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
-import org.sblim.wbemsmt.exception.CountException;
-import org.sblim.wbemsmt.exception.ObjectNotFoundException;
-import org.sblim.wbemsmt.exception.UpdateControlsException;
-import org.sblim.wbemsmt.tasklauncher.CIMClassNode;
-import org.sblim.wbemsmt.tasklauncher.CIMInstanceNode;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
 import org.sblim.wbemsmt.tools.beans.BeanNameConstants;
 import org.sblim.wbemsmt.tools.jsf.JsfUtil;
 
 public class TreeNodeActionListener implements ActionListener
 {
-    private static final Logger logger = TaskLauncherController.getLogger();
+    private static final Logger logger = Logger.getLogger(TreeNodeActionListener.class.getName());
     private UIComponent component;
     private FacesContext facesContext;
     private UIViewRoot viewRoot;
@@ -76,21 +68,6 @@ public class TreeNodeActionListener implements ActionListener
         selector.setSelectedNode(node);
         
         TaskLauncherTreeNode treeNode = node.getTaskLauncherTreeNode();
-        
-        //**** TODO: Remove this part
-//        ObjectActionControllerBean bean = (ObjectActionControllerBean)facesContext.getApplication().createValueBinding("#{objectActionController}").getValue(facesContext);
-//        
-//		if (treeNode instanceof CIMClassNode)
-//        {
-//        	bean.setCanCreate(true);
-//        	bean.setCanDelete(false);
-//        }
-//        if (treeNode instanceof CIMInstanceNode)
-//        {
-//        	bean.setCanCreate(true);
-//        	bean.setCanDelete(true);
-//        }
-        //*****
         
         try {
 			if(treeNode.hasEventListener())

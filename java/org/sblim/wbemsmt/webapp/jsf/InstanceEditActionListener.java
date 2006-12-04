@@ -19,21 +19,12 @@
 package org.sblim.wbemsmt.webapp.jsf;
 
 import java.util.Properties;
-import java.util.logging.Logger;
-
-import javax.faces.component.html.HtmlPanelGrid;
 
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListenerImpl;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 
 public class InstanceEditActionListener extends TaskLauncherTreeNodeEventListenerImpl
 {
-    private static final Logger logger = TaskLauncherController.getLogger();
-    
-    private HtmlPanelGrid instanceList,
-                          propertyList;
-    
     public InstanceEditActionListener()
     {
         super();

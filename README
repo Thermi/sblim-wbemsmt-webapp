@@ -10,10 +10,12 @@ CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
 You can obtain a current copy of the Common Public License from
 http://www.opensource.org/licenses/cpl1.0.php
 
-Author:       Michael Bauschert <michael.bauschert@de.ibm.com>
+Author:       Michael Bauschert <michael.bauschert(at)de.ibm.com>
 Date  :	      07/20/2006
 
-Contributors: Marius Kreis <marius@nulldevice.org>
+Contributors: Marius Kreis <marius(at)nulldevice.org>
+              Tony Gargya <gargya(at)de.ibm.com>
+              Wolfgang Taphorn <taphorn(at)de.ibm.com>
 
 /* --------------------------------------------------------------------------*/
 
@@ -23,7 +25,8 @@ SBLIM WBEMSMT Tasklauncher webapp README
 Introduction
 ------------
 
-The wbemsmt-webapp package provides the tasklauncher web application for wbemsmt based management tasks.
+The wbemsmt-webapp package provides the tasklauncher web application for 
+WBEM-SMT based management tasks.
 
 
 Source Package Contents
@@ -37,63 +40,117 @@ Source Package Contents
 
 General Requirements
 --------------------
-In order to build, install and operate this package you will need a 
-Java SDK or Run Time Environment of version 1.5 or higher, depending on
-whether you build binaries from sources or use the pre-built binaries (JAR
-file).
+In order to build, install and operate this package you will need a Java 
+SDK or Run Time Environment depending on whether you build binaries from 
+sources or use the pre-built binaries (JAR file). The following Java JDKs
+are supported:
 
-Sun Java SDK/JRE:
-For users of the Sun Java packages, the following package is required to be 
-adapted into the CLASSPATH environment variable:
- - xerces    http://xml.apache.org/xerces2-j
+Sun Java SDK/JRE: version 1.5.0 or higher
 
-IBM Java SDK/JRE:
-Because the IBM Java packages include already the xerces package, no further
-requirements need to be resolved.
+IBM Java SDK/JRE: version 1.5.0 or higher
 
+GNU Compile For Java: version 4.1.1 20061116 or higher
 
-Building and Installing the webapp
-----------------------------------
-As a requirement for building this package, Apache Ant 
-(http://ant.apache.org) needs to be setup properly. We would like to recommend
-a Apache Ant version 1.6.5 or higher. (Lower versions might also work properly
-here)
-
-The build process is based on Apache Ant, so it is very easy to build the 
-this component. 
-
-An Ant build.xml file is in place which supports specific targets. 
-Call ant with the option -projecthelp to get the information which targets are supported.
-  
-The execution of the build process is very easy. Once, Apache Ant is setup 
-properly on your system, just execute 'ant <target>' in the 'basedir' directory.
-The output will be written into a new created directory named 'target'. That's all.
 
 Build-time Prerequisites
 ------------------------
-The Binaries of the CVS Modules:
-- wbemsmt-tools-bl 
-- wbemsmt-tools-eui 
-- wbemsmt-tools-wizard-framework
-- wbemsmt-cim-schema-bl
+The Binaries of the CVS Module:
+  - wbemsmt-commons
+or the Release of the package
+  - sblim-wbemsmt-commons
 
 Third-Party Libraries (and their dependent jar-Files):
-- sblim-cim-client from http://www.sblim.org/
-- MyFaces 1.1.3 and Tomahawk 1.1.3 or later from http://myfaces.apache.org/
-- XMLBeans from http://xmlbeans.apache.org/
-- Jakarta-Commons Collections from http://jakarta.apache.org/commons/collections/
-- Jakarta-Commons Lang from http://jakarta.apache.org/commons/lang/
-- Jakarta-Commons Cli from http://jakarta.apache.org/commons/cli/
-- Apache Struts 1.2.9 or later from http://struts.apache.org/
-- tomcat5-servlet-2.4-api from http://www.apache.org/
+ - sblim-cim-client 1.3.1 or later from http://www.sblim.org/
+ - MyFaces 1.1.4 and Tomahawk 1.1.3 or later from http://myfaces.apache.org/
+ - XMLBeans 2.2.0 from http://xmlbeans.apache.org/
+ - Jakarta-Commons Collections from http://jakarta.apache.org/commons/collections/
+ - Jakarta-Commons Lang from http://jakarta.apache.org/commons/lang/
+ - Jakarta-Commons Cli from http://jakarta.apache.org/commons/cli/
+ - tomcat5-servlet-2.4-api from http://www.apache.org/
 
-Additional Run-time Prerequisites
----------------------------------
-- the above build-time preqrequisites
-- Apache Tomcat 5.5. or later from http://tomcat.apache.org/ and all its prerequisites
+
+Run-time Prerequisites
+----------------------
+ - the above build-time preqrequisites
+ - Apache Tomcat 5.5. or later from http://tomcat.apache.org/ and all its prerequisites
+ - xerces-j2 >= 2.7.1
+ - xalan-j2 >= 2.7.0
+ - jakarta-commons-beanutils >= 1.7.0
+ - jakarta-commons-cli >= 1.0
+ - jakarta-commons-codec >= 1.3
+ - jakarta-commons-collections >= 3.1
+ - jakarta-commons-digester >= 1.7
+ - jakarta-commons-el >= 1.0
+ - jakarta-commons-fileupload >= 1.0
+ - jakarta-commons-lang >= 2.1
+ - jakarta-commons-logging >= 1.0.4
+ - jakarta-commons-validator >= 1.1.4
+ - jakarta-taglibs-standard >= 1.1.1
+ - tomcat5 >= 5.5.17
+ - tomcat5-jsp-2.0-api >= 5.5.17
+ - xml-commons >= 1.3.02
+ - xml-commons-apis >= 1.3
+ - xml-commons-resolver >= 1.1
+
  
+Building this package
+------------------------------------------------------------------------------
+The build process is based on Apache Ant (http://ant.apache.org). It contains 
+a build.xml that allows very easy to perform a compile, produce JAR files and 
+build TAR balls for a binary or a source distribution.
+Additionally, an RPM spec file is in place that allows to build RPM packages.
+The output of the RPM build process are RPM packages that are based on the
+JPackage (http://www.jpackage.org) approach.
+
+To be able to perform the build, set the CLASSPATH to include the JAR files
+of the packages described in the 'Build-time Prerequisites. Afterwards
+a Source and a Binary TAR ball can easily be built by performing the following
+command:
+> ant build-release
+The output will be placed in the './target/release' directory.
+
+The Source TAR ball can also be created without setting the CLASSPATH by 
+simply performing:
+> ant package-src-tar
+
+With the Source TAR ball, RPM packages can be build. Since the TAR ball already
+includes the RPM spec file the execution of
+> rpmbuild -ta sblim-wbemsmt-webapp-<version>.src.tar.bz2
+will directly build the RPM package. Be sure to ressolve the build requirements
+before the build of the RPM package can take place. This is done when the 
+dependent packages explained in the 'Build-time Prerequisites' have been
+installed as RPM packages.
+
+
+Installation
+------------------------------------------------------------------------------
+The installation can be processed in two ways. 
+
+The first possible installation flavour would be to use the RPM package. This
+is of course our recommended way. Simply put the RPM package onto your system,
+resolve the 'Run-time Dependencies' and then perform the following command:
+> rpm -i sblim-wbemsmt-webapp-<version>.1jpp.noarch.rpm
+
+The second way is a manual installation. This means the Binary TAR ball should
+be taken and extracted. Copy the JAR files into the 'WEB-INF/lib' directory of
+the 'sblim-wbemsmt-webapp' in your tomcat installation directory and 
+additionally copy the content of the 'etc' directory into the '/etc' directory.
+If you like to run the Command Line Interface script, then you should copy
+the script to a location which is included into your '$PATH' environment 
+variable.
+
+Afterwards restart the tomcat server to load the new WebApplication.
+
+Advanced Feature
+------------------------------------------------------------------------------
+To enable the application to be able to multiple hosts in parallel, please 
+refere to the 'MultipleHostsSupport' documentation file.
+
+In case you encounter problems please refer to the TroubleShooting file. 
+
+
 Contacting the WBEMSMT Project
 ------------------------------ 
-To report weird behavior and bugs or suggestions and help contact the sblim project by sending email to the sblim-devel
-mailing list at sblim-devel@lists.sourceforge.net. 
-
+To report weird behavior and bugs or suggestions and help contact the sblim 
+project by sending email to the sblim-devel mailing list at 
+sblim-devel@lists.sourceforge.net. 

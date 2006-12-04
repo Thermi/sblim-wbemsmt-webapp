@@ -16,24 +16,23 @@
  *             Wolfgang Taphorn <taphorn@de.ibm.com>
   -->
 
-<project name="wbemsmt-webapp" default="package-release" basedir="." >
+<project name="wbemsmt-webapp" default="build-release" basedir="." >
     <description>
         Build file for SBLIM wbemsmt-webapp package
     </description>
 	
-    <property name="Manifest.version"    value="0.2.2"/>
+    <property name="Manifest.version"    value="0.2.3"/>
     <property name="Manifest.release"    value="1"/>
     <property name="Manifest.title"      value="WBEM-SMT: Web Based Task Launcher"/>
     <property name="Manifest.url"        value="http://sblim.sourceforge.net"/>
     <property name="Manifest.vendor"     value="IBM Corp."/>
 
-    <property name="build.output.dir"         value="target" />
-    <property name="build.output.classes.dir" value="${build.output.dir}/classes" />
-    <property name="build.output.webapps.dir" value="${build.output.dir}/webapps" />
-    <property name="build.output.jars.dir"    value="${build.output.dir}/jars" />
-    <property name="build.output.tars.dir"    value="${build.output.dir}/tar-balls" />
+    <property name="dir.compile.output"      value="target/compile"/>
+    <property name="dir.package.output"      value="target/package"/>
+    <property name="dir.release.output"      value="target/release"/>
+
     <property name="javac.debug"              value="true" />
-    <property name="javac.listfiles"          value="true" />
+    <property name="javac.listfiles"          value="false" />
     <property name="javac.deprecation"        value="true" />
     <property name="javac.optimize"           value="false" />
     <property name="javac.compiler"           value="modern" />
@@ -42,41 +41,45 @@
     <property name="tar.longfile"             value="gnu" />
 
 
-
     <path id="project.class.path">
         <pathelement path="${java.class.path}/"/>
     </path>
 
 
-    <target name="compile" description="Compile the sources">
-        <mkdir dir="${basedir}/${build.output.classes.dir}"/>
+    <!-- ================================= 
+          target: compile
+         ================================= -->
+    <target name="compile" description="--> Compile the sources of ${ant.project.name}">
+        <mkdir dir="${dir.compile.output}"/>
 
-        <javac destdir="${basedir}/${build.output.classes.dir}"
-               debug="${javac.debug}"
-               listfiles="${javac.listfiles}"
-               compiler="${javac.compiler}"
-               srcdir="${basedir}/java"
-               deprecation="${javac.deprecation}"
-               optimize="${javac.optimize}">
-            <classpath refid="project.class.path"/>
+        <javac destdir="${dir.compile.output}"
+               debug       ="${javac.debug}"
+               listfiles   ="${javac.listfiles}"
+               compiler    ="${javac.compiler}"
+               srcdir      ="${basedir}/java"
+               deprecation ="${javac.deprecation}"
+               optimize    ="${javac.optimize}">
+            <classpath refid ="project.class.path"/>
         </javac>
 
-        <copy todir="${basedir}/${build.output.classes.dir}">
+        <copy todir="${dir.compile.output}">
             <fileset dir="java">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
-
     </target>
 
 
+    <!-- ================================= 
+          target: build-webapp
+         ================================= -->
     <target name="build-webapp" depends="clean, compile" description="Build the WebApplication">
-        <mkdir dir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}"/>
-        <mkdir dir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/META-INF"/>
-        <mkdir dir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/WEB-INF/classes"/>
-        <mkdir dir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/WEB-INF/lib"/>
+        <mkdir dir="${dir.package.output}/sblim-${ant.project.name}"/>
+        <mkdir dir="${dir.package.output}/sblim-${ant.project.name}/META-INF"/>
+        <mkdir dir="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/classes"/>
+        <mkdir dir="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/lib"/>
 
-        <manifest file="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/META-INF/MANIFEST.MF">
+        <manifest file="${dir.package.output}/sblim-${ant.project.name}/META-INF/MANIFEST.MF">
             <attribute name="Built-By" value="${user.name}"/>
             <attribute name="Implementation-Version" value="${Manifest.version}-${Manifest.release}"/>
             <attribute name="Implementation-Title" value="${Manifest.title}"/>
@@ -84,18 +87,18 @@
             <attribute name="Implementation-Vendor" value="${Manifest.vendor}"/>
         </manifest>
 
-        <copy todir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/WEB-INF/">
-            <fileset dir="${basedir}/webapp/WEB-INF">
+        <copy todir="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/">
+            <fileset dir="webapp/WEB-INF">
                 <include name="*.xml" />
             </fileset>
         </copy>
-        <copy todir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/WEB-INF/classes">
-            <fileset dir="${basedir}/${build.output.classes.dir}">
+        <copy todir="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/classes">
+            <fileset dir="${dir.compile.output}">
                 <include name="**/*" />
             </fileset>
         </copy>
-        <copy todir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}">
-            <fileset dir="${basedir}/webapp">
+        <copy todir="${dir.package.output}/sblim-${ant.project.name}">
+            <fileset dir="webapp">
                 <include name="**/*.css" />
                 <include name="**/*.gif" />
                 <include name="**/*.html" />
@@ -103,54 +106,21 @@
                 <include name="**/*.jsp" />
             </fileset>
         </copy>
-        
     </target>
 
 
-    <target name="build-war" depends="build-webapp" description="Build the WebApplication Archive">
-        <mkdir dir="${basedir}/${build.output.jars.dir}"/>
-
-        <war destfile="${basedir}/${build.output.jars.dir}/sblim-${ant.project.name}.war" 
-             webxml="webapp/WEB-INF/web.xml" >
-            <classes dir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/WEB-INF/classes"/>
-            <webinf dir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/WEB-INF">
-                <exclude name="web.xml"/>
-            </webinf>
-            <metainf dir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}/META-INF"/>
-            <fileset dir="${basedir}/${build.output.webapps.dir}/sblim-${ant.project.name}">
-                <exclude name="WEB-INF/**" />
-                <exclude name="META-INF/**" />
-            </fileset>
-        </war>
-    </target>
+    <!-- ================================= 
+          target: build-release
+         ================================= -->
+    <target name="build-release" depends="clean, package-src-tar, package-bin-tar" description="--> Build a release of ${ant.project.name}."/>
 
 
-    <target name="package-bin" depends="clean, build-war" description="Package binaries into tar ball">
-        <mkdir dir="${basedir}/${build.output.tars.dir}"/>
-        <tar destfile="${basedir}/${build.output.tars.dir}/sblim-${ant.project.name}-${Manifest.version}-bin.tar.bz2"
-             compression="bzip2" longfile="${tar.longfile}">
-          <tarfileset
-            dir="${basedir}"
-            includes="AUTHORS,
-                      ChangeLog,
-                      COPYING,
-                      NEWS,
-                      README"
-            prefix="${ant.project.name}"/>
-          <tarfileset
-            dir="${build.output.jars.dir}"
-            includes="sblim-${ant.project.name}.war"
-            prefix="${ant.project.name}"/>
-          <tarfileset
-            dir="${build.output.webapps.dir}"
-            prefix="${ant.project.name}"/>
-        </tar>
-    </target>
-
-
-    <target name="package-src" description="Package sources into tar ball">
-        <mkdir dir="${basedir}/${build.output.tars.dir}"/>
-        <tar destfile="${basedir}/${build.output.tars.dir}/sblim-${ant.project.name}-${Manifest.version}-src.tar.bz2"
+    <!-- ================================= 
+          target: package-src
+         ================================= -->
+    <target name="package-src-tar" description="--> Package a source TAR ball for ${ant.project.name}">
+        <mkdir dir="${dir.release.output}"/>
+        <tar destfile="${dir.release.output}/sblim-${ant.project.name}-${Manifest.version}-src.tar.bz2"
              compression="bzip2"
              longfile="${tar.longfile}">
           <tarfileset
@@ -168,24 +138,54 @@
                       ChangeLog,
                       COPYING,
                       NEWS,
-                      README"
-            excludes=".ant-targets-build.xml, pom.xml, target/**"
-            prefix="${ant.project.name}"/>
+                      README,
+          	          MultipleHostSupport,
+          	          TroubleShooting,
+          	          sblim-${ant.project.name}.spec"
+            excludes=".settings/**, .ant-targets-build.xml, pom.xml, target/**"
+            prefix="sblim-${ant.project.name}"/>
         </tar>
     </target>
 
 
-    <target name="package-release" depends="package-src, package-bin" description="Package a whole release"/>
-
-
-    <target name="clean" description="Clean the output directory">
-        <delete verbose="${clean.verbose}" includeemptydirs="true">
-            <fileset dir="${basedir}" >
-                <include name="${build.output.dir}/**"/>
-                <include name="**/*.war"/>
-                <include name="**/*.jar"/>
-                <include name="**/*.tar.bz2"/>
-            </fileset>
-        </delete>
+    <!-- ================================= 
+          target: package-bin
+         ================================= -->
+    <target name="package-bin-tar" depends="build-webapp" description="Package binaries into tar ball">
+        <mkdir dir="${dir.release.output}"/>
+        <tar destfile="${dir.release.output}/sblim-${ant.project.name}-${Manifest.version}-${Manifest.release}-bin.tar.bz2"
+             compression="bzip2" longfile="${tar.longfile}">
+          <tarfileset
+            dir="${basedir}"
+            includes="AUTHORS,
+                      ChangeLog,
+                      COPYING,
+                      NEWS,
+                      README,
+                      MultipleHostSupport,
+                      TroubleShooting"
+            prefix="sblim-${ant.project.name}"/>
+          <tarfileset
+            dir="${dir.package.output}"
+          	includes="sblim-${ant.project.name}/**"
+            prefix="sblim-${ant.project.name}"/>
+        </tar>
     </target>
+
+
+    <!-- ================================= 
+          target: clean
+         ================================= -->
+	<target name="clean" description="--> Cleaning up ${ant.project.name}.">
+        <delete verbose="${clean.versose}" includeemptydirs="true">
+		    <fileset dir="${basedir}" >
+		        <include name="${dir.compile.output}/**"/>
+		        <include name="${dir.package.output}/**"/>
+		        <include name="${dir.release.output}/**"/>
+		        <include name="target"/>
+		        <include name="**/*.jar"/>
+		        <include name="**/*.tar.bz2"/>
+		    </fileset>
+		</delete>
+	</target>
 </project>

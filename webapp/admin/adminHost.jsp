@@ -25,6 +25,7 @@
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
 <html>
 <head>
+<link href="../styles/main.css" rel="stylesheet" type="text/css">
 <f:view>
 <h:outputText escape="false" value="<title>#{messages.webAppTitleAdmin}</title>"/>
 <style type="text/css">
@@ -55,20 +56,20 @@ TABLE {
 .blue {
 	background-color : #4477bb;
 	background : #4477bb;
+	height : 40%
+}
+
+.bigbold {
+	color : black;
+	font-weight : bolder;
 	font-size : 2em;
-	vertical-align : bottom;
-	color : #ffffff;
-	height : 40%;
+	text-align:center;
 }
 
 .white {
 	padding: 3em 3em 3em 3em;
 }
 
-.bigbold {
-	color : black;
-	font-weight : bolder;
-}
 
 .error {
 	color : red;
@@ -82,19 +83,31 @@ TABLE {
 
 .row1 {
 	background-color : white;
-	valign:top;
+	vertical-align:middle;
 }
 
 .row2 {
 	background-color : #B7DDFB;
+	vertical-align:middle;
+}
+
+.outerRow1 {
+	background-color : white;
+	text-align:center;
 	valign:top;
 }
 
+.outerRow2 {
+	background-color : white;
+	text-align:left;
+	valign:top;
+}
+
+.centered
+
 .col1 {
-	vertical-align:top;
 }
 .col2 {
-	vertical-align:top;
 }
 
 </style>
@@ -102,40 +115,72 @@ TABLE {
 <body>
 
 <h:form>
-<h:panelGrid columns="1" width="60%" align="center">
+<f:verbatim><br><br></f:verbatim>
+<h:panelGrid columns="1" width="80%" align="center" headerClass="blue" rowClasses="outerRow1,outerRow2,outerRow2,outerRow2,outerRow2,outerRow2,outerRow2,outerRow2,outerRow2,outerRow2,outerRow2">
+<f:facet name="header">
+<h:panelGroup>
+	<f:verbatim><br></f:verbatim>
+	<h:outputText styleClass="bigbold" value="#{messages.taskLauncherAdminconsole}"/>
+	<f:verbatim><br><br></f:verbatim>
+</h:panelGroup>
+</f:facet>
+
+<h:panelGroup>
+	<f:verbatim><br><br></f:verbatim>
+	<h:outputText value="#{messages.editConfiguredHosts}" rendered="#{!admin.slpMode}"/>
+	<h:outputText value="#{messages.editSlpHosts}" rendered="#{admin.slpMode}"/>
+</h:panelGroup>
 
 <f:verbatim><br><br></f:verbatim>
-<h:panelGroup>
-	<h:outputText styleClass="bigbold" value="#{messages.taskLauncherAdminconsole}"/>
-</h:panelGroup>
-<f:verbatim><br><br></f:verbatim>
-<h:outputText value="#{messages.edithost}"/>
-<f:verbatim><br><br></f:verbatim>
-<h:dataTable  value="#{admin.hostTable}" var="host" columnClasses="col1,col2" rowClasses="row1,row2" headerClass="header" border="0" cellpadding="3" cellspacing="0"> 
-	<h:column><h:selectBooleanCheckbox value="#{host.delete}" rendered="#{!host.new}"></h:selectBooleanCheckbox></h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.hostname}"></h:outputText></f:facet><h:inputText value="#{host.hostname}" size="30"></h:inputText></h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.port}"></h:outputText></f:facet><h:inputText value="#{host.port}" size="30"></h:inputText></h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.namespace}"></h:outputText></f:facet><h:inputText value="#{host.namespace}" size="30"></h:inputText></h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.user}"></h:outputText></f:facet><h:inputText value="#{host.user}" size="30"></h:inputText></h:column>
+<h:dataTable width="100%" value="#{admin.hostTable}" var="host" columnClasses="col1" rowClasses="row1,row2" headerClass="header" border="0" cellpadding="10" cellspacing="0"> 
+	<h:column><h:selectBooleanCheckbox value="#{host.delete}" rendered="#{!host.new && !admin.slpMode}"></h:selectBooleanCheckbox></h:column>
+	<h:column><h:selectBooleanCheckbox value="#{host.addToFile}" rendered="#{admin.slpMode}"></h:selectBooleanCheckbox></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.hostname}"></h:outputText></f:facet><h:inputText value="#{host.hostname}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.port}"></h:outputText></f:facet><h:inputText value="#{host.port}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.namespace}"></h:outputText></f:facet><h:inputText value="#{host.namespace}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.user}"></h:outputText></f:facet><h:inputText value="#{host.user}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
 	<h:column>
-	<f:facet name="header"><h:outputText value="#{messages.tasks}"></h:outputText></f:facet>
+	<f:facet name="header">
+	<h:panelGroup>
+		<h:outputText value="#{messages.tasks}"/>
+	</h:panelGroup>
+	</f:facet>
 	<h:dataTable  value="#{host.services}" var="service">
 		<h:column>
-			<h:selectBooleanCheckbox  value="#{service.enabled}"></h:selectBooleanCheckbox>
+			<h:selectBooleanCheckbox  value="#{service.enabled}" disabled="#{admin.slpMode}"></h:selectBooleanCheckbox>
+		</h:column>
+		<h:column>
 			<h:outputText value="#{service.service}"></h:outputText>
+		</h:column>
+		<h:column>
+			<h:outputText value="<nobr>#{service.configured ? '' : messages.not_configured}</nobr>" escape="false"></h:outputText>
+		</h:column>
+		<h:column>
+			<h:outputText value="<nobr>#{service.installed ? '' : messages.not_installed}<nobr>" escape="false"></h:outputText>
 		</h:column>
 	</h:dataTable>
 	</h:column>
 </h:dataTable>
+<h:panelGroup>
 <h:graphicImage value="/images/arrow.gif"></h:graphicImage>
-<h:commandButton value="#{messages.delete}" action="#{admin.deleteHosts}"/>
+<h:commandButton value="#{messages.delete}" action="#{admin.deleteHosts}" rendered="#{!admin.slpMode}"/>
+<h:commandButton value="#{messages.useSelectedSLPConfig}" action="#{admin.saveSelectedSlpHosts}" rendered="#{menueController.useSlp && admin.slpMode}"/>
+</h:panelGroup>
 <f:verbatim><br><br></f:verbatim>
 <f:verbatim>&nbsp;</f:verbatim>
-<h:commandButton value="#{messages.ok}" action="#{admin.saveHost}"/>
+<h:commandButton value="#{messages.save}" action="#{admin.saveHost}" rendered="#{!admin.slpMode}"/>
 
-<h:commandLink value="#{messages.editservice}" action="adminService"/>
+<h:commandLink styleClass="admin" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode}"/>
+<h:commandLink styleClass="admin" value="#{messages.reloadSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && admin.slpMode}"/>
+<h:commandLink styleClass="admin" value="#{messages.useAllSLPConfig}" action="#{admin.saveHost}" rendered="#{menueController.useSlp && admin.slpMode}"/>
+<h:commandLink styleClass="admin" value="#{messages.useOldConfig}" action="#{admin.reloadFromFile}" rendered="#{menueController.useSlp && admin.slpMode}"/>
+<h:commandLink styleClass="admin" value="#{messages.summary}" action="adminIndex"/>
 <f:verbatim><br><br></f:verbatim>
-<%@ include file="/include_errorHandling.jsp" %></h:panelGrid>
+<h:outputText value="#{messages.not_configured_hint}"></h:outputText>
+<h:outputText value="#{messages.not_installed_hint}"></h:outputText>
+<f:verbatim><br><br></f:verbatim>
+<%@ include file="/include_errorHandling.jsp" %>
+</h:panelGrid>
 </h:form>
 </f:view>
 </body>

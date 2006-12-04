@@ -35,6 +35,7 @@
 			lm.setCurrentLocale(new java.util.Locale(request.getParameter("locale")));
 		}
 	}
+	
 %>
 
 <script>

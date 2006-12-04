@@ -22,7 +22,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<h:commandLink value="update" actionListener="#{treeSelector.currentTreeBacker.updateTree}" styleClass="update"/>
+<h:commandLink value="update" actionListener="#{treeSelector.currentTreeBacker.updateTree}" action="start" styleClass="update"/>
 <t:tree2 binding="#{treeSelector.currentTree}" value="#{treeSelector.currentTreeBacker.treeModel}" var="node" preserveToggle="true" varNodeToggler="t" clientSideToggle="false" showRootNode="false">
 	<f:facet name="root">
 	    <h:panelGroup>
@@ -43,14 +43,17 @@
 	        <f:facet name="collapse">
 	            <t:graphicImage value="images/yellow-folder-closed.png" rendered="#{!t.nodeExpanded}" border="0"/>
 	        </f:facet>
-			<h:commandLink value="#{node.description}"
+			<h:commandLink value=""
 						   action="#{treeSelector.getCurrentOutcome}"
 						   actionListener="#{t.setNodeSelected}"
 						   styleClass="#{node.hasEventListener ? 'event' : 'noevent'} #{t.nodeSelected ? 'selected' : 'notselected'}"
+						   rendered="#{node.enabled}"
 						   >
 				<f:actionListener type="org.sblim.wbemsmt.webapp.jsf.TreeNodeActionListener"/>
 				<f:param name="node_id" value="#{node.identifier}" />
+				<h:outputText value="#{node.description}" escape="false"/>
 			</h:commandLink>
+			<h:outputText value="#{node.description}" escape="false" styleClass="treeDisabled" rendered="#{!node.enabled}"/>
 	    </h:panelGroup>
 	</f:facet>
 </t:tree2>

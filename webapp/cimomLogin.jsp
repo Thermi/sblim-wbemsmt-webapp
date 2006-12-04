@@ -25,7 +25,7 @@
 	<f:verbatim>
 	<br><br>
 	</f:verbatim>
-	<h:panelGrid id="loginPanel" columns="2" styleClass="mainTable">
+	<h:panelGrid id="loginPanel2" columns="2" styleClass="mainTable">
 		<f:facet name="header">
 			<h:outputText value="#{messages.loginTo} #{loginCheck.cimomName}"/>
 		</f:facet>
@@ -33,6 +33,11 @@
 		<h:inputText id="username" value="#{loginCheck.username}"/>
 		<h:outputLabel for="password" value="#{messages.password}"/>
 		<h:inputSecret id="password" value="#{loginCheck.password}"/>
+	</h:panelGrid>
+	<h:panelGrid id="loginPanel3" columns="1" styleClass="mainTable" rendered="#{menueController.useSlp}">
+		<h:panelGroup>
+		<h:selectBooleanCheckbox  value="#{loginCheck.useSlp}"/><h:outputText value="#{messages.useSlp}"/>
+		</h:panelGroup>
 	</h:panelGrid>
 	<h:commandButton value="#{messages.login}" action="#{loginCheck.loginActionEmbedded}"/>
 </h:panelGrid>

@@ -81,17 +81,20 @@ public class AuthorizationFilter implements Filter
             HttpSession session = httpRequest.getSession();
             
             String requestURI = httpRequest.getRequestURI();
-            
             String runtimeMode =(String) session.getAttribute(RuntimeUtil.RUNTIME_MODE);
             
             if(requestURI.equals(httpRequest.getContextPath() + "/loginFile.jsf"))
             {
+            	cleanupSession(session);
+            	runtimeMode = null;
             	switchRuntimeMode(session,runtimeMode, RuntimeUtil.MODE_SINGLE);
             	chain.doFilter(request, response);
             }
             ///AuthorizationFilter.MODE_MULTI.equals(runtimeMode) || 
             else if(requestURI.equals(httpRequest.getContextPath() + "/loginMulti.jsf"))
             {
+            	cleanupSession(session);
+            	runtimeMode = null;
             	switchRuntimeMode(session,runtimeMode, RuntimeUtil.MODE_MULTI);
             	chain.doFilter(request, response);
             }
@@ -108,6 +111,7 @@ public class AuthorizationFilter implements Filter
                     else
                     {
             			// access denied, loginBean was not found in session
+                    	switchRuntimeMode(session,runtimeMode, RuntimeUtil.MODE_SINGLE);
             			httpResponse.sendRedirect(httpRequest.getContextPath() + this.loginView);
                 	}
                 }
@@ -115,6 +119,7 @@ public class AuthorizationFilter implements Filter
                 {
                 		System.out.println("no bean found");
                 		// access denied, loginBean was not found in session
+                		switchRuntimeMode(session,runtimeMode, RuntimeUtil.MODE_SINGLE);
                 		httpResponse.sendRedirect(httpRequest.getContextPath() + this.loginView);
                 }
             }
@@ -124,6 +129,12 @@ public class AuthorizationFilter implements Filter
                 chain.doFilter(request, response);
             }
     }
+
+	private void cleanupSession(HttpSession session) {
+		session.removeAttribute(BeanNameConstants.TASKLAUNCHER_CONTROLLER.getName());
+		session.removeAttribute(BeanNameConstants.LOGIN_CHECK.getName());
+		session.removeAttribute(BeanNameConstants.MENUE_CONTROLLER.getName());
+	}
 
 	private void switchRuntimeMode(HttpSession session, String currentMode, String newMode) {
 

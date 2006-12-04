@@ -24,11 +24,10 @@ import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 
 import org.apache.myfaces.application.NavigationHandlerImpl;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 
 public class NavigationHandler extends NavigationHandlerImpl
 {
-    private static final Logger logger = TaskLauncherController.getLogger();
+    private static final Logger logger = Logger.getLogger(NavigationHandler.class.getName());
     
     public NavigationHandler()
     {

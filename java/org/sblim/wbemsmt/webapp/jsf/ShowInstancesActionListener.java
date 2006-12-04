@@ -34,11 +34,10 @@ import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListenerImpl;
 import org.sblim.wbemsmt.tasklauncher.CIMClassNode;
 import org.sblim.wbemsmt.tasklauncher.CIMInstanceNode;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 
 public class ShowInstancesActionListener extends TaskLauncherTreeNodeEventListenerImpl
 {
-    private static final Logger logger = TaskLauncherController.getLogger();
+    private static final Logger logger = Logger.getLogger(ShowInstancesActionListener.class.getName());
     private static final String ROOT_PANEL_ID = "content";
     private static final String PROPERTIES_PANEL_ID = "properties";
     private String panelID = ROOT_PANEL_ID;
