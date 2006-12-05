@@ -163,3 +163,15 @@ fi
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/TroubleShooting
 %{wbemsmt_webapp_dir}/*
 %{tomcat_webapp_dir}/*
+
+###############################################################################
+%changelog
+* Mon Dec 4 2006 Wolfgang Taphorn <taphorn@de.ibm.com> 0.2.3-1
+  - Inclusion of fixes for the following bug entries:
+    o 1609070 wbemsmt-webapp: admin console
+  - Upgrade for documentation
+* Tue Oct 17 2006 Wolfgang Taphorn <taphorn@de.ibm.com> 0.2.2-1
+  - Smart bug fixes and functional enhancements
+* Sat Jul 22 2006 Wolfgang Taphorn <taphorn@de.ibm.com> 0.2.1-1
+  - Initial upload
+

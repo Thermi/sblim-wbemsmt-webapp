@@ -1,4 +1,54 @@
 // =========================================================================
+// new in version 0.2.3-1 :
+
+2006-12-04 23:41  taphorn
+
+	* .classpath, webapp/admin/adminHost.jsp,
+	  webapp/admin/adminService.jsp, webapp/admin/index.jsp,
+	  .cvsignore, .project, MultipleHostSupport, README,
+	  TroubleShooting, build.xml, pom.xml, sblim-wbemsmt-webapp.spec,
+	  java/org/sblim/wbemsmt/webapp/jsf/JsfTreeNode.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/LoginFileGenerator.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/ObjectActionControllerBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/RenameEventListener.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/SessionInvalidationListener.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_en.properties,
+	  java/org/sblim/wbemsmt/webapp/jsf/AuthorizationFilter.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/LoginCheckBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/ManagedBeanInitializer.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/MenueControllerBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/MessageHandlerBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/ShowInstancesActionListener.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/TreeBacker.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/TreeNodeActionListener.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/WbemsmtWebAppBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/WbemsmtWebAppTreeState.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages.properties,
+	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_de.properties,
+	  java/org/sblim/wbemsmt/webapp/jsf/ContextMenuActionListener.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/FacesMessagesComparator.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/InstanceEditActionListener.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/LocaleManagerBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/NavigationHandler.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/ShowPropertiesAction.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/TreeSelectorBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/WbemsmtWebAppViewHandlerImpl.java,
+	  webapp/layout.jsp, java/ReadSerializedView.java,
+	  webapp/cimomLogin.jsp, webapp/login.jsp, webapp/loginMulti.jsp,
+	  webapp/tree.jsp, webapp/wizardPage.jsp, .settings/.component,
+	  .settings/org.eclipse.wst.common.project.facet.core.xml,
+	  .settings/org.eclipse.wst.validation.prefs,
+	  java/SerializationTest.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/AdminBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/ServiceInHost.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/HostEntry.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/ServiceEntry.java,
+	  webapp/WEB-INF/faces-config.xml, webapp/WEB-INF/web.xml,
+	  webapp/styles/main.css: Added diffs between 0.2.2-1 and 0.2.3-1
+
+	  Fix [1609070] wbemsmt-webapp: admin console
+
+// =========================================================================
 // new in version 0.2.2-1 :
 
 2006-10-11 11:57  mbauschert
