@@ -1,11 +1,12 @@
 Changes in 0.2.3-1 :
 ==============================================================================
+
 - #1609070  wbemsmt-webapp: admin console
+
 
 Changes in 0.2.2-1 :
 ==============================================================================
 
-- #1574472  Cleanup for client projects
 - #1575096  Tasklauncher: NPE switching from AdminConsole to Login
 - #1574472  Cleanup for client projects
 - #1573746  Preset handling for Login

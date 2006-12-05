@@ -18,7 +18,7 @@ License:        Common Public License
 Url:            http://sblim.sourceforge.net/
 Group:          System Environment/Applications
 Vendor:         IBM
-Summary:        WBEM-SMT Web Application for task launching
+Summary:        Provides a JSF-based task launcher and navigation tree for WBEM-SMT tasks
 SOURCE0:        %{name}-%{version}-src.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildArch:      noarch
@@ -67,8 +67,11 @@ Requires: struts >= 1.2.9
 ###############################################################################
 
 %description
-This package of the WBEM-SMT project contains the WebApplication task launcher
-in which the several tasks are launchable.
+This module provides the Java Server Faces (JSF)- based task launcher and
+navigation tree for all wbemsmt tasks. It also contains the admin console for
+multi-login support. With the help of the webapp module, one can "snap in" a 
+new task using the same infrastructure (launching, tree) mechanisms as the 
+other tasks.
 
 
 ###############################################################################
@@ -171,7 +174,10 @@ fi
     o 1609070 wbemsmt-webapp: admin console
   - Upgrade for documentation
 * Tue Oct 17 2006 Wolfgang Taphorn <taphorn@de.ibm.com> 0.2.2-1
-  - Smart bug fixes and functional enhancements
+  - Inclusion of fixes for the following bug entries:
+    o 1575096  Tasklauncher: NPE switching from AdminConsole to Login
+    o 1574472  Cleanup for client projects
+    o 1573746  Preset handling for Login
 * Sat Jul 22 2006 Wolfgang Taphorn <taphorn@de.ibm.com> 0.2.1-1
   - Initial upload
 
