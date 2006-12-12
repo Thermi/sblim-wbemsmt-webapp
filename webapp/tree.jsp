@@ -22,7 +22,9 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
-<h:commandLink value="update" actionListener="#{treeSelector.currentTreeBacker.updateTree}" action="start" styleClass="update"/>
+<h:panelGroup>
+<h:commandLink value="update" actionListener="#{treeSelector.currentTreeBacker.updateTree}" action="start"/>
+<f:verbatim><br></f:verbatim>
 <t:tree2 binding="#{treeSelector.currentTree}" value="#{treeSelector.currentTreeBacker.treeModel}" var="node" preserveToggle="true" varNodeToggler="t" clientSideToggle="false" showRootNode="false">
 	<f:facet name="root">
 	    <h:panelGroup>
@@ -57,3 +59,4 @@
 	    </h:panelGroup>
 	</f:facet>
 </t:tree2>
+</h:panelGroup>

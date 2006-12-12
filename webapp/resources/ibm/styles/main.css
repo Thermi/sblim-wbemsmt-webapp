@@ -40,16 +40,17 @@ pre {
     font-size: small;
 }
 
-a, .wpsLink, a:active, .wpsLink:active {
+a, .a:active {
     color: #3366CC;
 }
 
-a:visited, .wpsLink:visited { 
+a:visited, { 
     color: #3366CC;
 }
 
-a:hover, .wpsLink:hover { 
+a:hover, { 
     color: #3366CC;
+	text-decoration: underline;    
 }
 
 .fieldCaption
@@ -87,6 +88,7 @@ a:hover, .wpsLink:hover {
     border-right: 1px outset #000000;
     border-bottom: 1px outset #000000; 
     border-left: 1px outset #B1B1B1; 
+    width: 100px;
 }
 .imageLink
 {

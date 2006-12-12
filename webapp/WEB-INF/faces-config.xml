@@ -69,7 +69,7 @@
 		</managed-property>
 		<managed-property>
 			<property-name>expandAll</property-name>
-			<value>false</value>
+			<value>true</value>
 		</managed-property>
     </managed-bean>
 		
@@ -208,7 +208,7 @@
     		<property-class>
     		java.lang.Boolean</property-class>
     		<value>
-    		false</value>
+    		true</value>
     	</managed-property>
     	<managed-property>
     		<property-name>

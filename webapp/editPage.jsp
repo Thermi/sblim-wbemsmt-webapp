@@ -22,4 +22,4 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
-<h:panelGrid id="editPanel" binding="#{objectActionController.currentEditor}"/>
+<h:panelGrid id="editPanel" binding="#{objectActionController.currentEditor}" styleClass="editTableCenter"/>

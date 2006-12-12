@@ -24,42 +24,42 @@
 
 
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
+<f:loadBundle basename="#{style.resourceBundle}" var="styleMessages"/>
+
 <f:view>
 <html>
 <head>
-<link href="styles/main.css" rel="stylesheet" type="text/css">
 <h:outputText id="title" escape="false" value="<title>#{messages.webAppTitle}</title>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/edit.css' rel='stylesheet' type='text/css'>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
 </head>
 <body>
 <h:form id="mainForm">
 <tiles:insert attribute="header" flush="false"/>
-<h:panelGrid width="100%" id="mainPanel" columns="2" columnClasses="menuColumn, contentColumn" styleClass="layout">
+<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" id="mainPanel" columns="2" styleClass="editTableCenter" columnClasses="editTableCenterColumnTree, editTableCenterColumnContent">
 	<h:panelGroup>
-		<f:verbatim><div class="menu"></f:verbatim>
-			<tiles:insert attribute="menu" flush="false"/>
-		<f:verbatim></div></f:verbatim>
+		<tiles:insert attribute="menu" flush="false"/>
 	</h:panelGroup>
 	<h:panelGroup>
-		<f:verbatim><div class="menu"></f:verbatim>
-			<tiles:insert attribute="content" flush="false"/>
+		<tiles:insert attribute="content" flush="false"/>
 	</h:panelGroup>
 </h:panelGrid>
 </h:form>
-<h:panelGrid columns="2" columnClasses="lang,version" styleClass="langAndVersion" id="langgrid"> 
-	<h:form id="langform">
+<h:form id="langform" styleClass="languageForm">
+<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" columnClasses="editFooterLanguage, editFooterVersion" styleClass="editFooter"> 
 		<h:panelGroup id="langGroup">
-			<h:commandLink id="en" actionListener="#{localeManager.setEnglish}"><h:graphicImage url="/images/us.gif" style="border:0px"/></h:commandLink>
-			<h:commandLink id="de" actionListener="#{localeManager.setGerman}"><h:graphicImage url="/images/de.gif" style="border:0px"/></h:commandLink>
+			<h:commandLink actionListener="#{localeManager.setEnglish}" id="en" ><h:graphicImage url="/images/us.gif" styleClass="imageLink" alt="#{messages.language_english}" title="#{messages.language_english}"/></h:commandLink>
+			<f:verbatim>&nbsp;</f:verbatim>
+			<h:commandLink actionListener="#{localeManager.setGerman}" id="de"><h:graphicImage url="/images/de.gif" styleClass="imageLink" alt="#{messages.language_german}" title="#{messages.language_german}"/></h:commandLink>
 			<f:verbatim>&nbsp;&nbsp;</f:verbatim>
-			<h:outputText id="loggedInText" style="vertical-align:top" value="#{messages.loggedInAs} #{loginCheck.username}@#{loginCheck.hostname}#{loginCheck.namespace}" rendered="#{menueController.signedOnTextEnabled}"></h:outputText>
-			<f:verbatim>&nbsp;&nbsp;</f:verbatim>
-			<h:commandLink id="link_1_logout" value="logout" action="#{loginCheck.logoutAction}"  rendered="#{menueController.fileEnabled && menueController.testMode}" styleClass="footerLink"/>
+			<h:commandLink id="link_1_logout" value="logout" action="#{loginCheck.logoutAction}"  rendered="#{menueController.fileEnabled && menueController.testMode}"/>
 		</h:panelGroup>
-	</h:form>
-	<h:outputText id="version" value="#{messages.version}: #{objectActionController.currentVersion}"/>
+		<h:outputText value="#{messages.version}: #{objectActionController.currentVersion}" styleClass="fieldLabel"/>
 </h:panelGrid>
-</f:view>
+</h:form>
 </body>
+</html>
+</f:view>
 <script>
 
 var currentLink;

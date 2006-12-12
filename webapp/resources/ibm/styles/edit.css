@@ -1,0 +1,119 @@
+.editTable
+{
+}
+
+.editTableRowHeader
+{
+}
+
+.editTableRowCenter
+{
+	
+}
+
+.editTableRowFooter
+{
+	
+}
+
+.editTableHeader
+{
+	border: 0px;	
+	background-color: #F5F5F5;
+}
+
+.editTableCenter
+{
+	background-color: white;
+	height: 80%;
+	width: 100%;		
+}
+
+.editTableCenterColumnTree
+{
+	width:200px;	
+	vertical-align: top;
+}
+
+.editTableCenterColumnContent
+{
+	width: 100%;	
+	vertical-align: top;
+}
+
+.editTableTopLink
+{
+	background-color: white;
+	width: 100%;	
+}
+
+.editTableTopLinkColumnSelected
+{
+	text-align: left;
+}
+
+.editTableTopLinkColumnInfo
+{
+	text-align: right;
+}
+
+.editTableHeaderTitle
+{
+	background-color: #F5F5F5;
+	text-align: left;
+}
+
+.editTableHeaderBanner
+{
+	background-color: #F5F5F5;
+	text-align: right;
+}
+
+.editFooter 
+{
+}
+
+.editFooterLanguage
+{
+	text-align: left;
+	vertical-align : middle;
+	background-color: #F5F5F5;
+}
+
+.editFooterVersion
+{
+	text-align: right;
+	vertical-align : middle;
+	background-color: #F5F5F5;
+}
+
+DIV.menu
+{
+	/* overflow: auto; */
+	height: 100%;
+	width: 100%;
+}
+
+.toolBarLink, .toolBarLink:visited, .toolBarLink:active {
+    font-size: xx-small;
+    color:#5495d5;
+    text-decoration: none;
+}
+
+.toolBarLink:hover {
+    font-size: xx-small;
+    color:#5495d5;
+    text-decoration: underline;
+}
+
+.treeTopLink, .treeTopLink:visited, .treeTopLink:active {
+    font-size: xx-small;
+    color:#5495d5;
+    text-decoration: none;
+}
+
+.treeTopLink:hover {
+    font-size: xx-small;
+    color:#5495d5;
+    text-decoration: underline;
+}
