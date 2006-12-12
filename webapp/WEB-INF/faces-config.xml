@@ -188,6 +188,36 @@
 			<property-name>taskLauncherController</property-name>
 			<value>#{taskLauncherController}</value>
 		</managed-property>
+    </managed-bean>
+    <managed-bean>
+    	<description>Responsible for Managing Styles</description>
+    	<managed-bean-name>style</managed-bean-name>
+    	<managed-bean-class>org.sblim.wbemsmt.webapp.jsf.style.StyleBean</managed-bean-class>
+    	<managed-bean-scope>application</managed-bean-scope>
+    	<managed-property>
+    		<property-name>
+    		resourceDir</property-name>
+    		<property-class>
+    		java.lang.String</property-class>
+    		<value>
+    		resources/ibm</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>
+    		header</property-name>
+    		<property-class>
+    		java.lang.Boolean</property-class>
+    		<value>
+    		false</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>
+    		resourceBundle</property-name>
+    		<property-class>
+    		java.lang.String</property-class>
+    		<value>
+    		org.sblim.wbemsmt.webapp.jsf.webapp_ibm_messages</value>
+    	</managed-property>
     </managed-bean>    		
     		
 	<navigation-rule>
