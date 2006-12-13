@@ -23,7 +23,7 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <h:panelGroup>
-<h:commandLink value="update" actionListener="#{treeSelector.currentTreeBacker.updateTree}" action="start"/>
+<h:commandLink value="update" actionListener="#{treeSelector.currentTreeBacker.updateTree}" action="start" styleClass="treeLink"/>
 <f:verbatim><br></f:verbatim>
 <t:tree2 binding="#{treeSelector.currentTree}" value="#{treeSelector.currentTreeBacker.treeModel}" var="node" preserveToggle="true" varNodeToggler="t" clientSideToggle="false" showRootNode="false">
 	<f:facet name="root">
@@ -48,8 +48,7 @@
 			<h:commandLink value=""
 						   action="#{treeSelector.getCurrentOutcome}"
 						   actionListener="#{t.setNodeSelected}"
-						   styleClass="#{node.hasEventListener ? 'event' : 'noevent'} #{t.nodeSelected ? 'selected' : 'notselected'}"
-						   rendered="#{node.enabled}"
+						   rendered="#{node.enabled}" styleClass="treeLink"
 						   >
 				<f:actionListener type="org.sblim.wbemsmt.webapp.jsf.TreeNodeActionListener"/>
 				<f:param name="node_id" value="#{node.identifier}" />
