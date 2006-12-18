@@ -28,4 +28,16 @@
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>java/org/sblim/wbemsmt/webapp/jsf/webapp_style1_messages.properties</name>
+			<type>1</type>
+			<locationURI>JAR_REPO/sblim/sblim-wbemsmt-webapp/java/org/sblim/wbemsmt/webapp/jsf/webapp_style1_messages.properties</locationURI>
+		</link>
+		<link>
+			<name>webapp/resources/style1</name>
+			<type>2</type>
+			<locationURI>JAR_REPO/sblim/sblim-wbemsmt-webapp/webapp/resources/style1</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
