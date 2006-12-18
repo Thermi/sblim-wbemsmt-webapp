@@ -32,11 +32,13 @@
 <h:outputText id="title" escape="false" value="<title>#{messages.webAppTitle}</title>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/edit.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/wizard.css' rel='stylesheet' type='text/css'>"/>
 </head>
 <body>
+<h:panelGrid columns="1" cellpadding="0" cellspacing="0" border="0" styleClass="editOuterTable" rowClasses="editOuterTableRowMain, editOuterTableRowLanguage" columnClasses="editOuterTableColumn">
 <h:form id="mainForm">
 <tiles:insert attribute="header" flush="false"/>
-<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" id="mainPanel" columns="2" styleClass="editTableCenter" columnClasses="editTableCenterColumnTree, editTableCenterColumnContent">
+<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" id="mainPanel" columns="2" styleClass="editTableCenter" columnClasses="editTableCenterColumnTree, editTableCenterColumnContent" rowClasses="editTableCenterRows">
 	<h:panelGroup>
 		<tiles:insert attribute="menu" flush="false"/>
 	</h:panelGroup>
@@ -57,6 +59,7 @@
 		<h:outputText value="#{messages.version}: #{objectActionController.currentVersion}" styleClass="fieldLabel"/>
 </h:panelGrid>
 </h:form>
+</h:panelGrid>
 </body>
 </html>
 </f:view>

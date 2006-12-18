@@ -3,6 +3,7 @@ table.myFaces_panelTabbedPane{
 	padding: 0;
 	border-spacing: 0;
 	empty-cells: show;
+    height: 100%;
 }
 
 .myFaces_panelTabbedPane_activeHeaderCell{
