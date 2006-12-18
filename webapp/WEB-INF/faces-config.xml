@@ -200,7 +200,7 @@
     		<property-class>
     		java.lang.String</property-class>
     		<value>
-    		resources/ibm</value>
+    		resources/style1</value>
     	</managed-property>
     	<managed-property>
     		<property-name>
@@ -216,7 +216,7 @@
     		<property-class>
     		java.lang.String</property-class>
     		<value>
-    		org.sblim.wbemsmt.webapp.jsf.webapp_ibm_messages</value>
+    		org.sblim.wbemsmt.webapp.jsf.webapp_style1_messages</value>
     	</managed-property>
     </managed-bean>    		
     		
