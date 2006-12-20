@@ -38,10 +38,12 @@
 						<f:param name="stepName" value="#{step.pageName}"/>
 					</h:commandLink>
 					<h:outputText rendered="#{!step.visited || step.userdefined}" value="#{step.text}" styleClass="wizardProgressText"/>
+					<f:verbatim></nobr></f:verbatim>
+				</h:column>
+				<h:column>
 					<h:graphicImage value="#{style.resourceDir}/images/visited.png" rendered="#{step.visited && !step.current}" styleClass="wizardProgressGraphic"/>
 					<h:graphicImage value="#{style.resourceDir}/images/current.png" rendered="#{step.visited &&  step.current}" styleClass="wizardProgressGraphic"/>
 					<h:graphicImage value="#{style.resourceDir}/images/emptyStepState.png	" rendered="#{!step.visited}" styleClass="wizardProgressGraphic"/>
-					<f:verbatim></nobr></f:verbatim>
 				</h:column>
 			</h:dataTable>		
 		</h:panelGrid>
