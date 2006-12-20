@@ -12,6 +12,7 @@ table.myFaces_panelTabbedPane{
 	border-bottom: 0px none;
 	border-left: 1px solid #5495d5;
 	text-align: center;
+    height:25px;
 }
 .myFaces_panelTabbedPane_inactiveHeaderCell,
 .myFaces_panelTabbedPane_disabledHeaderCell{
@@ -21,6 +22,7 @@ table.myFaces_panelTabbedPane{
 	border-left: 1px solid #5495d5;
 	text-align: center;
 	background-color: #8EBBE4;
+    height:25px;
 }
 .myFaces_panelTabbedPane_activeHeaderCell input,
 .myFaces_panelTabbedPane_inactiveHeaderCell input,
