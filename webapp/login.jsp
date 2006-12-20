@@ -32,16 +32,16 @@
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
 </head>
 <body>
-<h:panelGrid width="100%" cellpadding="0" cellspacing="0" border="0" columns="1" styleClass="loginTable" rowClasses="loginTableRowHeader, loginTableRowCenter, loginTableRowFooter">
-	<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="loginTableHeader" columnClasses="loginTableHeaderTitle, loginTableHeaderBanner">
+<h:panelGrid width="100%" cellpadding="0" cellspacing="0" border="0" columns="1" styleClass="loginTable" rowClasses="loginTableRowHeader, loginTableRowMessages, loginTableRowCenter, loginTableRowFooter">
+	<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="loginTableHeader" columnClasses="loginTableHeaderTitle, loginTableHeaderBanner" rendered="#{style.header}">
 		<h:graphicImage value="#{style.resourceDir}/images/title.png" rendered="#{style.header}" alt="#{messages.webAppTitle}" title="#{messages.webAppTitle}" />
 		<h:graphicImage value="#{style.resourceDir}/images/banner.gif" rendered="#{style.header}" alt="#{styleMessages.bannerTitle}" title="#{styleMessages.bannerTitle}"/>
 	</h:panelGrid>
+	<%@ include file="include_errorHandling.jsp" %>
 	<h:panelGrid width="100%" styleClass="loginTableCenter" cellpadding="5">
 		<h:form id="connectFields">
 		<h:panelGrid width="100%" cellpadding="0" cellspacing="0" border="0" columns="1" styleClass="loginTableCenter">
 
-			<%@ include file="include_errorHandling.jsp" %>
 
 			<h:outputText value="#{messages.pleaseLogin}" rendered="#{!loginCheck.loginDisabled}" styleClass="fieldCaption"/>
 

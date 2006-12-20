@@ -27,15 +27,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 
+import org.sblim.wbemsmt.bl.ErrCodes;
+import org.sblim.wbemsmt.bl.adapter.Message;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TasklauncherconfigDocument;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.CimomDocument.Cimom;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigDocument.Treeconfig;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigReferenceDocument.TreeconfigReference;
+import org.sblim.wbemsmt.tools.jsf.JsfBase;
 import org.sblim.wbemsmt.tools.jsf.JsfUtil;
 import org.sblim.wbemsmt.tools.slp.SLPLoader;
 import org.sblim.wbemsmt.tools.slp.SLPUtil;
@@ -60,7 +62,6 @@ public class AdminBean extends WbemsmtWebAppBean {
 	private String newService = null;
 	
 	protected static final Logger logger = Logger.getLogger(AdminBean.class.getName());
-	protected static final Logger facesMsgLogger = TaskLauncherController.getLoggerFacesMessages();
 	
 	private SLPLoader slpLoader;
 	private Treeconfig[] treeconfigArray;
@@ -172,7 +173,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 				if (hostEntry.isAddToFile())
 				{
 					logger.info("Added host from slp: " + hostEntry.getHostname());
-					addMessage(FacesMessage.SEVERITY_INFO,bundle.getString("addedHostFromSlp",new Object[]{hostEntry.getHostname()}));
+					JsfBase.addMessage(Message.create(ErrCodes.MSG_ADDED_HOST, Message.INFO, bundle, "addedHostFromSlp",new Object[]{hostEntry.getHostname()}));
 					newHosts.add(hostEntry);				
 				}
 			}
@@ -224,7 +225,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 				if (hostEntry.isDelete())
 				{
 					logger.info("Deleting host " + hostEntry.getHostname());
-					addMessage(FacesMessage.SEVERITY_INFO,bundle.getString("removedHost", new Object[]{hostEntry.getHostname()}));
+					JsfBase.addMessage(Message.create(ErrCodes.MSG_REMOVED_HOST, Message.INFO, bundle, "removedHost",new Object[]{hostEntry.getHostname()}));
 					taskLauncherDoc.getTasklauncherconfig().removeCimom(i);
 					hostTable.remove(i);
 				}
@@ -304,7 +305,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 
 	private void handleSaveException(Exception e) {
 		logger.log(Level.SEVERE,"Cannot save to file " + loadedFile.getAbsolutePath(),e);
-		TaskLauncherController.getLoggerFacesMessages().log(Level.SEVERE,bundle.getString("cannotsave"));
+		JsfBase.addMessage(new Message(ErrCodes.MSG_CANNOT_SAVE, Message.WARNING, bundle.getString(ErrCodes.MSG_CANNOT_SAVE,"cannot.save", new Object[]{loadedFile.getAbsolutePath()})));
 	}
 	
 	
@@ -363,7 +364,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 		}
 		else
 		{
-			facesMsgLogger.info(bundle.getString("cannot.load.slp.conf"));
+			JsfBase.addMessage(new Message(ErrCodes.MSG_CANNOT_LOAD_SLP, Message.WARNING, bundle.getString(ErrCodes.MSG_CANNOT_LOAD_SLP,"cannot.load.slp.conf")));
 		}
     	return "";
     }

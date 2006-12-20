@@ -35,18 +35,20 @@
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/wizard.css' rel='stylesheet' type='text/css'>"/>
 </head>
 <body>
-<h:panelGrid columns="1" cellpadding="0" cellspacing="0" border="0" styleClass="editOuterTable" rowClasses="editOuterTableRowMain, editOuterTableRowLanguage" columnClasses="editOuterTableColumn">
-<h:form id="mainForm">
+<h:panelGrid columns="1" cellpadding="0" cellspacing="0" border="0" styleClass="editOuterTable" rowClasses="editOuterTableRowHeader, editOuterTableRowMain, editOuterTableRowLanguage" columnClasses="editOuterTableColumn">
 <tiles:insert attribute="header" flush="false"/>
 <h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" id="mainPanel" columns="2" styleClass="editTableCenter" columnClasses="editTableCenterColumnTree, editTableCenterColumnContent" rowClasses="editTableCenterRows">
 	<h:panelGroup>
+		<h:form id="menuForm">
 		<tiles:insert attribute="menu" flush="false"/>
+		</h:form>
 	</h:panelGroup>
 	<h:panelGroup>
+		<h:form id="mainForm">
 		<tiles:insert attribute="content" flush="false"/>
+		</h:form>
 	</h:panelGroup>
 </h:panelGrid>
-</h:form>
 <h:form id="langform" styleClass="languageForm">
 <h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" columnClasses="editFooterLanguage, editFooterVersion" styleClass="editFooter"> 
 		<h:panelGroup id="langGroup">

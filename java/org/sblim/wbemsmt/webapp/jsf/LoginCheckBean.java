@@ -457,6 +457,14 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     public String forward()
     {
 		try {
+			
+//			JsfBase.addMessage(new Message(ErrCodes.MSG_ADDED_HOST,Message.INFO,"testMessage1"));
+//			JsfBase.addMessage(new Message(ErrCodes.MSG_ABOVE_MAX,Message.INFO,"testMessage2"));
+//			JsfBase.addMessage(new Message(ErrCodes.MSG_BELOW_MIN,Message.SUCCESS,"testMessage3"));
+//			JsfBase.addMessage(new Message(ErrCodes.MSG_CANNOT_CONVERT,Message.SUCCESS,"testMessage4"));
+//			JsfBase.addMessage(new Message(ErrCodes.MSG_CANNOT_LOAD_SLP,Message.WARNING,"testMessage5"));
+//			JsfBase.addMessage(new Message(ErrCodes.MSG_CANNOT_SAVE,Message.WARNING,"testMessage6"));
+			
 			File f = new File(loginFilename);
 			logger.info("Reading LoginData from " + f.getAbsolutePath());
 	        XMLDecoder d = new XMLDecoder(

@@ -21,22 +21,24 @@ package org.sblim.wbemsmt.webapp.jsf;
 
 import java.util.Locale;
 
-import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
 import org.sblim.wbemsmt.tools.beans.BeanNameConstants;
-import org.sblim.wbemsmt.tools.jsf.JsfUtil;
 import org.sblim.wbemsmt.tools.resources.ILocaleManager;
 import org.sblim.wbemsmt.tools.resources.LocaleChangeListener;
+import org.sblim.wbemsmt.tools.resources.LocaleManager;
 import org.sblim.wbemsmt.tools.resources.ResourceBundleManager;
 import org.sblim.wbemsmt.tools.resources.WbemSmtResourceBundle;
 
 public abstract class WbemsmtWebAppBean
 {
     protected WbemSmtResourceBundle bundle = ResourceBundleManager.getResourceBundle(FacesContext.getCurrentInstance(),getClass().getClassLoader());
-
+    
     public WbemsmtWebAppBean()
     {
+    	WbemSmtResourceBundle bundleMessages = ResourceBundleManager.getResourceBundle(new String[]{"messages"},LocaleManager.getCurrent(FacesContext.getCurrentInstance()).getCurrentLocale());
+    	bundle.add(bundleMessages);
+    	
     	FacesContext fc = FacesContext.getCurrentInstance();
 		ILocaleManager localeManager = (ILocaleManager) BeanNameConstants.LOCALE_MANAGER.asValueBinding(fc).getValue(fc);
 		localeManager.addLocaleChangeListener(new LocaleChangeListener()
@@ -49,7 +51,4 @@ public abstract class WbemsmtWebAppBean
     	
 	}
 
-	public void addMessage(Severity severity, String message) {
-		JsfUtil.addMessage(severity,message);
-	}
 }

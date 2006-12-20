@@ -77,6 +77,10 @@
         <managed-bean-name>messageHandler</managed-bean-name>
         <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.MessageHandlerBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>style</property-name>
+			<value>#{style}</value>
+		</managed-property>
     </managed-bean>
     
     <managed-bean>

@@ -25,13 +25,15 @@
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
 <f:loadBundle basename="#{style.resourceBundle}" var="styleMessages"/>
 
-<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="editTableHeader" columnClasses="editTableHeaderTitle, editTableHeaderBanner">
+<h:panelGroup>
+<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="editTableHeader" columnClasses="editTableHeaderTitle, editTableHeaderBanner" rendered="#{style.header}">
 	<h:graphicImage value="#{style.resourceDir}/images/title.png" rendered="#{style.header}" alt="#{messages.webAppTitle}" title="#{messages.webAppTitle}" />
 	<h:graphicImage value="#{style.resourceDir}/images/banner.gif" rendered="#{style.header}" alt="#{styleMessages.bannerTitle}" title="#{styleMessages.bannerTitle}"/>
 </h:panelGrid>
 
 
 <%@ include file="include_errorHandling.jsp" %>
+<h:form id="breadcrumb">
 <h:panelGrid columns="2" width="100%" styleClass="editTableTopLink" cellpadding="5" columnClasses="editTableTopLinkColumnSelected, editTableTopLinkColumnInfo">
 <h:panelGroup>
 <h:outputText value="#{messages.selectedNode}" styleClass="fieldLabel"/><f:verbatim>&nbsp;</f:verbatim><h:outputText styleClass="fieldLabel" value="#{messages.noSelection}" rendered="#{treeSelector.selectedNode == null}"/><h:outputText value="#{treeSelector.selectedNode.description}" rendered="#{treeSelector.selectedNode != null}" styleClass="fieldLabel"/>
@@ -58,4 +60,6 @@
 			<f:verbatim><br></f:verbatim>
 			<h:commandLink id="link_1_help" value="#{messages.menu_Help}" action="help"  rendered="#{menueController.fileEnabled}" styleClass="treeTopLink"/>
 </h:panelGroup>
-</h:panelGrid>           			  
+</h:panelGrid>           
+</h:form>	
+</h:panelGroup>		  
