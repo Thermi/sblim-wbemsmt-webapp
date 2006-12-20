@@ -46,9 +46,6 @@
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xmlbeans/xmlbeans-jsr173-api/2.2.0/jsr173_1.0_api-2.2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster-eui-jsf/wbemsmt-metacluster-eui-jsf">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-samba-bl2/wbemsmt-samba-bl2">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -103,8 +100,6 @@
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-samba/wbemsmt-samba">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-
-
         <property name="java-output-path" value="/target/classes/"/>
         <property name="context-root" value="wbemsmt-webapp"/>
     </wb-module>

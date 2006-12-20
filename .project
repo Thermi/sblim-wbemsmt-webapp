@@ -4,7 +4,9 @@
 	<comment></comment>
 	<projects>
 		<project>wbemsmt-commons</project>
-	</projects>
+		<project>wbemsmt-metacluster</project>
+		<project>wbemsmt-samba</project>
+    </projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
