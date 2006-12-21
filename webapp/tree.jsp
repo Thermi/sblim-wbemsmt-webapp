@@ -48,7 +48,8 @@
 			<h:commandLink value=""
 						   action="#{treeSelector.getCurrentOutcome}"
 						   actionListener="#{t.setNodeSelected}"
-						   rendered="#{node.enabled}" styleClass="treeLink"
+						   rendered="#{node.enabled}"
+						   styleClass="treeLink #{t.nodeSelected ? 'selected' : 'notselected'}"
 						   >
 				<f:actionListener type="org.sblim.wbemsmt.webapp.jsf.TreeNodeActionListener"/>
 				<f:param name="node_id" value="#{node.identifier}" />

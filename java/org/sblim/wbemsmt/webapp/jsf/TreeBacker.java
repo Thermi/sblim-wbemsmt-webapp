@@ -33,6 +33,7 @@ import javax.faces.event.ActionEvent;
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.apache.myfaces.custom.tree2.TreeModel;
 import org.apache.myfaces.custom.tree2.TreeModelBase;
+import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.exception.WbemSmtException;
@@ -324,7 +325,12 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 		this.expandAll = expandAll;
 	}
 
-
+	public JsfTreeNode findJsfTreeNode(ITaskLauncherTreeNode taskLauncherTreeNode)
+	{
+		return jsfRootNode.find(taskLauncherTreeNode);
+	}
+	
+	
 	
 	
 }

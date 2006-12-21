@@ -30,6 +30,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.myfaces.custom.navmenu.NavigationMenuItem;
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.sblim.wbemsmt.bl.Cleanup;
+import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.ITreeSelector;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
@@ -44,7 +45,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 {
     public static final String TREE_SELECTION_ACTION = "treeselect_";
     
-    private static final Logger logger = Logger.getLogger(TreeSelectorBean.class.getName());
+    public static final Logger logger = Logger.getLogger(TreeSelectorBean.class.getName());
     
     private HashMap treeBackerMap;
     private NavigationMenuItem[] menuItems;
@@ -174,24 +175,53 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     }
     
     /* (non-Javadoc)
-	 * @see org.sblim.wbemsmt.webapp.jsf.ITreeSelector#setSelectedNode(org.sblim.wbemsmt.webapp.jsf.JsfTreeNode)
+	 * @see org.sblim.wbemsmt.webapp.jsf
 	 */
-    public void setSelectedNode(JsfTreeNode node)
+    public void setSelectedNode(JsfTreeNode jsfNode)
     {
-        this.selectedNode = node;
+        this.selectedNode = jsfNode;
         if (selectedNode != null)
         {
-            setSelectedTaskLauncherTreeNode(selectedNode.getTaskLauncherTreeNode());
-            getCurrentTreeBacker().getTree().expandPath(selectedNode.getPath(getCurrentTreeBacker().getTree()));
+        	String[] path = selectedNode.getPath(getCurrentTreeBacker().getTree());
+			getCurrentTreeBacker().getTree().expandPath(path);
+            selectedTasklauncherTreeNode = selectedNode.getTaskLauncherTreeNode();
         }
         else
         {
-            setSelectedTaskLauncherTreeNode(null);
+        	selectedTasklauncherTreeNode = null;
         }
     }
     
+	public void setSelectedTaskLauncherTreeNode(ITaskLauncherTreeNode node) {
+		
+		JsfTreeNode jsfNode = getCurrentTreeBacker().findJsfTreeNode(node);
+		if (jsfNode != null)
+		{
+			setSelectedNode(jsfNode);
+		}
+		else
+		{
+			logger.warning("The node " + node.getInfo() + " was not found in Tree. Tree is not synchronized");
+		}
+	}
+	
+	public void selectNode(ITaskLauncherTreeNode node)
+	{
+		JsfTreeNode jsfNode = getCurrentTreeBacker().findJsfTreeNode(node);
+		if (jsfNode != null)
+		{
+			String[] path = selectedNode.getPath(getCurrentTreeBacker().getTree());
+			getCurrentTreeBacker().getTree().expandPath(path);
+            getCurrentTreeBacker().getTreeModelDirect().getTreeState().setSelected(path[path.length-1]);
+		}
+		else
+		{
+			logger.warning("The node " + node.getInfo() + " was not found in Tree");
+		}
+		
+	}
     
-    /* (non-Javadoc)
+	/* (non-Javadoc)
 	 * @see org.sblim.wbemsmt.webapp.jsf.ITreeSelector#getSelectedNode()
 	 */
     public JsfTreeNode getSelectedNode() {
@@ -285,6 +315,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 	public void setExpandAll(boolean expandAll) {
 		this.expandAll = expandAll;
 	}
+
 
 	
     

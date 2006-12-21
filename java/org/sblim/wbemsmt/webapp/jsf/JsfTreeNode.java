@@ -33,6 +33,7 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.apache.myfaces.custom.tree2.TreeNode;
+import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.exception.WbemSmtException;
@@ -68,7 +69,7 @@ public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode,
     private boolean leaf;
     private String description,
                    type,
-                   identifier;
+                   id;
     
     private ArrayList children;
     
@@ -234,17 +235,25 @@ public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode,
 
     }
     
-    public void setIdentifier(String identifier)
+    public void setId(String id)
     {
-        this.identifier = identifier;
+        this.id = id;
     }
     
-    public String getIdentifier()
+	public String getId() {
+		return id;
+	}
+
+    public void setIdentifier(String id)
     {
-        return this.identifier;
+        this.id = id;
     }
-    
-    public void setDescription(String description)
+
+    public String getIdentifier() {
+		return id;
+	}
+
+	public void setDescription(String description)
     {
         this.description = description;
     }
@@ -473,6 +482,26 @@ public class JsfTreeNode implements TaskLauncherTreeNodeEventListener, TreeNode,
 	public void setEnabled(boolean enabled) {
 		taskLauncherTreeNode.setEnabled(enabled);
 	}
+
+	public JsfTreeNode find(ITaskLauncherTreeNode taskLauncherTreeNode) {
+		if (this.taskLauncherTreeNode == taskLauncherTreeNode)
+		{
+			return this;
+		}
+		else
+		{
+			for (Iterator iter = children.iterator(); iter.hasNext();) {
+				JsfTreeNode jsfTreeNode = (JsfTreeNode) iter.next();
+				JsfTreeNode node = jsfTreeNode.find(taskLauncherTreeNode);
+				if (node != null)
+				{
+					return node;
+				}
+			}
+		}
+		return null;
+	}
+
 	
 	
 }

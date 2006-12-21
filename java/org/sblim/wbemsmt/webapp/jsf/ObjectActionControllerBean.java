@@ -34,6 +34,7 @@ import org.sblim.wbemsmt.exception.ObjectDeletionException;
 import org.sblim.wbemsmt.exception.ObjectNotFoundException;
 import org.sblim.wbemsmt.exception.ObjectUpdateException;
 import org.sblim.wbemsmt.exception.ValidationException;
+import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
 import org.sblim.wbemsmt.tasklauncher.event.EditListener;
 import org.sblim.wbemsmt.tools.jsf.EditBean;
 import org.sblim.wbemsmt.tools.jsf.IObjectActionController;
@@ -53,12 +54,13 @@ public class ObjectActionControllerBean  implements IObjectActionController, IWi
 	private HtmlPanelGrid currentEditor;
 	private Map editBeans = new HashMap();
 	private Map adapter = new HashMap();
-	private String selectedTabId = "undefined";
-	private TabbedPane tabbedPane;
-	private int selectedTabIndex;
+	public String selectedTabId = "undefined";
+	public TabbedPane tabbedPane;
+	public int selectedTabIndex;
 	private String cimomName;
 	
-	public final String KEY_VERSION = "wbemsmt-version"; 
+	public final String KEY_VERSION = "wbemsmt-version";
+	public TaskLauncherTreeNode selectedNode; 
 	
 	public ObjectActionControllerBean() {
 		this.facesContext = FacesContext.getCurrentInstance();	
@@ -203,6 +205,14 @@ public class ObjectActionControllerBean  implements IObjectActionController, IWi
 	public void cleanup() {
 		editBeans.clear();
 		adapter.clear();
+	}
+
+	public void setSelectedNode(TaskLauncherTreeNode node) {
+		this.selectedNode = node;
+	}
+
+	public TaskLauncherTreeNode getSelectedNode() {
+		return selectedNode;
 	}
 	
 	

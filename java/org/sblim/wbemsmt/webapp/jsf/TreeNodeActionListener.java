@@ -29,11 +29,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 
 import org.apache.myfaces.custom.tree2.HtmlTree;
-import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
-import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
 import org.sblim.wbemsmt.tools.beans.BeanNameConstants;
-import org.sblim.wbemsmt.tools.jsf.JsfUtil;
 
 public class TreeNodeActionListener implements ActionListener
 {
@@ -64,23 +61,19 @@ public class TreeNodeActionListener implements ActionListener
         HtmlTree tree = (HtmlTree) component;
         JsfTreeNode node = (JsfTreeNode) tree.getNode();
         
-        TreeSelectorBean selector = (TreeSelectorBean) facesContext.getApplication().createValueBinding("#{treeSelector}").getValue(facesContext);
-        selector.setSelectedNode(node);
+        TreeSelectorBean treeSelectorBean = (TreeSelectorBean)BeanNameConstants.TREE_SELECTOR.getBoundValue(facesContext);
+        treeSelectorBean.setSelectedNode(node);
+        
+        ObjectActionControllerBean objectActionController = (ObjectActionControllerBean)BeanNameConstants.OBJECT_ACTION_CONTROLLER.getBoundValue(facesContext);
+        objectActionController.setSelectedNode(node.getTaskLauncherTreeNode());
         
         TaskLauncherTreeNode treeNode = node.getTaskLauncherTreeNode();
-        
-        try {
-			if(treeNode.hasEventListener())
-			{
-				TreeSelectorBean treeSelectorBean = (TreeSelectorBean)BeanNameConstants.TREE_SELECTOR.asValueBinding(facesContext).getValue(facesContext);
-				ITaskLauncherTreeNode nodeOfAction = treeSelectorBean.getSelectedNode().getTaskLauncherTreeNode();
-			    TaskLauncherTreeNodeEvent treeNodeEvent = new TaskLauncherTreeNodeEvent(this, nodeOfAction, FacesContext.getCurrentInstance(), TaskLauncherTreeNodeEvent.TYPE_CLICKED);
-				String result = treeNode.processEvent(treeNodeEvent);
-			    treeSelectorBean.setCurrentOutcome(result);
-			}
-		} catch (Exception e) {
-			JsfUtil.handleException(e);
-		}
+
+        String result = treeNode.click();
+        if (result != null)
+        {
+        	treeSelectorBean.setCurrentOutcome(result);        
+        }
     }
 
     public UIComponent getComponent()
