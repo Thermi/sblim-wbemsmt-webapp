@@ -33,6 +33,7 @@ import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.ITreeSelector;
 import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.tasklauncher.ITaskLauncherUiTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeFactory;
 import org.sblim.wbemsmt.tasklauncher.TreeSelector;
@@ -177,19 +178,25 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     /* (non-Javadoc)
 	 * @see org.sblim.wbemsmt.webapp.jsf
 	 */
-    public void setSelectedNode(JsfTreeNode jsfNode)
+    public void setSelectedNode(ITaskLauncherUiTreeNode uiTreeNode)
     {
-        this.selectedNode = jsfNode;
-        if (selectedNode != null)
-        {
-        	String[] path = selectedNode.getPath(getCurrentTreeBacker().getTree());
+    	if (uiTreeNode instanceof JsfTreeNode)
+    	{
+    		JsfTreeNode jsfNode = (JsfTreeNode)uiTreeNode;
+    		this.selectedNode = jsfNode;
+			String[] path = selectedNode.getPath(getCurrentTreeBacker().getTree());
 			getCurrentTreeBacker().getTree().expandPath(path);
-            selectedTasklauncherTreeNode = selectedNode.getTaskLauncherTreeNode();
-        }
-        else
-        {
-        	selectedTasklauncherTreeNode = null;
-        }
+			selectedTasklauncherTreeNode = selectedNode.getTaskLauncherTreeNode();
+    	}
+    	else if (uiTreeNode != null)
+    	{
+			logger.warning("TreeSelectorBean cannot handle nodes from type " + uiTreeNode.getClass().getName());
+    		selectedTasklauncherTreeNode = null;
+    	}
+    	else
+    	{
+    		selectedTasklauncherTreeNode = null;
+    	}
     }
     
 	public void setSelectedTaskLauncherTreeNode(ITaskLauncherTreeNode node) {
@@ -224,7 +231,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 	/* (non-Javadoc)
 	 * @see org.sblim.wbemsmt.webapp.jsf.ITreeSelector#getSelectedNode()
 	 */
-    public JsfTreeNode getSelectedNode() {
+    public ITaskLauncherUiTreeNode getSelectedNode() {
 		return selectedNode;
 	}
 
