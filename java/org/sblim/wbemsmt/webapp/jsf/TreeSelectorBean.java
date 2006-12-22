@@ -191,24 +191,32 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     	else if (uiTreeNode != null)
     	{
 			logger.warning("TreeSelectorBean cannot handle nodes from type " + uiTreeNode.getClass().getName());
+    		this.selectedNode = null;    		
     		selectedTasklauncherTreeNode = null;
     	}
     	else
     	{
+    		this.selectedNode = null;    		
     		selectedTasklauncherTreeNode = null;
     	}
     }
     
 	public void setSelectedTaskLauncherTreeNode(ITaskLauncherTreeNode node) {
-		
-		JsfTreeNode jsfNode = getCurrentTreeBacker().findJsfTreeNode(node);
-		if (jsfNode != null)
+		if (node != null)
 		{
-			setSelectedNode(jsfNode);
+			JsfTreeNode jsfNode = getCurrentTreeBacker().findJsfTreeNode(node);
+			if (jsfNode != null)
+			{
+				setSelectedNode(jsfNode);
+			}
+			else
+			{
+				logger.warning("The node " + node.getInfo() + " was not found in Tree. Tree is not synchronized");
+			}
 		}
 		else
 		{
-			logger.warning("The node " + node.getInfo() + " was not found in Tree. Tree is not synchronized");
+			setSelectedNode(null);
 		}
 	}
 	

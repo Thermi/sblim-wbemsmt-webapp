@@ -62,6 +62,7 @@
 </h:panelGrid>
 </h:form>
 </h:panelGrid>
+<h:graphicImage value="#{style.resourceDir}/images/wait.gif" style="visibility:hidden"  alt="#{messages.wait}" title="#{messages.wait}" id="wait"/>
 </body>
 </html>
 </f:view>
@@ -95,6 +96,51 @@ function popup(popupName)
 	}
 	poppedUp = true;
 	return false;
+}
+
+</script>
+<script>
+
+var clientX, clientY;
+var gotoWait = false;
+
+function showWait()
+{
+	if (clientY)
+	{
+		var waitImage = document.getElementById("wait");
+		waitImage.style.position = "absolute";
+		waitImage.style.top = clientY + 20 + "px";
+		waitImage.style.left = clientX + 30 + "px";
+		waitImage.style.visibility = "visible";
+	}
+	else
+	{
+		gotoWait = true;
+	}	
+}
+
+function saveXY (clickEvent) {
+
+  if (!clickEvent)
+    ourEvent = window.event;
+
+  clientX  = clickEvent.clientX;
+  clientY  = clickEvent.clientY;
+  
+  if (gotoWait)
+  	showWait();
+}
+
+document.onclick = saveXY;
+
+</script>
+
+<script>
+function showConfirm(msg)
+{
+	check = confirm(msg);
+	return check;
 }
 </script>
 <script>

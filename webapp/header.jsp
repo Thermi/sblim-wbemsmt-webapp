@@ -41,17 +41,23 @@
 	<h:commandLink           value="#{treeSelector.selectedNode.contextMenu.menuItems[0].description}"
 				actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[0].processEvent}"
            				action="#{treeSelector.getCurrentOutcome}"
-           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 1}" styleClass="treeTopLink" />
+           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 1}" styleClass="treeTopLink"
+           			  onclick="#{treeSelector.selectedNode.contextMenu.menuItems[0].javaScriptConfirmStatement}
+           			           #{treeSelector.selectedNode.contextMenu.menuItems[0].showWait ? 'showWait();' : ''}"/>
 <f:verbatim>&nbsp;</f:verbatim>
 <h:commandLink           value="#{treeSelector.selectedNode.contextMenu.menuItems[1].description}"
 				actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[1].processEvent}"
            				action="#{treeSelector.getCurrentOutcome}"
-           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 2}" styleClass="treeTopLink" />
+           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 2}" styleClass="treeTopLink" 
+           			  onclick="#{treeSelector.selectedNode.contextMenu.menuItems[1].javaScriptConfirmStatement}
+           			           #{treeSelector.selectedNode.contextMenu.menuItems[1].showWait ? 'showWait();' : ''}"/>
 <f:verbatim>&nbsp;</f:verbatim>
 <h:commandLink           value="#{treeSelector.selectedNode.contextMenu.menuItems[2].description}"
 				actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[2].processEvent}"
            				action="#{treeSelector.getCurrentOutcome}"
-           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 3}" styleClass="treeTopLink"/>
+           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 3}" styleClass="treeTopLink" 
+           			  onclick="#{treeSelector.selectedNode.contextMenu.menuItems[2].javaScriptConfirmStatement}
+           			           #{treeSelector.selectedNode.contextMenu.menuItems[2].showWait ? 'showWait();' : ''}"/>
 </h:panelGroup>
 <h:panelGroup>
 			<h:outputText id="loggedInText" styleClass="fieldLabel" value="#{messages.loggedInAs} #{loginCheck.username}@#{loginCheck.hostname}#{loginCheck.namespace}" rendered="#{menueController.signedOnTextEnabled}"></h:outputText>

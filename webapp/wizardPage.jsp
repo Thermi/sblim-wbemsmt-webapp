@@ -59,7 +59,7 @@
 					<f:verbatim><nobr></f:verbatim>
 					<h:commandButton id="prev" styleClass="wizardButton" value="#{messages.button_previous}" action="#{objectActionController.currentWizard.back}" disabled="#{objectActionController.currentWizard.backButtonDisabled}" />
 					<h:commandButton id="next" styleClass="wizardButton" value="#{messages.button_next}" action="#{objectActionController.currentWizard.next}" disabled="#{objectActionController.currentWizard.nextButtonDisabled}" />
-					<h:commandButton id="finish" styleClass="wizardButton" value="#{objectActionController.currentWizard.finishText}" action="#{objectActionController.currentWizard.finish}" disabled="#{objectActionController.currentWizard.finishButtonDisabled}"/>
+					<h:commandButton id="finish" styleClass="wizardButton" value="#{objectActionController.currentWizard.finishText}" action="#{objectActionController.currentWizard.finish}" onclick="showWait();" disabled="#{objectActionController.currentWizard.finishButtonDisabled}"/>
 					<h:commandButton id="cancel" styleClass="wizardButton" value="#{messages.button_cancel}" action="#{objectActionController.currentWizard.cancel}" disabled="#{objectActionController.currentWizard.cancelButtonDisabled}"/>
 					<f:verbatim></nobr></f:verbatim>
 				</h:panelGroup>
