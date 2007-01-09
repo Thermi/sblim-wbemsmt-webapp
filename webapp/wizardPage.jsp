@@ -60,7 +60,7 @@
 					<h:commandButton id="prev" styleClass="wizardButton" value="#{messages.button_previous}" action="#{objectActionController.currentWizard.back}" disabled="#{objectActionController.currentWizard.backButtonDisabled}" />
 					<h:commandButton id="next" styleClass="wizardButton" value="#{messages.button_next}" action="#{objectActionController.currentWizard.next}" disabled="#{objectActionController.currentWizard.nextButtonDisabled}" />
 					<h:commandButton id="finish" styleClass="wizardButton" value="#{objectActionController.currentWizard.finishText}" action="#{objectActionController.currentWizard.finish}" onclick="showWait();" disabled="#{objectActionController.currentWizard.finishButtonDisabled}"/>
-					<h:commandButton id="cancel" styleClass="wizardButton" value="#{messages.button_cancel}" action="#{objectActionController.currentWizard.cancel}" disabled="#{objectActionController.currentWizard.cancelButtonDisabled}"/>
+					<h:commandButton id="cancel" styleClass="wizardButton" value="#{messages.button_cancel}" action="#{objectActionController.currentWizard.cancel}" disabled="#{objectActionController.currentWizard.cancelButtonDisabled}" onclick="#{objectActionController.currentWizard.cancelJavaScriptConfirmStatement}"/>
 					<f:verbatim></nobr></f:verbatim>
 				</h:panelGroup>
 				<h:outputText style="width:100%"></h:outputText>
