@@ -30,7 +30,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UISelectItems;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
@@ -46,6 +45,8 @@ import org.sblim.wbem.client.CIMClient;
 import org.sblim.wbem.client.PasswordCredential;
 import org.sblim.wbem.client.UserPrincipal;
 import org.sblim.wbemsmt.bl.Cleanup;
+import org.sblim.wbemsmt.bl.ErrCodes;
+import org.sblim.wbemsmt.bl.adapter.Message;
 import org.sblim.wbemsmt.exception.LoginException;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
@@ -53,7 +54,11 @@ import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.CimomData;
 import org.sblim.wbemsmt.tasklauncher.login.LoginCheck;
+import org.sblim.wbemsmt.tools.jsf.JavascriptUtil;
+import org.sblim.wbemsmt.tools.jsf.JsfBase;
 import org.sblim.wbemsmt.tools.jsf.JsfUtil;
+import org.sblim.wbemsmt.tools.resources.ResourceBundleManager;
+import org.sblim.wbemsmt.tools.resources.WbemSmtResourceBundle;
 import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 
 
@@ -363,9 +368,9 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			treeNode.setCimClient(null);
 			treeNode.getCimomData().setUser(null);
 			treeNode.updateName();
-			treeNode.buildTree();
+			treeNode.buildTree();   
 			treeNode.readSubnodes(true);
-			FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(bundle.getString("loggedOutFrom",new Object[]{treeNode.getCimomData().getInfo()}),""));
+			JsfBase.addMessage(Message.create(ErrCodes.MSG_LOGGED_OUT, Message.INFO, bundle, "loggedOutFrom",new Object[]{treeNode.getCimomData().getInfo()}));
 			return "cimomLogin";
 		} catch (WbemSmtException e) {
 			JsfUtil.handleException(e);
@@ -540,7 +545,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 	}
 	
 	public String getCimomName() {
-		return cimomData.getInfo();
+		return cimomData != null ? cimomData.getInfo() : "";
 	}
 	
 	public void setCimomName()
@@ -553,6 +558,20 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		taskLauncherController = null;
 	}
 	
+	public String getJavascriptShowWait()
+	{
+		WbemSmtResourceBundle bundle = ResourceBundleManager.getResourceBundle(FacesContext.getCurrentInstance());
+		if (cimomData == null)
+		{
+			return JavascriptUtil.getShowWaitCall(
+					"'" + bundle.getString("login.to",new Object[]{""}) + " ' + " +
+					"document.getElementById('connectFields:host').value",false);
+		}
+		else
+		{
+			return JavascriptUtil.getShowWaitCall(bundle.getString("login.to", new Object[]{getCimomName()}));
+		}
+	}
 	
 	
 	

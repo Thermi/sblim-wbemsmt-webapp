@@ -32,7 +32,9 @@ import javax.faces.model.SelectItem;
 import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
 import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
+import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.TreeConfigData;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TasklauncherconfigDocument;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.CimomDocument.Cimom;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigDocument.Treeconfig;
@@ -50,7 +52,9 @@ public class AdminBean extends WbemsmtWebAppBean {
 	private TasklauncherconfigDocument taskLauncherDoc;
 	private File loadedFile;
     private TaskLauncherController taskLauncherController;
-	
+    private boolean welcomeSettingsEnabled;
+    private boolean welcomeTasksEnabled;
+    
 	/**
 	 * True if the slp config is shown
 	 */
@@ -295,6 +299,20 @@ public class AdminBean extends WbemsmtWebAppBean {
 		 return result;
 	}
 
+	public List getTasks() throws WbemSmtException
+	{
+		 List result = new ArrayList();
+		 for (int i = 0; i < treeconfigArray.length; i++) {
+			Treeconfig treeconfig = treeconfigArray[i];
+
+			TreeConfigData treeConfigDataByTaskname = taskLauncherController.getTaskLauncherConfig().getTreeConfigDataByTaskname(treeconfig.getName());
+			Boolean installed = new Boolean(treeConfigDataByTaskname != null && 
+							new CustomTreeConfig(treeConfigDataByTaskname).isLoaded());
+			result.add(new Task(treeconfig.getName(),true,installed.booleanValue()));
+		 }
+		 return result;
+	}
+
 	public String getNewService() {
 		return newService;
 	}
@@ -378,7 +396,24 @@ public class AdminBean extends WbemsmtWebAppBean {
 		this.taskLauncherController = taskLauncherController;
 		init();
 	}
-   
-    
+
+	public boolean isWelcomeSettingsEnabled() {
+		return welcomeSettingsEnabled;
+	}
+
+	public void setWelcomeSettingsEnabled(boolean welcomeSettingsEnabled) {
+		this.welcomeSettingsEnabled = welcomeSettingsEnabled;
+	}
+
+	public boolean isWelcomeTasksEnabled() {
+		return welcomeTasksEnabled;
+	}
+
+	public void setWelcomeTasksEnabled(boolean welcomeTasksEnabled) {
+		this.welcomeTasksEnabled = welcomeTasksEnabled;
+	}
+	
+	
+	
 }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf11658483692860" configfile="/wbemsmt-webapp/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2482" id="pf11658486741641" referenceLink="//@navigationRule.11/@fromViewId|" outlinks="pf11658486741642 pf11658486741643 pf11658486741644 pf11658486741645 pf11658486741646 pf11658486741647 pf11658486741648 pf11658486741649 pf116584867416410 pf116584867416411 pf116584867416412 pf116584867416413 pf116584867416414" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2482" id="pf11658486741641" referenceLink="//@navigationRule.12/@fromViewId|" outlinks="pf11658486741642 pf11658486741643 pf11658486741644 pf11658486741645 pf11658486741646 pf11658486741647 pf11658486741648 pf11658486741649 pf116584867416410 pf116584867416411 pf116584867416412 pf116584867416413 pf116584867416414 pf11686189162760 pf11686189214642" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="properties.tiles" x="338" y="178" id="pf116584867416415" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf11658486741642" path="/properties.tiles"/>
   <nodes xsi:type="pageflow:PFPage" name="customtree.tiles" x="338" y="562" id="pf116584867416416" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf11658486741643" path="/customtree.tiles"/>
   <nodes xsi:type="pageflow:PFPage" name="index.tiles" x="338" y="946" id="pf116584867416417" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf11658486741644" path="/index.tiles"/>
@@ -12,7 +12,8 @@
   <nodes xsi:type="pageflow:PFPage" name="admin/adminHost.adminjsf" x="338" y="3250" id="pf116584867416423" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf116584867416410" path="/admin/adminHost.adminjsf"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/adminService.adminjsf" x="338" y="3634" id="pf116584867416424" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" inlinks="pf116584867416411" path="/admin/adminService.adminjsf"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/index.adminjsf" x="338" y="4018" id="pf116584867416425" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf116584867416412" path="/admin/index.adminjsf"/>
-  <nodes xsi:type="pageflow:PFPage" name="login" x="338" y="4402" id="pf116584867416426" referenceLink="//@navigationRule.11/@navigationCase.1/@toViewId|" inlinks="pf116584867416413 pf116584867416414" path="/login.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="338" y="4402" id="pf116584867416426" referenceLink="//@navigationRule.12/@navigationCase.1/@toViewId|" inlinks="pf116584867416413 pf116584867416414 pf11686189162760" path="/login.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="loginMulti" id="pf11686189214643" referenceLink="//@navigationRule.12/@navigationCase.1/@toViewId|" inlinks="pf11686189214642" path="/loginMulti.jsf"/>
   <links id="pf11658486741642" target="pf116584867416415" source="pf11658486741641" outcome="showproperties"/>
   <links id="pf11658486741643" target="pf116584867416416" source="pf11658486741641" outcome="showcustomtree"/>
   <links id="pf11658486741644" target="pf116584867416417" source="pf11658486741641" outcome="start"/>
@@ -26,4 +27,6 @@
   <links id="pf116584867416412" target="pf116584867416425" source="pf11658486741641" outcome="adminIndex"/>
   <links id="pf116584867416413" target="pf116584867416426" source="pf11658486741641" outcome="logout"/>
   <links id="pf116584867416414" target="pf116584867416426" source="pf11658486741641" outcome="login"/>
+  <links id="pf11686189162760" target="pf116584867416426" source="pf11658486741641" outcome="loginSingle"/>
+  <links id="pf11686189214642" target="pf11686189214643" source="pf11658486741641" outcome="loginMulti"/>
 </pageflow:Pageflow>

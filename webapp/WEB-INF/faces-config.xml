@@ -192,6 +192,22 @@
 			<property-name>taskLauncherController</property-name>
 			<value>#{taskLauncherController}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>
+			welcomeSettingsEnabled</property-name>
+			<property-class>
+			boolean</property-class>
+			<value>
+			true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>
+			welcomeTasksEnabled</property-name>
+			<property-class>
+			boolean</property-class>
+			<value>
+			true</value>
+		</managed-property>
     </managed-bean>
     <managed-bean>
     	<description>Responsible for Managing Styles</description>
@@ -311,4 +327,17 @@
 			<to-view-id>/login.jsf</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+
+    <navigation-rule>
+ 		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>loginSingle</from-outcome>
+			<to-view-id>/login.jsf</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>loginMulti</from-outcome>
+			<to-view-id>/loginMulti.jsf</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
 </faces-config>

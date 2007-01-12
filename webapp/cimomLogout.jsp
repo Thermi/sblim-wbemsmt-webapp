@@ -21,10 +21,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
 
-	<f:verbatim>
-	<br><br>
-	</f:verbatim>
-	<h:panelGrid id="loginPanel" columns="2" styleClass="mainTable">
+	<h:panelGrid id="loginPanel" columns="2" styleClass="mainTable" headerClass="left">
 		<f:facet name="header">
 			<h:outputText value="#{messages.logoutFrom} #{loginCheck.cimomName}"/>
 		</f:facet>

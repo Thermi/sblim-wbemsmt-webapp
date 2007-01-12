@@ -33,6 +33,7 @@
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/edit.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/wizard.css' rel='stylesheet' type='text/css'>"/>
+<h:outputText escape="false" value="<script src='scripts/showWait.js'></script>"/>
 </head>
 <body>
 <h:panelGrid columns="1" cellpadding="0" cellspacing="0" border="0" styleClass="editOuterTable" rowClasses="editOuterTableRowHeader, editOuterTableRowMain, editOuterTableRowLanguage" columnClasses="editOuterTableColumn">
@@ -62,10 +63,7 @@
 </h:panelGrid>
 </h:form>
 </h:panelGrid>
-<h:panelGrid id="waitDlg" style="visibility:hidden" columns="2" styleClass="waitDlg" cellpadding="5" cellspacing="5">
-	<h:graphicImage value="#{style.resourceDir}/images/wait.gif" alt="#{messages.wait}" title="#{messages.wait}" id="waitImage"/>
-	<h:outputText value="" id="waitMsg" styleClass="waitMsg"/>
-</h:panelGrid>
+<%@ include file="include_showWait.jsp" %>
 
 </body>
 </html>
@@ -103,56 +101,7 @@ function popup(popupName)
 }
 
 </script>
-<script>
 
-var clientX, clientY;
-var gotoWait = false;
-var waitMessage = "";
-function showWait()
-{
-
-	if (clientX && clientY)
-	{
-		var waitMsg = document.getElementById("waitMsg");
-		
-		if (waitMessage.indexOf("...") == -1)
-		{
-			waitMessage = waitMessage + "...";
-		}
-		
-		waitMsg.innerHTML = waitMessage;
-
-		var waitDlg = document.getElementById("waitDlg");
-		waitDlg.style.position = "absolute";
-		waitDlg.style.top = clientY + 20 + "px";
-		waitDlg.style.left = clientX + 30 + "px";
-		waitDlg.style.visibility = "visible";
-		
-		
-	}
-	else
-	{
-		gotoWait = true;
-	}	
-	
-}
-
-function saveXY (clickEvent) {
-
-  if (!clickEvent)
-    clickEvent = window.event;
-
-
-  clientX  = clickEvent.clientX;
-  clientY  = clickEvent.clientY;
-  
-  if (gotoWait)
-  	showWait();
-}
-
-document.onclick = saveXY;
-
-</script>
 
 <script>
 function showConfirm(msg)
@@ -169,5 +118,4 @@ function addText(text)
 }
 </script>
 
-</html>
 

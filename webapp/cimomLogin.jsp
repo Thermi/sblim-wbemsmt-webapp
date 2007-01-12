@@ -22,10 +22,7 @@
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
 
 <h:panelGrid id="loginPanel1" columns="1" width="100%" align="center">
-	<f:verbatim>
-	<br><br>
-	</f:verbatim>
-	<h:panelGrid id="loginPanel2" columns="2" styleClass="mainTable">
+	<h:panelGrid id="loginPanel2" columns="1" styleClass="mainTable" headerClass="left">
 		<f:facet name="header">
 			<h:outputText value="#{messages.loginTo} #{loginCheck.cimomName}"/>
 		</f:facet>
@@ -39,5 +36,5 @@
 		<h:selectBooleanCheckbox  value="#{loginCheck.useSlp}"/><h:outputText value="#{messages.useSlp}"/>
 		</h:panelGroup>
 	</h:panelGrid>
-	<h:commandButton value="#{messages.login}" action="#{loginCheck.loginActionEmbedded}"/>
+	<h:commandButton value="#{messages.login}" action="#{loginCheck.loginActionEmbedded}" onclick="#{loginCheck.javascriptShowWait}"/>
 </h:panelGrid>

@@ -98,6 +98,10 @@ public class AuthorizationFilter implements Filter
             	switchRuntimeMode(session,runtimeMode, RuntimeUtil.MODE_MULTI);
             	chain.doFilter(request, response);
             }
+            else if(requestURI.equals(httpRequest.getContextPath() + "/welcome.jsf"))
+            {
+            	chain.doFilter(request, response);
+            }
             else if(!requestURI.equals(httpRequest.getContextPath() + this.loginView))
             {
                 if(session.getAttribute(this.loginCheckBean) != null)

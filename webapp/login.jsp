@@ -30,6 +30,7 @@
 <h:outputText escape="false" value="<title>#{messages.webAppTitle}</title>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/login.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
+<h:outputText escape="false" value="<script src='scripts/showWait.js'></script>"/>
 </head>
 <body>
 <h:panelGrid width="100%" cellpadding="0" cellspacing="0" border="0" columns="1" styleClass="loginTable" rowClasses="loginTableRowHeader, loginTableRowMessages, loginTableRowCenter, loginTableRowFooter">
@@ -64,7 +65,14 @@
 			<h:selectBooleanCheckbox  value="#{loginCheck.useSlp}" styleClass="checkbox"/><h:outputText value="#{messages.useSlp}"  id="useSlp"  styleClass="fieldLabel"/>
 			</h:panelGroup>
 
-			<h:commandButton value="#{messages.login}" actionListener="#{loginCheck.login}" action="#{loginCheck.loginAction}" disabled="#{loginCheck.loginDisabled}" id="login"  styleClass="submitButton"/>
+			<h:commandButton 
+			       value="#{messages.login}"
+			       actionListener="#{loginCheck.login}"
+			       action="#{loginCheck.loginAction}"
+			       disabled="#{loginCheck.loginDisabled}"
+			       onclick="#{loginCheck.javascriptShowWait}"
+			       id="login"
+			       styleClass="submitButton"/>
 
 		</h:panelGrid>
 		</h:form>
@@ -80,6 +88,7 @@
 	</h:panelGrid>
 	</h:form>
 </h:panelGrid>
+<%@ include file="include_showWait.jsp" %>
 </body>
 </html>
 </f:view>
