@@ -49,7 +49,7 @@
 						   action="#{treeSelector.getCurrentOutcome}"
 						   actionListener="#{t.setNodeSelected}"
 						   rendered="#{node.enabled}"
-						   onclick="#{node.showWaitOnClick ? 'showWait()' : ''}"
+						   onclick="#{node.onClickJavaScript}"
 						   styleClass="treeLink #{t.nodeSelected ? 'selected' : 'notselected'}"
 						   >
 				<f:actionListener type="org.sblim.wbemsmt.webapp.jsf.TreeNodeActionListener"/>

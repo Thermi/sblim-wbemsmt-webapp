@@ -62,7 +62,11 @@
 </h:panelGrid>
 </h:form>
 </h:panelGrid>
-<h:graphicImage value="#{style.resourceDir}/images/wait.gif" style="visibility:hidden"  alt="#{messages.wait}" title="#{messages.wait}" id="wait"/>
+<h:panelGrid id="waitDlg" style="visibility:hidden" columns="2" styleClass="waitDlg" cellpadding="5" cellspacing="5">
+	<h:graphicImage value="#{style.resourceDir}/images/wait.gif" alt="#{messages.wait}" title="#{messages.wait}" id="waitImage"/>
+	<h:outputText value="" id="waitMsg" styleClass="waitMsg"/>
+</h:panelGrid>
+
 </body>
 </html>
 </f:view>
@@ -103,27 +107,41 @@ function popup(popupName)
 
 var clientX, clientY;
 var gotoWait = false;
-
+var waitMessage = "";
 function showWait()
 {
-	if (clientY)
+
+	if (clientX && clientY)
 	{
-		var waitImage = document.getElementById("wait");
-		waitImage.style.position = "absolute";
-		waitImage.style.top = clientY + 20 + "px";
-		waitImage.style.left = clientX + 30 + "px";
-		waitImage.style.visibility = "visible";
+		var waitMsg = document.getElementById("waitMsg");
+		
+		if (waitMessage.indexOf("...") == -1)
+		{
+			waitMessage = waitMessage + "...";
+		}
+		
+		waitMsg.innerHTML = waitMessage;
+
+		var waitDlg = document.getElementById("waitDlg");
+		waitDlg.style.position = "absolute";
+		waitDlg.style.top = clientY + 20 + "px";
+		waitDlg.style.left = clientX + 30 + "px";
+		waitDlg.style.visibility = "visible";
+		
+		
 	}
 	else
 	{
 		gotoWait = true;
 	}	
+	
 }
 
 function saveXY (clickEvent) {
 
   if (!clickEvent)
-    ourEvent = window.event;
+    clickEvent = window.event;
+
 
   clientX  = clickEvent.clientX;
   clientY  = clickEvent.clientY;
