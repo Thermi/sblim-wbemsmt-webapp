@@ -30,6 +30,7 @@
 <html>
 <head>
 <h:outputText id="title" escape="false" value="<title>#{messages.webAppTitle}</title>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/defaultStyles.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/edit.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/wizard.css' rel='stylesheet' type='text/css'>"/>

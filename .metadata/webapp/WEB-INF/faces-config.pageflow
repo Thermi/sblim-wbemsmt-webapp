@@ -12,7 +12,7 @@
   <nodes xsi:type="pageflow:PFPage" name="admin/adminHost.adminjsf" x="338" y="3250" id="pf116584867416423" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf116584867416410" path="/admin/adminHost.adminjsf"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/adminService.adminjsf" x="338" y="3634" id="pf116584867416424" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" inlinks="pf116584867416411" path="/admin/adminService.adminjsf"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/index.adminjsf" x="338" y="4018" id="pf116584867416425" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf116584867416412" path="/admin/index.adminjsf"/>
-  <nodes xsi:type="pageflow:PFPage" name="login" x="338" y="4402" id="pf116584867416426" referenceLink="//@navigationRule.12/@navigationCase.1/@toViewId|" inlinks="pf116584867416413 pf116584867416414 pf11686189162760" path="/login.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="338" y="4402" id="pf116584867416426" referenceLink="//@navigationRule.12/@navigationCase.0/@toViewId|" inlinks="pf116584867416413 pf116584867416414 pf11686189162760" path="/login.jsf"/>
   <nodes xsi:type="pageflow:PFPage" name="loginMulti" id="pf11686189214643" referenceLink="//@navigationRule.12/@navigationCase.1/@toViewId|" inlinks="pf11686189214642" path="/loginMulti.jsf"/>
   <links id="pf11658486741642" target="pf116584867416415" source="pf11658486741641" outcome="showproperties"/>
   <links id="pf11658486741643" target="pf116584867416416" source="pf11658486741641" outcome="showcustomtree"/>

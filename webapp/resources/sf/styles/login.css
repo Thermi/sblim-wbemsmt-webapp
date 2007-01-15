@@ -1,5 +1,11 @@
+.loginBody
+{
+	background-color: #CFFFCF;
+}
+
 .loginTable
 {
+ height:99%;
 }
 
 .loginTableRowHeader
@@ -8,7 +14,12 @@
 
 .loginTableRowCenter
 {
-	
+   height:100%;
+}
+
+.loginTableRowMessages
+{
+   height:0%;
 }
 
 .loginTableRowFooter
@@ -23,20 +34,35 @@
 
 .loginTableCenter
 {
-	background-color: #e8e8e8;
+	background-color: #CFFFCF;
 	height: 100%;
 	width: 100%;	
 }
 
+.loginTableCenterColumn
+{
+	width:100%;
+    text-align:center;
+}
+
+.loginTableCenterInnerTable
+{
+	width: 50%;
+	height: 50%;
+	padding-left:30%;
+	vertical-align:middle;
+}
+
+
 .loginTableHeaderTitle
 {
-	background-color: #F5F5F5;
+	background-color: #CFFFCF;
 	text-align: left;
 }
 
 .loginTableHeaderBanner
 {
-	background-color: #F5F5F5;
+	background-color: #CFFFCF;
 	text-align: right;
 }
 
@@ -48,14 +74,23 @@
 {
 	text-align: left;
 	vertical-align : middle;
-	background-color: #F5F5F5;
+	background-color: #CFFFCF;
 }
 
 .loginFooterVersion
 {
 	text-align: right;
 	vertical-align : middle;
-	background-color: #F5F5F5;
+	background-color: #CFFFCF;
 }
 
+.loginTableCenterRow1
+{
+}
+.loginTableCenterRow2
+{
+}
+.loginTableCenterRow3
+{
+}
 

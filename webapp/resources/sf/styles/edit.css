@@ -1,0 +1,225 @@
+.editTable
+{
+}
+
+.editTableRowHeader
+{
+}
+
+.editTableRowCenter
+{
+	
+}
+
+.editTableRowFooter
+{
+	
+}
+
+.editTableHeader
+{
+	border: 0px;	
+	background-color: #F5F5F5;
+}
+
+.editTableCenter
+{
+	background-color: white;
+	height: 80%;
+	width: 100%;		
+}
+
+.editTableCenterRows
+{
+     height: 100%;	
+}
+
+.editTableCenterColumnTree
+{
+	width:200px;	
+	vertical-align: top;
+}
+
+.editTableCenterColumnContent
+{
+	width: 100%;	
+	vertical-align: top;
+}
+
+.editTableTopLink
+{
+	background-color: white;
+	width: 100%;	
+}
+
+.editTableTopLinkColumnSelected
+{
+	text-align: left;
+}
+
+.editTableTopLinkColumnInfo
+{
+	text-align: right;
+}
+
+.editTableHeaderTitle
+{
+	background-color: #CFFFCF;
+	text-align: left;
+}
+
+.editTableHeaderBanner
+{
+	background-color: #CFFFCF;
+	text-align: right;
+}
+
+.editFooter 
+{
+}
+
+.editFooterLanguage
+{
+	text-align: left;
+	vertical-align : middle;
+	background-color: #CFFFCF;
+}
+
+.editFooterVersion
+{
+	text-align: right;
+	vertical-align : middle;
+	background-color: #CFFFCF;
+}
+
+DIV.menu
+{
+	/* overflow: auto; */
+	height: 100%;
+	width: 100%;
+}
+
+.toolBarLink, .toolBarLink:visited, .toolBarLink:active {
+    font-size: xx-small;
+    color:#1A5A1A;
+    text-decoration: none;
+}
+
+.toolBarLink:hover {
+    font-size: xx-small;
+    color:#1A5A1A;
+    text-decoration: underline;
+}
+
+.treeTopLink, .treeTopLink:visited, .treeTopLink:active {
+    font-size: xx-small;
+    color:#1A5A1A;
+    text-decoration: none;
+}
+
+.treeTopLink:hover {
+    font-size: xx-small;
+    color:#1A5A1A;
+    text-decoration: underline;
+}
+
+.treeLink, .treeLink:visited, .treeLink:active {
+    font-size: xx-small;
+    color:#1A5A1A;
+    text-decoration: none;
+    line-height:180%;
+    
+}
+
+.treeLink:hover {
+    font-size: xx-small;
+    color:#1A5A1A;
+    text-decoration: underline;
+    line-height:180%;
+}
+
+.selected
+{
+	font-weight: bold; 
+	background-color : #C1BFBF;
+	padding : 3px;
+}
+.notselected
+{
+}
+
+
+.treeDisabled
+{
+    font-size: xx-small;
+    color:#C0C0C0;
+    text-decoration: none;
+}
+
+.tabbedPanel
+{
+	height:80%;
+}
+
+.tabbedPanelColumn
+{
+	vertical-align: top;
+}
+
+.tabbedPanelRow
+{
+	
+}
+
+.tabbedPanelRowTabs
+{
+	height: 80%;
+}   
+
+.tabbedPanelRowButtons
+{
+	height: 5%;
+}   
+
+/* The table below all tabs */
+.tabbedPanelSpacerTable
+{
+	height: 100%;
+}   
+
+.editOuterTable
+{
+	height: 99%;
+	width: 100%;
+	margin-right: 5px;
+	margin-bottom: 0px;
+}
+
+.editOuterTableColumn
+{
+	vertical-align: top;	
+}
+/* The row of the outer table containing the header and content */
+.editOuterTableRowMain
+{
+	height: 100%;
+}
+/* The row of the outer table containing the language switchers and the version */
+.editOuterTableRowLanguage
+{
+	height: 0%;
+}
+
+/* The table around all containers AND Buttons within a non-tabbed edit panel */
+.editPanelNoTabs
+{
+	border: 1px solid #1A5A1A;	
+	padding: 5px;
+}
+
+/* The table around all containers AND NOT THE Buttons within a non-tabbed edit panel */
+.editPanelNoTabsOnlyContainers
+{
+	
+}
+
