@@ -27,7 +27,7 @@
 
 <h:panelGroup>
 <h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="editTableHeader" columnClasses="editTableHeaderTitle, editTableHeaderBanner" rendered="#{style.header}">
-	<h:graphicImage value="#{style.resourceDir}/images/title.png" rendered="#{style.header}" alt="#{messages.webAppTitle}" title="#{messages.webAppTitle}" />
+	<h:graphicImage value="#{style.resourceDir}/images/title.gif" rendered="#{style.header}" alt="#{messages.webAppTitle}" title="#{messages.webAppTitle}" />
 	<h:graphicImage value="#{style.resourceDir}/images/banner.gif" rendered="#{style.header}" alt="#{styleMessages.bannerTitle}" title="#{styleMessages.bannerTitle}"/>
 </h:panelGrid>
 

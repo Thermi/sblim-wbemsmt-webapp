@@ -1,0 +1,12 @@
+links: #5F513B
+multilineGrid: #C3B7A5
+multilineHeader: #AF9F85
+multilineError: #CB5B5B
+multilineGray: #F3F3F3
+multilineWhite: #FFFFFF
+
+warningMessage: #FA9900
+errorMessage: #FF0000
+infoMessages: #000000
+
+background: #F5F5F5

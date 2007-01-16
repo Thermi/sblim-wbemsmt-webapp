@@ -1,0 +1,429 @@
+/******************************************************************************/
+/* General styles                                                             */
+/******************************************************************************/
+
+body { 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: x-small;
+    background-color: #FFFFFF;
+    margin: 0px;
+    padding: 0px;
+}
+
+table, input, textarea, button {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+}
+
+label {
+	white-space: nowrap;
+}
+
+/* select has a special font family to fix a problem in Simplified Chinese */
+select, option {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: xx-small;
+}
+
+div, span, p, td, th { 
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+li { 
+    margin-left: 0.75em;padding-top: 1px; padding-bottom: 1px;font-family: Verdana, sans-serif; 
+}
+
+ul { 
+    margin-left: 0.75em;margin-bottom: 0px; margin-top: 0px; font-size:65.0%; list-style-position: outside; list-style-type: square; color: #BCBCBC
+}
+
+pre {
+    font-family: monospace;
+    font-size: small;
+}
+
+a, .a:active, a:visited {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: none;
+}
+
+a:hover { 
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: underline;
+}
+
+.fieldCaption
+{
+ font-size: small;
+ font-weight: bold; 
+ color: #000000; 
+ margin:0;
+}
+
+.fieldLabel
+{
+  font-size: xx-small;
+  color: #000000;
+  margin: 1px 5px 1px 2px; 
+}
+
+.textField
+{
+	font-family: Verdana,sans-serif; 
+    font-size:100.0%; 	
+}
+
+.submitButton
+{
+	font-family: Verdana,Helvetica, sans-serif; 
+    font-size:100.0%; 
+    margin: 0px 2px 1px 0px; 
+    border-top: 1px outset #B1B1B1; 
+    border-right: 1px outset #000000;
+    border-bottom: 1px outset #000000; 
+    border-left: 1px outset #B1B1B1; 
+    width: 125px;
+}
+
+.listBox
+{
+    font-family: Verdana,Helvetica, sans-serif; 
+    font-size:100.0%; 
+    width: 125px;
+}
+
+.comboBox
+{
+    font-family: Verdana,Helvetica, sans-serif; 
+    font-size:100.0%; 
+    width: 125px;
+}
+
+.checkBox
+{
+	font-family: Verdana,Helvetica, sans-serif; 
+    font-size:100.0%; 
+    margin: 4px 2px 1px 0px; 
+    border-top: 0px; 
+    border-right: 0px;
+    border-bottom: 0px; 
+    border-left: 0px; 
+}
+
+.imageLink
+{
+	border: 0px; 	
+	vertical-align : middle;
+}
+
+.languageForm
+{
+	vertical-align : middle;
+}
+
+.tableHeader
+{
+	text-align: left;
+	font-size: small;
+	font-weight: bold; 
+	color: #000000; 
+    padding-top: 10px;
+	
+}
+
+.tableFooter
+{
+	margin-top:5px;
+}
+
+.tableHeaderHR
+{
+	width:100%;
+	color:#5F513B;
+	background-color:#5F513B;
+	height:2px;
+	margin-right:0px;
+	margin-top:2px;
+	text-align:left;
+	border:1px solid #5F513B;
+}
+.componentTableLeft
+{
+    font-size: xx-small;
+	color: #000000;
+	vertical-align: middle;
+	margin-right:5;
+}
+.checkboxComponentTableLeft
+{
+    font-size: xx-small;
+	color: #000000;
+	vertical-align: middle;
+	margin-right:5;
+	width:10px;
+}
+
+.checkboxComponentTableRight
+{
+	vertical-align: middle;
+    font-size: xx-small;
+	color: #000000;
+	width:100%;
+}
+
+.labelComponentTableLeft
+{
+    font-size: xx-small;
+	color: #000000;
+	vertical-align: middle;
+	width:100px;
+}
+
+.labelComponentTableRight
+{
+    font-size: xx-small;
+	color: #000000;
+	vertical-align: middle;
+	text-align: left;
+	width:100%;
+}
+
+.componentTableRight
+{
+    font-size: xx-small;
+	color: #000000;
+	vertical-align: middle;
+	width:100%;
+}
+
+.multiLineTable
+{
+	//border:1px solid #918065;
+}
+
+.multiLineDummyTable
+{
+   width:100%:
+}
+
+.multiLineOuterTable
+{
+   width:100%:
+}
+
+.multiLineRowHeader
+{
+	background-color:#AF9F85;
+	height: 30px;
+}
+
+.multiLineHeaderContent
+{
+	font-weight:bold;
+}
+
+
+.multiLineRowGray
+{
+	background-color:#F3F3F3;
+	height: 25px;
+}
+
+.multiLineRowWhite
+{
+	background-color:#FFFFFF;
+	border-bottom:1px solid #C3B7A5;
+	height: 25px;
+}
+
+.multiLineRowError
+{
+	background-color:#CB5B5B;
+	border-bottom:1px solid #C3B7A5;
+	height: 25px;
+}
+
+.multiLineContentFirst
+{
+	border-right:1px solid #C3B7A5;
+	padding-left: 2px;
+	padding-right: 5px;
+    white-space: nowrap; 
+}
+
+.multiLineContentLast
+{
+	padding-left: 2px;
+	padding-right: 5px;
+    white-space: nowrap; 
+}
+
+.multiLineContent
+{
+	padding-left: 2px;
+	padding-right: 5px;
+	border-right:1px solid #C3B7A5;
+    white-space: nowrap; 
+}
+
+
+.multiLineHeader
+{
+	background-color: #AF9F85;
+}
+
+.multiLineChildTable
+{
+    border:none;
+	cellspacing:0px;
+	border-spacing:0px;
+	width:100%;
+}
+
+.mainTable, .childTable {
+	width:100%;
+}
+
+/* every checkbox or other components with actions ar having a invisible submit button*/
+.invisibleButton
+{
+	visibility:hidden;
+	width:0px;
+    height:0px
+}
+
+.fill100
+{
+	width:100%;
+}
+
+.fill0
+{
+	width:0%;
+}
+
+
+.topAlignment
+{
+	vertical-align: top;
+}
+
+/******************************************************************************/
+/* Styles for displaying messages
+/******************************************************************************/
+
+.messagePanel
+{
+	border:1px solid #5F513B;
+	width: 100%;
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 10px;
+}
+
+.messagePanelColumnIcon
+{
+	vertical-align: top;
+	width:0%;
+}
+
+.messagePanelColumnText
+{
+	vertical-align: top;
+	width:100%;
+}
+
+.messageLink, .messageLink:visited, .messageLink:active {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: none;
+}
+
+.messageLink:hover {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: underline;
+}
+
+.errorMessageTitle
+{
+    font-size: xx-small;
+	font-weight:bold;
+    color:#800000;
+    text-decoration: none;
+}
+
+.errorMessageText
+{
+    font-size: xx-small;
+    color:#800000;
+    text-decoration: none;
+}
+
+.warningMessageTitle
+{
+    font-size: xx-small;
+	font-weight:bold;
+    color:#FA9900;
+    text-decoration: none;
+}
+
+.warningMessageText
+{
+    font-size: xx-small;
+    color:#FA9900;
+    text-decoration: none;
+}
+
+.infoMessageTitle, .successMessageTitle
+{
+    font-size: xx-small;
+	font-weight:bold;
+    color:#000000;
+    text-decoration: none;
+}
+
+.infoMessageText, .successMessageText
+{
+    font-size: xx-small;
+    color:#000000;
+    text-decoration: none;
+}
+
+.left
+{
+	text-align:left;
+}
+
+.right
+{
+	text-align:right;
+}
+
+.center
+{
+	text-align:center;
+}
+
+/******* List that is in read only state displayed as table ********/
+
+.tableAsReadOnlyList
+{
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+.waitDlg
+{
+	border:1px solid #5F513B;
+	background-color: #F5F5F5;
+}
+
+.waitMsg
+{
+	font-weight:bold;
+}
