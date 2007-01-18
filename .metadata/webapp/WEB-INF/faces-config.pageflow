@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf11658483692860" configfile="/wbemsmt-webapp/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2482" id="pf11658486741641" referenceLink="//@navigationRule.12/@fromViewId|" outlinks="pf11658486741642 pf11658486741643 pf11658486741644 pf11658486741645 pf11658486741646 pf11658486741647 pf11658486741648 pf11658486741649 pf116584867416410 pf116584867416411 pf116584867416412 pf116584867416413 pf116584867416414 pf11686189162760 pf11686189214642" path="*"/>
-  <nodes xsi:type="pageflow:PFPage" name="properties.tiles" x="338" y="178" id="pf116584867416415" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf11658486741642" path="/properties.tiles"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="2482" id="pf11658486741641" referenceLink="//@navigationRule.12/@fromViewId|" outlinks="pf11658486741643 pf11658486741645 pf11658486741647 pf11658486741649 pf116584867416411 pf116584867416413 pf116584867416414 pf11690489735620 pf11690489735621 pf11690489735622 pf11690489735623 pf11690489735624 pf11690489735625 pf11690489735626 pf11690489735627" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="customtree.tiles" x="338" y="562" id="pf116584867416416" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf11658486741643" path="/customtree.tiles"/>
-  <nodes xsi:type="pageflow:PFPage" name="index.tiles" x="338" y="946" id="pf116584867416417" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf11658486741644" path="/index.tiles"/>
   <nodes xsi:type="pageflow:PFPage" name="wizardPage.tiles" x="338" y="1330" id="pf116584867416418" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf11658486741645" path="/wizardPage.tiles"/>
-  <nodes xsi:type="pageflow:PFPage" name="cimomLogin.tiles" x="338" y="1714" id="pf116584867416419" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf11658486741646" path="/cimomLogin.tiles"/>
   <nodes xsi:type="pageflow:PFPage" name="cimomLogout.tiles" x="338" y="2098" id="pf116584867416420" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf11658486741647" path="/cimomLogout.tiles"/>
-  <nodes xsi:type="pageflow:PFPage" name="editPage.tiles" x="338" y="2482" id="pf116584867416421" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf11658486741648" path="/editPage.tiles"/>
   <nodes xsi:type="pageflow:PFPage" name="helpPage.tiles" x="338" y="2866" id="pf116584867416422" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf11658486741649" path="/helpPage.tiles"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/adminHost.adminjsf" x="338" y="3250" id="pf116584867416423" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf116584867416410" path="/admin/adminHost.adminjsf"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/adminService.adminjsf" x="338" y="3634" id="pf116584867416424" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" inlinks="pf116584867416411" path="/admin/adminService.adminjsf"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/index.adminjsf" x="338" y="4018" id="pf116584867416425" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf116584867416412" path="/admin/index.adminjsf"/>
-  <nodes xsi:type="pageflow:PFPage" name="login" x="338" y="4402" id="pf116584867416426" referenceLink="//@navigationRule.12/@navigationCase.0/@toViewId|" inlinks="pf116584867416413 pf116584867416414 pf11686189162760" path="/login.jsf"/>
-  <nodes xsi:type="pageflow:PFPage" name="loginMulti" id="pf11686189214643" referenceLink="//@navigationRule.12/@navigationCase.1/@toViewId|" inlinks="pf11686189214642" path="/loginMulti.jsf"/>
-  <links id="pf11658486741642" target="pf116584867416415" source="pf11658486741641" outcome="showproperties"/>
+  <nodes xsi:type="pageflow:PFPage" name="login" x="338" y="4402" id="pf116584867416426" referenceLink="//@navigationRule.12/@navigationCase.0/@toViewId|" inlinks="pf116584867416413 pf116584867416414 pf11690489735626" path="/login.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="properties.tiles" id="pf11690489735628" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf11690489735620" path="/properties.tiles"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.tiles" id="pf11690489735629" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf11690489735621" path="/index.tiles"/>
+  <nodes xsi:type="pageflow:PFPage" name="cimomLogin.tiles" id="pf116904897356210" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf11690489735622" path="/cimomLogin.tiles"/>
+  <nodes xsi:type="pageflow:PFPage" name="editPage.tiles" id="pf116904897356211" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" inlinks="pf11690489735623" path="/editPage.tiles"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/adminHost.adminjsf" id="pf116904897356212" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf11690489735624" path="/admin/adminHost.adminjsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/index.adminjsf" id="pf116904897356213" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf11690489735625" path="/admin/index.adminjsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="loginMulti" id="pf116904897356214" referenceLink="//@navigationRule.12/@navigationCase.1/@toViewId|" inlinks="pf11690489735627" path="/loginMulti.jsf"/>
   <links id="pf11658486741643" target="pf116584867416416" source="pf11658486741641" outcome="showcustomtree"/>
-  <links id="pf11658486741644" target="pf116584867416417" source="pf11658486741641" outcome="start"/>
   <links id="pf11658486741645" target="pf116584867416418" source="pf11658486741641" outcome="wizardPage"/>
-  <links id="pf11658486741646" target="pf116584867416419" source="pf11658486741641" outcome="cimomLogin"/>
   <links id="pf11658486741647" target="pf116584867416420" source="pf11658486741641" outcome="cimomLogout"/>
-  <links id="pf11658486741648" target="pf116584867416421" source="pf11658486741641" outcome="editPage"/>
   <links id="pf11658486741649" target="pf116584867416422" source="pf11658486741641" outcome="help"/>
-  <links id="pf116584867416410" target="pf116584867416423" source="pf11658486741641" outcome="adminHost"/>
   <links id="pf116584867416411" target="pf116584867416424" source="pf11658486741641" outcome="adminService"/>
-  <links id="pf116584867416412" target="pf116584867416425" source="pf11658486741641" outcome="adminIndex"/>
   <links id="pf116584867416413" target="pf116584867416426" source="pf11658486741641" outcome="logout"/>
   <links id="pf116584867416414" target="pf116584867416426" source="pf11658486741641" outcome="login"/>
-  <links id="pf11686189162760" target="pf116584867416426" source="pf11658486741641" outcome="loginSingle"/>
-  <links id="pf11686189214642" target="pf11686189214643" source="pf11658486741641" outcome="loginMulti"/>
+  <links id="pf11690489735620" target="pf11690489735628" source="pf11658486741641" outcome="showproperties"/>
+  <links id="pf11690489735621" target="pf11690489735629" source="pf11658486741641" outcome="start"/>
+  <links id="pf11690489735622" target="pf116904897356210" source="pf11658486741641" outcome="cimomLogin"/>
+  <links id="pf11690489735623" target="pf116904897356211" source="pf11658486741641" outcome="editPage"/>
+  <links id="pf11690489735624" target="pf116904897356212" source="pf11658486741641" outcome="adminHost"/>
+  <links id="pf11690489735625" target="pf116904897356213" source="pf11658486741641" outcome="adminIndex"/>
+  <links id="pf11690489735626" target="pf116584867416426" source="pf11658486741641" outcome="loginSingle"/>
+  <links id="pf11690489735627" target="pf116904897356214" source="pf11658486741641" outcome="loginMulti"/>
 </pageflow:Pageflow>

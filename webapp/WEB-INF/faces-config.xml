@@ -37,11 +37,13 @@
 	</lifecycle>
 	
 	<render-kit>
+	    <!-- 
 		<renderer>
 		<component-family>javax.faces.Panel</component-family>
 		<renderer-type>org.apache.myfaces.Popup</renderer-type>
 		<renderer-class>org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppContextMenuRenderer</renderer-class>
 		</renderer>
+		 -->
 	</render-kit>
 
     <managed-bean>
@@ -220,7 +222,7 @@
     		<property-class>
     		java.lang.String</property-class>
     		<value>
-    		resources/style1</value>
+    		resources/sf</value>
     	</managed-property>
     	<managed-property>
     		<property-name>

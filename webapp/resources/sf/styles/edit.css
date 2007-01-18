@@ -55,11 +55,13 @@
 .editTableTopLinkColumnSelected
 {
 	text-align: left;
+	vertical-align: top;
 }
 
 .editTableTopLinkColumnInfo
 {
 	text-align: right;
+	vertical-align: top;
 }
 
 .editTableHeaderTitle

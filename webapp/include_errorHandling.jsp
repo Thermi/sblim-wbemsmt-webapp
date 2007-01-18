@@ -10,7 +10,7 @@
 </h:column>
 </h:dataTable>
 <f:facet name="footer">
-	<h:commandLink value="#{messages.close}" styleClass="treeLink" onclick="hidePanel(this);return;"/>
+	<h:commandLink value="#{messages.close}" styleClass="messageCloseLink" onclick="hidePanel(this);return;"/>
 </f:facet>
 </h:panelGrid>
 
@@ -25,7 +25,7 @@
 </h:column>
 </h:dataTable>
 <f:facet name="footer">
-	<h:commandLink value="#{messages.close}" styleClass="treeLink" onclick="hidePanel(this);return;"/>
+	<h:commandLink value="#{messages.close}" styleClass="messageCloseLink" onclick="hidePanel(this);return;"/>
 </f:facet>
 </h:panelGrid>
 
@@ -40,7 +40,7 @@
 </h:column>
 </h:dataTable>
 <f:facet name="footer">
-	<h:commandLink value="#{messages.close}" styleClass="treeLink" onclick="hidePanel(this);return;"/>
+	<h:commandLink value="#{messages.close}" styleClass="messageCloseLink" onclick="hidePanel(this);return;"/>
 </f:facet>
 </h:panelGrid>
 
@@ -55,7 +55,7 @@
 </h:column>
 </h:dataTable>
 <f:facet name="footer">
-	<h:commandLink value="#{messages.close}" styleClass="treeLink" onclick="hidePanel(this);return;"/>
+	<h:commandLink value="#{messages.close}" styleClass="messageCloseLink" onclick="hidePanel(this);return;"/>
 </f:facet>
 </h:panelGrid>
 

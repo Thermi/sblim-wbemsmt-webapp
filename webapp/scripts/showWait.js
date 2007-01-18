@@ -1,5 +1,6 @@
 var clientX, clientY;
 var gotoWait = false;
+var gotoAction = false;
 var waitMessage = "";
 function showWait()
 {
@@ -30,7 +31,16 @@ function showWait()
 	
 }
 
+function hideWait()
+{
+	var waitDlg = document.getElementById("waitDlg");
+	waitDlg.style.visibility = "hidden";
+	stop();
+}
+
 function saveXY (clickEvent) {
+
+  
 
   if (!clickEvent)
     clickEvent = window.event;
@@ -40,7 +50,69 @@ function saveXY (clickEvent) {
   clientY  = clickEvent.clientY;
   
   if (gotoWait)
-  	showWait();
+  {
+  	  gotoWait = false;
+	  showWait();
+  }
+  	
+
+  if (gotoAction)
+  {
+    gotoAction = false;
+  	showActionMenue();
+  }
+
+}
+
+var actionMenueVisible = false;
+
+function showActionMenue()
+{
+	if (actionMenueVisible)
+	{
+		hideActionMenue();
+		return;
+	}
+
+	var actionButton = document.getElementById("breadcrumb:actionIcon");
+	var actionMenue = document.getElementById("breadcrumb:popup");
+
+	x=-1;
+	y=-1;
+	
+	if (actionButton.x)
+	{
+	   x = actionButton.x;
+	   y = actionButton.y + actionButton.height + 10;
+	}
+	else
+	{
+		if (clientX && clientY)
+		{
+		   x = clientX;
+		   y = clientY + 10;
+		}
+		else
+		{
+			gotoAction = true;
+		}
+	}
+
+	if (x != -1)
+	{
+		actionMenue.style.position = "absolute";
+		actionMenue.style.top = y;
+		actionMenue.style.left = x;
+		actionMenue.style.visibility = "visible";
+		actionMenueVisible = true;
+	}
+}
+
+function hideActionMenue()
+{
+	var actionMenue = document.getElementById("breadcrumb:popup");
+	actionMenue.style.visibility = "hidden";
+	actionMenueVisible = false;
 }
 
 document.onclick = saveXY;

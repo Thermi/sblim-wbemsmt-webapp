@@ -46,14 +46,11 @@ pre {
 
 a, .a:active, a:visited {
     font-size: xx-small;
-    color:#5F513B;
     text-decoration: none;
 }
 
 a:hover { 
     font-size: xx-small;
-    color:#5F513B;
-    text-decoration: underline;
 }
 
 .fieldCaption
@@ -68,7 +65,7 @@ a:hover {
 {
   font-size: xx-small;
   color: #000000;
-  margin: 1px 5px 1px 2px; 
+  margin: 5px 5px 1px 0px; 
 }
 
 .textField
@@ -81,7 +78,7 @@ a:hover {
 {
 	font-family: Verdana,Helvetica, sans-serif; 
     font-size:100.0%; 
-    margin: 0px 2px 1px 0px; 
+    margin: 0px 2px 1px -1px; 
     border-top: 1px outset #B1B1B1; 
     border-right: 1px outset #000000;
     border-bottom: 1px outset #000000; 
@@ -151,6 +148,11 @@ a:hover {
 	text-align:left;
 	border:1px solid #5F513B;
 }
+.componentTable
+{
+	margin-top:3px;
+}
+
 .componentTableLeft
 {
     font-size: xx-small;
@@ -306,10 +308,29 @@ a:hover {
 	width:0%;
 }
 
+/******************************************************************************/
+/* Common styles for alignment
+/******************************************************************************/
+
 
 .topAlignment
 {
 	vertical-align: top;
+}
+
+.left
+{
+	text-align:left;
+}
+
+.right
+{
+	text-align:right;
+}
+
+.center
+{
+	text-align:center;
 }
 
 /******************************************************************************/
@@ -394,19 +415,16 @@ a:hover {
     text-decoration: none;
 }
 
-.left
-{
-	text-align:left;
+.messageCloseLink, .messageCloseLink:visited, .messageCloseLink:active {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: none;
 }
 
-.right
-{
-	text-align:right;
-}
-
-.center
-{
-	text-align:center;
+.messageCloseLink:hover {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: underline;
 }
 
 /******* List that is in read only state displayed as table ********/
@@ -421,9 +439,98 @@ a:hover {
 {
 	border:1px solid #5F513B;
 	background-color: #F5F5F5;
+	padding:5px;
 }
+
+
+/******* 
+	Styles for the Wait messages
+********/
+.waitDlgMsgRow
+{
+	
+}
+
+.waitDlgCloseRow
+{
+}
+
+.waitCloseLink, .waitCloseLink:visited, .waitCloseLink:active {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: none;
+}
+
+.waitCloseLink:hover {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: underline;
+}
+
 
 .waitMsg
 {
 	font-weight:bold;
+}
+
+/******* 
+	Styles for the ActionsMenue
+********/
+
+
+.actionsPopup
+{
+	border:1px solid #5F513B;
+	padding: 5px;
+    background-color: #FFFFFF;
+}
+
+.actionsPopupItem
+{
+	white-space: nowrap;
+	line-height:150%;
+}
+
+.actionImage
+{
+	vertical-align: middle;
+	border:0px solid #5F513B;
+}
+
+
+.actionLink, .actionLink:visited, .actionLink:active {
+    font-size: xx-small;
+    color:#000000;
+    text-decoration: none;
+}
+
+.actionLink:hover {
+    font-size: xx-small;
+    color:#000000;
+    text-decoration: none;
+}
+
+
+.actionLink:hover
+{
+	vertical-align: middle;
+        color:black;
+        text-decoration:none;
+}
+
+
+.actionPanel
+{
+    background-color: #C0C0C0;
+    vertical-align: middle;
+    font-family: Verdana,Helvetica, sans-serif; 
+    font-size:100.0%; 
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-top: 1px outset #B1B1B1; 
+    border-right: 1px outset #000000;
+    border-bottom: 1px outset #000000; 
+    border-left: 1px outset #B1B1B1; 
+
 }

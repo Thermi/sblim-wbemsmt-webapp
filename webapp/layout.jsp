@@ -69,39 +69,6 @@
 </body>
 </html>
 </f:view>
-<script>
-
-var currentLink;
-var currentPopup;
-var poppedUp=false;
-
-document.oncontextmenu = new Function("addText('poppedUp' + poppedUp); return (!poppedUp)");
-
-function enablePopup(link, popupName)
-{
-	addText("enablePopup for " + link.innerHTML);
-	link.oncontextmenu = new Function("return popup('" + popupName + "');");
-	link.onmousedown = saveMouseData;
-	currentLink = link
-	poppedUp = true;
-}
-
-function popup(popupName)
-{
-	addText("Popup " + popupName);
-	hide(currentPopup);
-	currentPopup = document.getElementById(popupName);
-	with (currentPopup)
-	{
-		style.visibility="visible";
-		style.left=x-2;
-		style.top=y-2;
-	}
-	poppedUp = true;
-	return false;
-}
-
-</script>
 
 
 <script>
