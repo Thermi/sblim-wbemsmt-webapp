@@ -480,9 +480,24 @@ a:hover {
 
 .actionsPopup
 {
-	border:1px solid #1A5A1A;
+    border-top: 1px outset #1A5A1A; 
+    border-right: 1px outset #DAFEDA;
+    border-bottom: 1px outset #DAFEDA; 
+    border-left: 1px outset #1A5A1A; 
 	padding: 5px;
     background-color: #FFFFFF;
+}
+
+
+.actionsPopupSeparatorHr
+{
+	width:100%;
+	color:#5495d5;
+	background-color:#1A5A1A;
+    border:0px solid #1A5A1A;
+	height:1px;
+	margin-top: 3px;
+	margin-bottom: 3px;
 }
 
 .actionsPopupItem

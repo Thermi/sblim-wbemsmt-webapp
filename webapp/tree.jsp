@@ -23,7 +23,7 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <h:panelGroup>
-<h:commandLink value="update" actionListener="#{treeSelector.currentTreeBacker.updateTree}" action="start" styleClass="treeLink"/>
+<h:outputText value="#{messages.managedConfigurations}" style="white-space: nowrap;" styleClass="fieldLabel"/>
 <f:verbatim><br></f:verbatim>
 <t:tree2 binding="#{treeSelector.currentTree}" value="#{treeSelector.currentTreeBacker.treeModel}" var="node" preserveToggle="true" varNodeToggler="t" clientSideToggle="false" showRootNode="false">
 	<f:facet name="root">

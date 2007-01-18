@@ -39,7 +39,7 @@
 <h:outputText value="#{messages.selectedNode}" styleClass="fieldLabel"/><f:verbatim>&nbsp;</f:verbatim><h:outputText styleClass="fieldLabel" value="#{messages.noSelection}" rendered="#{treeSelector.selectedNode == null}"/><h:outputText value="#{treeSelector.selectedNode.description}" rendered="#{treeSelector.selectedNode != null}" styleClass="fieldLabel" escape="false"/>
 <f:verbatim>&nbsp;</f:verbatim>
 
-    <h:commandLink styleClass="actionPanel" onclick="showActionMenue();return false;" id="actionLink" rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 1}">
+    <h:commandLink styleClass="actionPanel" onclick="showActionMenue();return false;" id="actionLink">
 		<h:graphicImage 
 			value="#{style.resourceDir}/images/empty.png" 
 			alt="empty"
@@ -56,7 +56,22 @@
     </h:commandLink>
       <h:panelGroup style="visibility:hidden; position:absolute; top:0px; left:0px;" id="popup">
           <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="actionsPopup" columnClasses="actionsPopupItem">
-		<h:commandLink           value="#{treeSelector.selectedNode.contextMenu.menuItems[0].description}"
+		<h:commandLink       value="#{messages.updateTree}"
+					        action="#{treeSelector.currentTreeBacker.updateTree}"
+					    styleClass="treeTopLink"/>
+		<h:commandLink       value="#{messages.menu_expandAll}"
+      					    action="#{treeSelector.currentTreeBacker.expandAll}"
+               			styleClass="treeTopLink"/>
+
+		<h:commandLink       value="#{messages.menu_collapseAll}"
+					actionListener="#{treeSelector.currentTreeBacker.collapseAll}"
+              			styleClass="treeTopLink"/>
+
+		<h:panelGroup rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 1}">
+			<f:verbatim><hr class="actionsPopupSeparatorHr"/></f:verbatim>
+		</h:panelGroup>
+
+		<h:commandLink       value="#{treeSelector.selectedNode.contextMenu.menuItems[0].description}"
 					actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[0].processEvent}"
 	           				action="#{treeSelector.getCurrentOutcome}"
 	           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 1}" styleClass="treeTopLink"

@@ -186,6 +186,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     		this.selectedNode = jsfNode;
 			String[] path = selectedNode.getPath(getCurrentTreeBacker().getTree());
 			getCurrentTreeBacker().getTree().expandPath(path);
+			getCurrentTreeBacker().getTreeModelDirect().getTreeState().setSelected(path[path.length-1]);
 			selectedTasklauncherTreeNode = selectedNode.getTaskLauncherTreeNode();
     	}
     	else if (uiTreeNode != null)
@@ -208,6 +209,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 			if (jsfNode != null)
 			{
 				setSelectedNode(jsfNode);
+				
 			}
 			else
 			{
@@ -220,22 +222,6 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 		}
 	}
 	
-	public void selectNode(ITaskLauncherTreeNode node)
-	{
-		JsfTreeNode jsfNode = getCurrentTreeBacker().findJsfTreeNode(node);
-		if (jsfNode != null)
-		{
-			String[] path = selectedNode.getPath(getCurrentTreeBacker().getTree());
-			getCurrentTreeBacker().getTree().expandPath(path);
-            getCurrentTreeBacker().getTreeModelDirect().getTreeState().setSelected(path[path.length-1]);
-		}
-		else
-		{
-			logger.warning("The node " + node.getInfo() + " was not found in Tree");
-		}
-		
-	}
-    
 	/* (non-Javadoc)
 	 * @see org.sblim.wbemsmt.webapp.jsf.ITreeSelector#getSelectedNode()
 	 */
