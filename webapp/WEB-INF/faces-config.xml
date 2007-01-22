@@ -222,7 +222,7 @@
     		<property-class>
     		java.lang.String</property-class>
     		<value>
-    		resources/sf</value>
+    		resources/sf2</value>
     	</managed-property>
     	<managed-property>
     		<property-name>

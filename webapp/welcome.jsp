@@ -127,8 +127,8 @@
 <%@ include file="/include_errorHandling.jsp" %>
 </h:panelGrid>
 <h:panelGrid columns="1" width="80%" align="center">
-<h:commandLink value="#{messages.loginSingle}" action="loginSingle"/>
-<h:commandLink value="#{messages.loginMulti}" action="loginMulti"/>
+<h:commandLink value="#{messages.loginSingle}" action="loginSingle" styleClass="adminLink" rendered="false"/>
+<h:commandLink value="#{messages.loginMulti}" action="loginMulti" styleClass="adminLink" rendered="false"/>
 </h:panelGrid>
 </h:form>
 </body>

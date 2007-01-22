@@ -102,11 +102,11 @@
 <h:commandButton value="#{messages.save}" action="#{admin.saveHost}" rendered="#{!admin.slpMode}"/>
 <f:verbatim><br><br></f:verbatim>
 
-<h:commandLink styleClass="admin" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode}"/>
-<h:commandLink styleClass="admin" value="#{messages.reloadSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && admin.slpMode}"/>
-<h:commandLink styleClass="admin" value="#{messages.useAllSLPConfig}" action="#{admin.saveHost}" rendered="#{menueController.useSlp && admin.slpMode}"/>
-<h:commandLink styleClass="admin" value="#{messages.useOldConfig}" action="#{admin.reloadFromFile}" rendered="#{menueController.useSlp && admin.slpMode}"/>
-<h:commandLink styleClass="admin" value="#{messages.summary}" action="adminIndex"/>
+<h:commandLink styleClass="adminLink" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode}"/>
+<h:commandLink styleClass="adminLink" value="#{messages.reloadSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && admin.slpMode}"/>
+<h:commandLink styleClass="adminLink" value="#{messages.useAllSLPConfig}" action="#{admin.saveHost}" rendered="#{menueController.useSlp && admin.slpMode}"/>
+<h:commandLink styleClass="adminLink" value="#{messages.useOldConfig}" action="#{admin.reloadFromFile}" rendered="#{menueController.useSlp && admin.slpMode}"/>
+<h:commandLink styleClass="adminLink" value="#{messages.summary}" action="adminIndex"/>
 <f:verbatim><br><br></f:verbatim>
 <h:outputText value="#{messages.not_configured_hint}"></h:outputText>
 <h:outputText value="#{messages.not_installed_hint}"></h:outputText>

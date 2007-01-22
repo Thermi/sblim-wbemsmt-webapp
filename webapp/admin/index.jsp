@@ -124,8 +124,8 @@
 <%@ include file="/include_errorHandling.jsp" %>
 </h:panelGrid>
 <h:panelGrid columns="1" width="80%" align="center" rendered="#{admin.adminEnabled}">
-<h:commandLink styleClass="admin" value="#{messages.edithost}" action="adminHost"/>
-<h:commandLink styleClass="admin" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode }"/>
+<h:commandLink styleClass="adminLink" value="#{messages.edithost}" action="adminHost"/>
+<h:commandLink styleClass="adminLink" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode }"/>
 </h:panelGrid>
 </h:form>
 </body>

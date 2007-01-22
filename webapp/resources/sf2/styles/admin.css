@@ -2,3 +2,18 @@
 {
 	height:25px;
 }
+
+.adminLink, .adminLink:visited, .adminLink:active {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: none;
+    line-height:180%;
+    
+}
+
+.adminLink:hover {
+    font-size: xx-small;
+    color:#5F513B;
+    text-decoration: underline;
+    line-height:180%;
+}
