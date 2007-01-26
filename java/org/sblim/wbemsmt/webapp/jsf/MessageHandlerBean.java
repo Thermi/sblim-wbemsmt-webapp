@@ -31,8 +31,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.sblim.wbemsmt.bl.Cleanup;
+import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
-import org.sblim.wbemsmt.tools.jsf.FacesMessageWrapper;
 import org.sblim.wbemsmt.tools.jsf.WbemsmtFacesMessage;
 import org.sblim.wbemsmt.tools.jsf.WbesmtFacesSeverity;
 import org.sblim.wbemsmt.webapp.jsf.style.StyleBean;
@@ -95,7 +95,10 @@ public class MessageHandlerBean extends WbemsmtWebAppBean implements Cleanup {
 			}
 			else
 			{
-				wbemsmtFacesMessage = new FacesMessageWrapper(msg);
+				logger.severe(msg.getSummary());
+				logger.severe(msg.getDetail());
+				wbemsmtFacesMessage = new WbemsmtFacesMessage(Message.create(ErrCodes.MSG_OTHER_EXCEPTION, Message.ERROR, bundle, "errorMessage.otherExceptions"));
+				//wbemsmtFacesMessage = new FacesMessageWrapper(msg);
 			}
 			
 			
