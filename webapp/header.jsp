@@ -77,12 +77,14 @@
 	           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 1}" styleClass="treeTopLink"
 	           			  onclick="hideActionMenue();#{treeSelector.selectedNode.contextMenu.menuItems[0].javaScriptConfirmStatement}
 	           			           #{treeSelector.selectedNode.contextMenu.menuItems[0].javaScriptWaitStatement}"/>
+
 		<h:commandLink           value="#{treeSelector.selectedNode.contextMenu.menuItems[1].description}"
 						actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[1].processEvent}"
 		           				action="#{treeSelector.getCurrentOutcome}"
 	    	       			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 2}" styleClass="treeTopLink" 
 	        	   			  onclick="hideActionMenue();#{treeSelector.selectedNode.contextMenu.menuItems[1].javaScriptConfirmStatement}
 	           				           #{treeSelector.selectedNode.contextMenu.menuItems[1].javaScriptWaitStatement}"/>
+
 		<h:commandLink           value="#{treeSelector.selectedNode.contextMenu.menuItems[2].description}"
 						actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[2].processEvent}"
 		           				action="#{treeSelector.getCurrentOutcome}"
@@ -97,9 +99,9 @@
 <h:panelGroup>
 			<h:outputText id="loggedInText" styleClass="fieldLabel" value="#{messages.loggedInAs} #{loginCheck.username}@#{loginCheck.hostname}#{loginCheck.namespace}" rendered="#{menueController.signedOnTextEnabled}"></h:outputText>
 			<f:verbatim>&nbsp;&nbsp;</f:verbatim>
-			<h:commandLink id="link_1_logout" value="#{messages.logout}" action="#{loginCheck.logoutAction}"  rendered="#{menueController.fileEnabled}" styleClass="treeTopLink"/>
+			<h:commandLink id="link_1_logout" value="#{messages.logout}" action="#{loginCheck.logoutAction}"  styleClass="treeTopLink" rendered="#{style.logoutLink}" />
 			<f:verbatim><br></f:verbatim>
-			<h:commandLink id="link_1_help" value="#{messages.menu_Help}" action="help"  rendered="#{menueController.fileEnabled}" styleClass="treeTopLink"/>
+			<h:commandLink id="link_1_help" value="#{messages.menu_Help}" action="help" styleClass="treeTopLink"  rendered="#{style.helpLink}"/>
 </h:panelGroup>
 </h:panelGrid>           
 </h:form>	

@@ -228,7 +228,23 @@
     		<property-name>
     		header</property-name>
     		<property-class>
-    		java.lang.Boolean</property-class>
+    		boolean</property-class>
+    		<value>
+    		true</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>
+    		helpLink</property-name>
+    		<property-class>
+    		boolean</property-class>
+    		<value>
+    		true</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>
+    		logoutLink</property-name>
+    		<property-class>
+    		boolean</property-class>
     		<value>
     		true</value>
     	</managed-property>
