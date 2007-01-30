@@ -48,14 +48,18 @@
 			<h:commandLink value=""
 						   action="#{treeSelector.getCurrentOutcome}"
 						   actionListener="#{t.setNodeSelected}"
-						   rendered="#{node.enabled}"
+						   rendered="#{node.enabled && !t.nodeSelected}"
 						   onclick="#{node.onClickJavaScript}"
-						   styleClass="treeLink #{t.nodeSelected ? 'selected' : 'notselected'}"
+						   styleClass="treeLink notselected"
 						   >
 				<f:actionListener type="org.sblim.wbemsmt.webapp.jsf.TreeNodeActionListener"/>
 				<f:param name="node_id" value="#{node.identifier}" />
 				<h:outputText value="#{node.description}" escape="false"/>
 			</h:commandLink>
+			<h:outputText value="#{node.description}"
+						   rendered="#{node.enabled && t.nodeSelected}"
+						   styleClass="treeLink selected"
+						   />
 			<h:outputText value="#{node.description}" escape="false" styleClass="treeDisabled" rendered="#{!node.enabled}"/>
 	    </h:panelGroup>
 	</f:facet>

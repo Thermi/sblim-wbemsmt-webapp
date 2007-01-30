@@ -78,6 +78,29 @@ function showConfirm(msg)
 	return check;
 }
 </script>
+
+<script>
+
+var changeMessage = "";
+
+function inputFieldChanged(message)
+{
+	changeMessage = message;
+	//addText("Field changed");
+}
+
+function checkModifications()
+{
+	executeRequest = true;
+
+	if (changeMessage.length > 0)
+	{
+		executeRequest = confirm(changeMessage);
+	}
+	return executeRequest;
+}
+</script>
+
 <script>
 //var debugWindow = window.open("debug.html", "Zweitfenster", "width=300,height=400,left=100,top=200,resizable=yes");
 function addText(text)

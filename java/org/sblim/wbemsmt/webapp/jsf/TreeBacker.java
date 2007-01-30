@@ -34,7 +34,6 @@ import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.apache.myfaces.custom.tree2.TreeModel;
 import org.apache.myfaces.custom.tree2.TreeModelBase;
 import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
-import org.sblim.wbemsmt.bl.tree.ITreeSelector;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.exception.WbemSmtException;
@@ -207,27 +206,34 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 	 * Restores the old selection within the tree and the previous selected tab in the corresponding editPanel
 	 * @param result
 	 * @return
+	 * @throws WbemSmtException 
 	 */
-	private String restoreOldSelection() {
+	private String restoreOldSelection() throws WbemSmtException {
 		
 		String result = "start";
 		
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ObjectActionControllerBean objectActionController = (ObjectActionControllerBean)BeanNameConstants.OBJECT_ACTION_CONTROLLER.getBoundValue(facesContext);
+		TreeSelectorBean treeSelectorBean =  (TreeSelectorBean) BeanNameConstants.TREE_SELECTOR.getBoundValue(FacesContext.getCurrentInstance());
+
 		TaskLauncherTreeNode selectedNode = objectActionController.getSelectedNode();
 		int selectTabIndex = objectActionController.getSelectedTabIndex();
 		String selectTabId = objectActionController.getSelectedTabId();
 
 		if (selectedNode != null)
         {
-    		ITreeSelector treeSelectorBean = (ITreeSelector)BeanNameConstants.TREE_SELECTOR.getBoundValue(FacesContext.getCurrentInstance());
-    		treeSelectorBean.setSelectedTaskLauncherTreeNode(selectedNode);
+    		selectedNode = (TaskLauncherTreeNode) getRootNode().getTaskLauncherTreeNode().findNode(selectedNode);
+    		if (selectedNode != null)
+    		{
+        		treeSelectorBean.setSelectedTaskLauncherTreeNode(selectedNode);
 
-    		result = selectedNode.click();
+        		result = selectedNode.click();
 
-    		objectActionController.setSelectedNode(selectedNode);
-    		objectActionController.setSelectedTabIndex(selectTabIndex);
-        	objectActionController.setSelectedTabId(selectTabId);
+        		objectActionController.setSelectedNode(selectedNode);
+        		objectActionController.setSelectedTabIndex(selectTabIndex);
+            	objectActionController.setSelectedTabId(selectTabId);
+    		}
+    		
         
         }
 		return result;
@@ -248,7 +254,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 		
 		menuList.clear();
 		menuIds .clear();
-    	JsfTreeNode rootNode = (JsfTreeNode) treeModel.getNodeById("0");
+    	JsfTreeNode rootNode = getRootNode();
     	addMenue(menuList,rootNode);
     	
     	ILocaleManager manager = (ILocaleManager) BeanNameConstants.LOCALE_MANAGER.getBoundValue(FacesContext.getCurrentInstance());
@@ -258,6 +264,14 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 			menu.initI18n(manager);
 		}
     	
+	}
+
+	/**
+	 * get the root node of the Tree
+	 * @return
+	 */
+	public JsfTreeNode getRootNode() {
+		return (JsfTreeNode) treeModel.getNodeById("0");
 	}
 
 	private void addMenue(List menues, JsfTreeNode nodeById) {
@@ -311,13 +325,16 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 
 	public String expandAll() {
 		TreeModel treeModel = getTreeModelDirect();
-		JsfTreeNode node = (JsfTreeNode) treeModel.getNodeById("0");
+		JsfTreeNode node = getRootNode();
 		expandNode(treeModel,node);
 		
-		String result = restoreOldSelection();
-		
-		return result;
-		
+		try {
+			String result = restoreOldSelection();
+			return result;
+		} catch (WbemSmtException e) {
+			JsfUtil.handleException(e);
+		}
+		return "";
 	}
 
 
@@ -338,7 +355,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 
 	public void collapseAll() {
 		TreeModel treeModel = getTreeModelDirect();
-		JsfTreeNode node = (JsfTreeNode) treeModel.getNodeById("0");
+		JsfTreeNode node = getRootNode();
 		collapseNode(treeModel,node);
 	}
 
