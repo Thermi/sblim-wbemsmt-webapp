@@ -1,6 +1,9 @@
 Multiple Hosts Support
 ------------------------------------------------------------------------------
 
+MultiHostSupport is designed to run in the Standalone Mode. For mor Information on that take a look at the file StandaloneSupport.
+If you want to support more than host in a PortletContainer take a look PortletContainerSupport
+
 The default behavior when starting the client is to connect to one host. To 
 connect to multiple hosts simultaneously, do the following:
 

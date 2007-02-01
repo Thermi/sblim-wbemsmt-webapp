@@ -115,7 +115,7 @@
     </managed-bean>
     
 	<!-- LoginCheck for Standalone Mode-->
-	<!--  -->
+	<!--  --
     <managed-bean>
         <managed-bean-name>loginCheck</managed-bean-name>
         <managed-bean-class>
@@ -146,10 +146,10 @@
 			<value>#{treeSelector}</value>
 		</managed-property>
     </managed-bean>
-    <!--  -->
+    !--  -->
 	<!-- LoginCheck for  Embedded Mode-->
 
-    <!-- 
+    <!-- -->
     <managed-bean>
         <managed-bean-name>loginCheck</managed-bean-name>
         <managed-bean-class>
@@ -168,7 +168,7 @@
 			<value>#{treeSelector}</value>
 		</managed-property>
     </managed-bean>
-    -->
+    <!-- -->
 
     <managed-bean>
         <managed-bean-name>slpLoader</managed-bean-name>
@@ -247,7 +247,7 @@
     		<property-class>
     		java.lang.String</property-class>
     		<value>
-    		resources/sf2</value>
+    		resources/style1</value>
     	</managed-property>
     	<managed-property>
     		<property-name>
@@ -255,7 +255,7 @@
     		<property-class>
     		boolean</property-class>
     		<value>
-    		false</value>
+    		true</value>
     	</managed-property>
     	<managed-property>
     		<property-name>
@@ -263,7 +263,7 @@
     		<property-class>
     		java.lang.String</property-class>
     		<value>
-    		org.sblim.wbemsmt.webapp.jsf.webapp_sf2_messages</value>
+    		org.sblim.wbemsmt.webapp.jsf.webapp_style1_messages</value>
     	</managed-property>
     </managed-bean>    		
     		

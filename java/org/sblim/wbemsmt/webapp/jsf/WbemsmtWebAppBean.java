@@ -46,6 +46,9 @@ public abstract class WbemsmtWebAppBean
 			public void localeChanged(Locale newLocale)
 			{
 				bundle = ResourceBundleManager.getResourceBundle(FacesContext.getCurrentInstance());
+
+				WbemSmtResourceBundle bundleMessages = ResourceBundleManager.getResourceBundle(new String[]{"messages"},newLocale);
+		    	bundle.add(bundleMessages);
 			}
 		});
     	

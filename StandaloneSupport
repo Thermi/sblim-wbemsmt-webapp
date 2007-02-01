@@ -1,0 +1,107 @@
+Portlet Container Support
+------------------------------------------------------------------------------
+
+The Application can be configured so that it runs as a standalone application
+
+1. web.xml
+
+    <filter>
+        <filter-name>authorizationFilter</filter-name>
+        <filter-class>org.sblim.wbemsmt.webapp.jsf.AuthorizationFilter</filter-class>
+        <init-param>
+            <param-name>LoginView</param-name>
+            <param-value>/login.jsf</param-value>
+            <description>
+            Sets the view id to which the AuthorizationFilter redirects unauthorized requests.
+            This will be the only view accessible to unauthenticated users.
+            </description>
+        </init-param>
+        <init-param>
+            <param-name>LoginCheckClass</param-name>
+            <param-value>org.sblim.wbemsmt.webapp.jsf.LoginCheckBean</param-value>
+            <description>
+            Defines the class of the bean doing the authorization.
+            This class must implement the interface org.sblim.wbemsmt.tasklauncher.login.LoginCheck
+            </description>
+        </init-param>
+        <init-param>
+            <param-name>LoginCheckBean</param-name>
+            <param-value>loginCheck</param-value>
+            <description>
+            Name of the session bean which type is defined in LoginCheckClass
+            </description>
+        </init-param>
+    </filter>
+    
+2. faces-config.xml
+
+    <managed-bean>
+        <managed-bean-name>loginCheck</managed-bean-name>
+        <managed-bean-class>
+        org.sblim.wbemsmt.webapp.jsf.LoginCheckBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>taskLauncherController</property-name>
+			<value>#{taskLauncherController}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginView</property-name>
+			<value>login</value>
+		</managed-property>
+		<managed-property>
+			<property-name>startView</property-name>
+			<value>start</value>
+		</managed-property>
+		<managed-property>
+			<property-name>logoutView</property-name>
+			<value>login</value>
+		</managed-property>
+		<managed-property>
+			<property-name>loginFilename</property-name>
+			<value>/workspace-intern/login.bin</value>
+		</managed-property>
+		<managed-property>
+			<property-name>treeSelector</property-name>
+			<value>#{treeSelector}</value>
+		</managed-property>
+		
+    </managed-bean>
+
+    
+    
+    <managed-bean>
+    	<description>Responsible for Managing Styles</description>
+    	<managed-bean-name>style</managed-bean-name>
+    	<managed-bean-class>org.sblim.wbemsmt.webapp.jsf.style.StyleBean</managed-bean-class>
+    	<managed-bean-scope>application</managed-bean-scope>
+    	<managed-property>
+    		<property-name>
+    		resourceDir</property-name>
+    		<property-class>
+    		java.lang.String</property-class>
+    		<value>
+    		resources/sf2</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>
+    		embedded</property-name>
+    		<property-class>
+    		boolean</property-class>
+    		<value>
+    		false</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>
+    		resourceBundle</property-name>
+    		<property-class>
+    		java.lang.String</property-class>
+    		<value>
+    		org.sblim.wbemsmt.webapp.jsf.webapp_style1_messages</value>
+    	</managed-property>
+    </managed-bean>    		
+    
+    
+3. Start the application
+
+Use the URL: http://<server>:<port>/wbemsmt-webapp
+

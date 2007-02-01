@@ -34,9 +34,9 @@
 </head>
 <body class="loginBody">
 <h:panelGrid width="100%" cellpadding="0" cellspacing="0" border="0" columns="1" styleClass="loginTable" rowClasses="loginTableRowHeader, loginTableRowMessages, loginTableRowCenter, loginTableRowCenter, loginTableRowFooter">
-	<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="loginTableHeader" columnClasses="loginTableHeaderTitle, loginTableHeaderBanner" rendered="#{style.header}">
-		<h:graphicImage value="#{style.resourceDir}/images/title.gif" rendered="#{style.header}" alt="#{messages.webAppTitle}" title="#{messages.webAppTitle}" />
-		<h:graphicImage value="#{style.resourceDir}/images/banner.gif" rendered="#{style.header}" alt="#{styleMessages.bannerTitle}" title="#{styleMessages.bannerTitle}"/>
+	<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="loginTableHeader" columnClasses="loginTableHeaderTitle, loginTableHeaderBanner" rendered="#{!style.embedded}">
+		<h:graphicImage value="#{style.resourceDir}/images/title.gif" rendered="#{!style.embedded}" alt="#{messages.webAppTitle}" title="#{messages.webAppTitle}" />
+		<h:graphicImage value="#{style.resourceDir}/images/banner.gif" rendered="#{!style.embedded}" alt="#{styleMessages.bannerTitle}" title="#{styleMessages.bannerTitle}"/>
 	</h:panelGrid>
 	<h:panelGroup>
 	<%@ include file="include_errorHandling.jsp" %>
@@ -79,7 +79,7 @@
 		</h:panelGrid>
 		</h:form>
 	</h:panelGrid>
-	<h:form id="langform" styleClass="languageForm">
+	<h:form id="langform" styleClass="languageForm" rendered="#{!style.embedded}">
 	<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" columnClasses="loginFooterLanguage, loginFooterVersion" styleClass="loginFooter"> 
 			<h:panelGroup>
 			<h:commandLink actionListener="#{localeManager.setEnglish}" id="en" ><h:graphicImage url="/images/us.gif" styleClass="imageLink" alt="#{messages.language_english}" title="#{messages.language_english}"/></h:commandLink>

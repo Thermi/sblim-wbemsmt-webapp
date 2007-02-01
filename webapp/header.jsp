@@ -26,9 +26,9 @@
 <f:loadBundle basename="#{style.resourceBundle}" var="styleMessages"/>
 
 <h:panelGroup>
-<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="editTableHeader" columnClasses="editTableHeaderTitle, editTableHeaderBanner" rendered="#{style.header}">
-	<h:graphicImage value="#{style.resourceDir}/images/title.gif" rendered="#{style.header}" alt="#{messages.webAppTitle}" title="#{messages.webAppTitle}" />
-	<h:graphicImage value="#{style.resourceDir}/images/banner.gif" rendered="#{style.header}" alt="#{styleMessages.bannerTitle}" title="#{styleMessages.bannerTitle}"/>
+<h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" styleClass="editTableHeader" columnClasses="editTableHeaderTitle, editTableHeaderBanner" rendered="#{!style.embedded}">
+	<h:graphicImage value="#{style.resourceDir}/images/title.gif" rendered="#{!style.embedded}" alt="#{messages.webAppTitle}" title="#{messages.webAppTitle}" />
+	<h:graphicImage value="#{style.resourceDir}/images/banner.gif" rendered="#{!style.embedded}" alt="#{styleMessages.bannerTitle}" title="#{styleMessages.bannerTitle}"/>
 </h:panelGrid>
 
 
@@ -96,13 +96,17 @@
           </h:panelGrid>
       </h:panelGroup>
 </h:panelGroup>
-<h:panelGroup>
+<h:panelGroup rendered="#{!style.embedded}">
 			<h:outputText id="loggedInText" styleClass="fieldLabel" value="#{messages.loggedInAs} #{loginCheck.username}@#{loginCheck.hostname}#{loginCheck.namespace}" rendered="#{menueController.signedOnTextEnabled}"></h:outputText>
 			<f:verbatim>&nbsp;&nbsp;</f:verbatim>
-			<h:commandLink id="link_1_logout" value="#{messages.logout}" action="#{loginCheck.logoutAction}"  styleClass="treeTopLink" rendered="#{style.logoutLink}" />
+			<h:commandLink id="link_1_logout" value="#{messages.logout}" action="#{loginCheck.logoutAction}"  styleClass="treeTopLink" />
 			<f:verbatim><br></f:verbatim>
-			<h:commandLink id="link_1_help" value="#{messages.menu_Help}" action="help" styleClass="treeTopLink"  rendered="#{style.helpLink}"/>
+			<h:commandLink id="link_1_help" value="#{messages.menu_Help}" action="help" styleClass="treeTopLink"/>
 </h:panelGroup>
+<h:panelGroup rendered="#{style.embedded}">
+	<f:verbatim>&nbsp;</f:verbatim>
+</h:panelGroup>
+
 </h:panelGrid>           
 </h:form>	
 </h:panelGroup>		  

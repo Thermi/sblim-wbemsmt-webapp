@@ -341,6 +341,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 
     /**
      * Used by the Login Action withion the Application.
+     * This kind of Login is used for MultiHost-Login
      * @return
      */
     public String loginActionEmbedded()

@@ -51,7 +51,7 @@
 		</h:form>
 	</h:panelGroup>
 </h:panelGrid>
-<h:form id="langform" styleClass="languageForm">
+<h:form id="langform" styleClass="languageForm" rendered="#{!style.embedded}">
 <h:panelGrid width="100%" cellpadding="5" cellspacing="0" border="0" columns="2" columnClasses="editFooterLanguage, editFooterVersion" styleClass="editFooter"> 
 		<h:panelGroup id="langGroup">
 			<h:commandLink actionListener="#{localeManager.setEnglish}" id="en" ><h:graphicImage url="/images/us.gif" styleClass="imageLink" alt="#{messages.language_english}" title="#{messages.language_english}"/></h:commandLink>

@@ -23,8 +23,7 @@
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <h:panelGroup>
-<h:outputText value="#{messages.managedConfigurations}" style="white-space: nowrap;" styleClass="fieldLabel"/>
-<f:verbatim><br></f:verbatim>
+<h:outputText value="#{messages.managedConfigurations}<br>" style="white-space: nowrap;" styleClass="fieldLabel" escape="false" rendered="#{!style.embedded}"/>
 <t:tree2 binding="#{treeSelector.currentTree}" value="#{treeSelector.currentTreeBacker.treeModel}" var="node" preserveToggle="true" varNodeToggler="t" clientSideToggle="false" showRootNode="false">
 	<f:facet name="root">
 	    <h:panelGroup>
