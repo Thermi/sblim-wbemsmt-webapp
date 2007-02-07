@@ -1,7 +1,7 @@
 /**
  *  LoginCheckBean.java
  *
- * (C) Copyright IBM Corp. 2005
+ * © Copyright IBM Corp. 2005
  *
  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
@@ -10,7 +10,7 @@
  * You can obtain a current copy of the Common Public License from
  * http://www.opensource.org/licenses/cpl1.0.php
  *
- * @author: Marius Kreis <mail@nulldevice.org>
+ * @author: Michael.Bauschert@de.ibm.com
  *
  * Contributors:
  *
@@ -70,7 +70,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     	super();
     }
     
-    private CIMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String namespace) throws LoginException
+    private CIMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String namespace, List treeconfigs) throws LoginException
     {
         CIMClient cimClient;
         try
@@ -108,7 +108,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         if (initModel)
         {
         	try {
-				this.taskLauncherController.init(hostname, cimClient,false);
+				this.taskLauncherController.init(hostname, cimClient,false,treeconfigs);
 				treeSelector.setTaskLauncherController(hostname,taskLauncherController);
 			}catch (WbemSmtException e) {
 				throw new LoginException(bundle.getString("internal.error"),e);
@@ -172,7 +172,9 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				"wbem01smt", 
 				data.getHostname(), 
 				"" + data.getPort(), 
-				data.getNamespace());
+				data.getNamespace(),
+				data.getTreeConfigs()
+				);
 	}
 
 	private void buildMultiTarget(CimomData[] datas) throws WbemSmtException {
@@ -192,7 +194,8 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 						"wbem01smt", 
 						cimomNode.getCimomData().getHostname(), 
 						"" + cimomNode.getCimomData().getPort(), 
-						cimomNode.getCimomData().getNamespace()));
+						cimomNode.getCimomData().getNamespace(),
+						cimomNode.getCimomData().getTreeConfigs()));
 				
 				cimomNode.getCimomData().setUser(cimomNode.getCimomData().getUser());
 				cimomNode.setName(cimomNode.getCimomData().getHostname());
