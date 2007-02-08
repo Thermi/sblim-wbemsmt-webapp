@@ -79,9 +79,6 @@
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-wbemsmt-commons-launcher-config/0.2.3/sblim-wbemsmt-commons-launcher-config-0.2.3.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/cim-client/cim-client">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-samba/wbemsmt-samba">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -89,6 +86,9 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-commons/wbemsmt-commons">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster/wbemsmt-metacluster">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         

@@ -2,7 +2,7 @@
 /**
  *  loginFile.jsp
  *
- * (C) Copyright IBM Corp. 2005
+ * © Copyright IBM Corp. 2005
  *
  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
@@ -28,7 +28,7 @@
 function submitLikeJSF()
 {
 	document.forms[0].elements['test:task'].value = '<%=request.getParameter("task")%>';
-	document.forms[0].elements['test:target'].value = '<%=request.getParameter("target")%>';
+	document.forms[0].elements['test:target'].value = '<%=request.getParameter("target") != null ? request.getParameter("target") : ""%>';
 	document.forms[0].elements['test:cmd1'].click();
 }
 </script>

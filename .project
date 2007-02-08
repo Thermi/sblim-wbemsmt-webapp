@@ -30,6 +30,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>webapp/scripts/dojo.js</name>
+			<type>1</type>
+			<locationURI>JAR_REPO/dojo/dojo/0.4/dojo.js</locationURI>
+		</link>
+		<link>
 			<name>java/org/sblim/wbemsmt/webapp/jsf/webapp_style1_messages.properties</name>
 			<type>1</type>
 			<locationURI>JAR_REPO/sblim/sblim-wbemsmt-webapp/java/org/sblim/wbemsmt/webapp/jsf/webapp_style1_messages.properties</locationURI>

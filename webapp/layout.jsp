@@ -2,7 +2,7 @@
 /**
  *  layout.jsp
  *
- * (C) Copyright IBM Corp. 2005
+ * © Copyright IBM Corp. 2005
  *
  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
@@ -30,10 +30,10 @@
 <html>
 <head>
 <h:outputText id="title" escape="false" value="<title>#{messages.webAppTitle}</title>"/>
-<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/defaultStyles.css' rel='stylesheet' type='text/css'>"/>
-<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/edit.css' rel='stylesheet' type='text/css'>"/>
-<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
-<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/wizard.css' rel='stylesheet' type='text/css'>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/defaultStyles.css' rel='stylesheet' type='text/css'/>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/edit.css' rel='stylesheet' type='text/css'/>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'/>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/wizard.css' rel='stylesheet' type='text/css'/>"/>
 <h:outputText escape="false" value="<script src='scripts/showWait.js'></script>"/>
 </head>
 <body>

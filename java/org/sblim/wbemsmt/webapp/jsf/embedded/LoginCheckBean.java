@@ -19,8 +19,10 @@
 package org.sblim.wbemsmt.webapp.jsf.embedded;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +61,8 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 
     private TaskLauncherController taskLauncherController;
     private TreeSelectorBean treeSelector;
+    
+    private Map targetsForTasks = new HashMap();
     
 	private CIMClient cimClient;
 
@@ -127,7 +131,35 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     {
 		try {
 			
-			String[] targets = new StringTokenizer(target,",").asArray(true, false);
+			if (task == null)
+			{
+				Message message = Message.create(ErrCodes.MSG_TASK_NOT_SUPPORTED, Message.ERROR, bundle, "task.not.specified");
+				JsfUtil.addMessage(message);
+				return startView;
+			}
+			
+			String[] targets = null;
+			
+			if (StringUtils.isEmpty(target))
+			{
+				Object targetsFromConfig = targetsForTasks.get(task);
+				if (targetsFromConfig != null)
+				{
+					targets = new StringTokenizer((String) targetsFromConfig,",").asArray(true, false);
+				}
+				else
+				{
+					Message message = Message.create(ErrCodes.MSG_TASK_NOT_SUPPORTED, Message.ERROR, bundle, "target.not.specified");
+					JsfUtil.addMessage(message);
+					return startView;
+				}
+				
+			}
+			else
+			{
+				targets = new StringTokenizer(target,",").asArray(true, false);
+			}
+			
 			CimomData datas[] = new CimomData[targets.length];
 			
 			for (int i = 0; i < targets.length; i++) {
@@ -230,7 +262,6 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 	}
 
 	public void cleanup() {
-		// TODO Auto-generated method stub
 	}
 
 	public String getTarget() {
@@ -272,6 +303,14 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 
 	public void setStartView(String startView) {
 		this.startView = startView;
+	}
+
+	public Map getTargetsForTasks() {
+		return targetsForTasks;
+	}
+
+	public void setTargetsForTasks(Map targetsForTasks) {
+		this.targetsForTasks = targetsForTasks;
 	}
 
 	
