@@ -34,16 +34,32 @@
 		<phase-listener>
 			org.sblim.wbemsmt.webapp.jsf.ManagedBeanInitializer
 		</phase-listener>
+		<phase-listener>
+			org.sblim.wbemsmt.ajax.panel.AjaxPanelPhaseListener
+		</phase-listener>
 	</lifecycle>
 	
+	<component>
+		<component-type>org.sblim.wbemsmt.AjaxPanelGroup</component-type>
+		<component-class>org.sblim.wbemsmt.ajax.panel.AjaxPanelGroup</component-class>
+	</component>
+	<component>
+		<component-type>org.sblim.wbemsmt.StopRefresh</component-type>
+		<component-class>org.sblim.wbemsmt.ajax.panel.StopRefresh</component-class>
+	</component>
+	
+	
 	<render-kit>
-	    <!-- 
-		<renderer>
-		<component-family>javax.faces.Panel</component-family>
-		<renderer-type>org.apache.myfaces.Popup</renderer-type>
-		<renderer-class>org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppContextMenuRenderer</renderer-class>
-		</renderer>
-		 -->
+	    <renderer>
+		    <component-family>org.sblim.wbemsmt.AjaxPanelGroup</component-family>
+		    <renderer-type>org.sblim.wbemsmt.AjaxPanelGroup</renderer-type>
+		    <renderer-class>org.sblim.wbemsmt.ajax.panel.AjaxPanelGroupRenderer</renderer-class>
+		</renderer>		
+	    <renderer>
+		    <component-family>org.sblim.wbemsmt.StopRefresh</component-family>
+		    <renderer-type>org.sblim.wbemsmt.StopRefresh</renderer-type>
+		    <renderer-class>org.sblim.wbemsmt.ajax.panel.StopRefreshRenderer</renderer-class>
+		</renderer>		
 	</render-kit>
 
     <managed-bean>
@@ -115,7 +131,7 @@
     </managed-bean>
     
 	<!-- LoginCheck for Standalone Mode-->
-	<!--  --
+	<!-- 
     <managed-bean>
         <managed-bean-name>loginCheck</managed-bean-name>
         <managed-bean-class>
@@ -146,7 +162,7 @@
 			<value>#{treeSelector}</value>
 		</managed-property>
     </managed-bean>
-    !--  -->
+     -->
 	<!-- LoginCheck for  Embedded Mode-->
 
     <!-- -->
@@ -166,6 +182,19 @@
 		<managed-property>
 			<property-name>treeSelector</property-name>
 			<value>#{treeSelector}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>targetsForTasks</property-name>
+			<map-entries>
+				<map-entry>
+					<key>SAMBA</key>
+					<value>localhost</value>
+				</map-entry>
+				<map-entry>
+					<key>DNS</key>
+					<value>localhost</value>
+				</map-entry>
+			</map-entries>
 		</managed-property>
     </managed-bean>
     <!-- -->

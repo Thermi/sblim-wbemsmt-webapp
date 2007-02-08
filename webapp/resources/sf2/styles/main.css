@@ -286,7 +286,12 @@ a:hover {
 	width:100%;
 }
 
-.mainTable, .childTable {
+.mainTable {
+	width:100%;
+}
+
+.childTable {
+    padding-bottom:5px;
 	width:100%;
 }
 
