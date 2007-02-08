@@ -57,6 +57,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     
     private String target = "",
                    startView = "start",
+                   timeoutView = "timeout",
                    task = "";
 
     private TaskLauncherController taskLauncherController;
@@ -129,6 +130,10 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
      */
     public String loginEmbedded()
     {
+    	
+    	//first do a cleanup so that there is no old tree if the login failes
+    	treeSelector.cleanup();
+    	
 		try {
 			
 			if (task == null)
@@ -193,6 +198,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			loggedIn = true;
 		} catch (Exception e) {
 			JsfUtil.handleException(e);
+			return timeoutView;
 		}
 		return startView;
     }

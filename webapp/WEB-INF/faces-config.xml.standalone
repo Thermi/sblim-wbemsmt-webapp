@@ -359,6 +359,13 @@
         </navigation-case>
     </navigation-rule>
 
+   	<navigation-rule>
+	    <navigation-case>
+            <from-outcome>timeout</from-outcome>
+            <to-view-id>/embeddedNoSession.jsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
     <navigation-rule>
  		<from-view-id>*</from-view-id>
 		<navigation-case>

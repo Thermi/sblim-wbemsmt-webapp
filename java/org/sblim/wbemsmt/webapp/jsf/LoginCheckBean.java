@@ -289,9 +289,10 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     
     public void login() throws LoginException
     {
-        // authenticating user
-        //HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-        
+    	
+    	//first do a cleanup so that there is no old tree if the login failes
+    	treeSelector.cleanup();
+    	
     	this.cimClient = this.createCIMClient(true); 
     	
         logger.log(Level.INFO, "connection ok, good authentication, cimclient created");
