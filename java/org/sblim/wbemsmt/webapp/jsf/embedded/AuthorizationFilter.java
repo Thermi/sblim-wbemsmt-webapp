@@ -102,6 +102,10 @@ public class AuthorizationFilter implements Filter
             {
             	chain.doFilter(request, response);
             }
+            else if(requestURI.equals(httpRequest.getContextPath() + "/help.jsf"))
+            {
+            	chain.doFilter(request, response);
+            }
             else if(requestURI.equals(httpRequest.getContextPath() + this.loginView))
             {
             	chain.doFilter(request, response);

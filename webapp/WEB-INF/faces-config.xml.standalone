@@ -282,6 +282,31 @@
     		org.sblim.wbemsmt.webapp.jsf.webapp_sf2_messages</value>
     	</managed-property>
     </managed-bean>    		
+
+    <managed-bean>
+    	<managed-bean-name>
+    	helpManager</managed-bean-name>
+    	<managed-bean-class>
+    	org.sblim.wbemsmt.webapp.jsf.HelpManagerBean</managed-bean-class>
+    	<managed-bean-scope>
+    	session</managed-bean-scope>
+    	<managed-property>
+    		<property-name>
+    		objActionController</property-name>
+    		<property-class>
+    		org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean</property-class>
+    		<value>
+    		#{objectActionController}</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>
+    		defaultLanguage</property-name>
+    		<property-class>
+    		java.lang.String</property-class>
+    		<value>
+    		en</value>
+    	</managed-property>
+    </managed-bean>    		
     		
 	<navigation-rule>
 	    <navigation-case>

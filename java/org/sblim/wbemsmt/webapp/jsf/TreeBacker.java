@@ -33,6 +33,7 @@ import javax.faces.event.ActionEvent;
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.apache.myfaces.custom.tree2.TreeModel;
 import org.apache.myfaces.custom.tree2.TreeModelBase;
+import org.sblim.wbemsmt.bl.help.HelpManager;
 import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
@@ -154,6 +155,10 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
     
 	public String updateTree() throws WbemSmtException
     {        
+		
+		//Reset the Help
+		HelpManager hm = (HelpManager)BeanNameConstants.HELP_MANAGER.getBoundValue(FacesContext.getCurrentInstance());
+		hm.resetTopic();
 		
     	logger.log(Level.INFO, "Updating Tree...");
         if(this.treeFactory == null)

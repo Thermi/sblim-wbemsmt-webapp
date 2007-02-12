@@ -101,7 +101,7 @@
 			<f:verbatim>&nbsp;&nbsp;</f:verbatim>
 			<h:commandLink id="link_1_logout" value="#{messages.logout}" action="#{loginCheck.logoutAction}"  styleClass="treeTopLink" />
 			<f:verbatim><br></f:verbatim>
-			<h:commandLink id="link_1_help" value="#{messages.menu_Help}" action="help" styleClass="treeTopLink"/>
+			<h:commandLink id="link_1_help" value="#{messages.menu_Help}" onclick="#{helpManager.javascriptCall}" styleClass="treeTopLink"/>
 </h:panelGroup>
 <h:panelGroup rendered="#{style.embedded}">
 	<f:verbatim>&nbsp;</f:verbatim>

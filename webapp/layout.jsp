@@ -109,4 +109,13 @@ function addText(text)
 }
 </script>
 
+<script>
+function showHelp(url)
+{
+	var helpWindow = window.open(url, "Zweitfenster", "width=300,height=500,left=100,top=200,resizable=yes,scrollbars=yes");
+	helpWindow.focus();
+	
+}
+</script>
+
 
