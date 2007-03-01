@@ -4,10 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>wbemsmt-commons</project>
-		<project>wbemsmt-dns</project>
-		<project>wbemsmt-metacluster</project>
-		<project>wbemsmt-samba</project>
-		<project>wbemsmt-mc2</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

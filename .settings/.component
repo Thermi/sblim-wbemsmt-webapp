@@ -34,64 +34,55 @@
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xerces/xerces/1.4.4/xerces-1.4.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/myfaces/myfaces-api/1.1.4/myfaces-api-1.1.4.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/myfaces/myfaces-impl/1.1.4/myfaces-impl-1.1.4.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xmlbeans/xbean/2.2.0/xbean-2.2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xmlbeans/xmlbeans-jsr173-api/2.2.0/jsr173_1.0_api-2.2.0.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xmlbeans/xmlbeans-jsr173-api/2.2.0/jsr173_1.0_api-2.2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/myfaces/myfaces-api/1.1.4/myfaces-api-1.1.4.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/myfaces/myfaces-api/1.1.4/myfaces-api-1.1.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/myfaces/myfaces-impl/1.1.4/myfaces-impl-1.1.4.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/myfaces/myfaces-impl/1.1.4/myfaces-impl-1.1.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/myfaces/tomahawk/1.1.3/tomahawk-1.1.3.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/myfaces/tomahawk/1.1.3/tomahawk-1.1.3.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-digester/commons-digester/1.6/commons-digester-1.6.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-digester/commons-digester/1.6/commons-digester-1.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-lang/commons-lang/2.1/commons-lang-2.1.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-lang/commons-lang/2.1/commons-lang-2.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-collections/commons-collections/3.1/commons-collections-3.1.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/workspace-intern/wbemsmt-jar-repository/commons-collections/commons-collections/3.1/commons-collections-3.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-cim-client/1.3.1/sblim-cim-client-1.3.1.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-cim-client/1.3.1/sblim-cim-client-1.3.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-slp-client/1.3.1/sblim-slp-client-1.3.1.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-slp-client/1.3.1/sblim-slp-client-1.3.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-wbemsmt-commons-launcher-config/0.2.3/sblim-wbemsmt-commons-launcher-config-0.2.3.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-wbemsmt-commons-launcher-config/0.2.3/sblim-wbemsmt-commons-launcher-config-0.2.3.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-dns/wbemsmt-dns">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-commons/wbemsmt-commons">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-commons/wbemsmt-commons">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster/wbemsmt-metacluster">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-mc2/wbemsmt-mc2">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-samba/wbemsmt-samba">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/myfaces/myfaces-api/1.1.5/myfaces-api-1.1.5.jar">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/myfaces/myfaces-impl/1.1.5/myfaces-impl-1.1.5.jar">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-codec/commons-codec/1.3/commons-codec-1.3.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
         
