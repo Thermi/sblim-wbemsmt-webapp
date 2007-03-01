@@ -129,12 +129,6 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
         return "";
     }
     
-    public String saveCurrentTreeConfigAction()
-    {
-        super.saveCurrentTreeConfig();
-        return "";
-    }
-
     public String pasteAbove()
     {
         if(this.clipboard != null && this.selectedNode != null)
