@@ -20,10 +20,14 @@ package org.sblim.wbemsmt.webapp.jsf;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.component.html.HtmlOutputText;
+import javax.faces.component.html.HtmlPanelGrid;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -34,6 +38,7 @@ import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.ITreeSelector;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.ITaskLauncherUiTreeNode;
+import org.sblim.wbemsmt.tasklauncher.TaskLauncherContextMenu;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeFactory;
 import org.sblim.wbemsmt.tasklauncher.TreeSelector;
@@ -311,7 +316,95 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 		this.expandAll = expandAll;
 	}
 
+	public HtmlPanelGrid getContextMenuTable()
+	{
+		HtmlPanelGrid result = (HtmlPanelGrid) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlPanelGrid.COMPONENT_TYPE);
+		
+		result.setColumns(1);
+		result.setCellspacing("0");
+		result.setCellpadding("0");
+		result.setStyleClass("actionsPopup");
+		result.setColumnClasses("actionsPopupItem");
 
+		HtmlCommandLink link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
+		link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.currentTreeBacker.updateTree}", new Class[]{}));
+		link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{messages.updateTree}"));
+		link.setStyleClass("treeTopLink");
+		result.getChildren().add(link);
+		
+		link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
+		link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.currentTreeBacker.expandAll}", new Class[]{}));
+		link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{messages.menu_expandAll}"));
+		link.setStyleClass("treeTopLink");
+		result.getChildren().add(link);
+
+		link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
+		link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.currentTreeBacker.collapseAll}", new Class[]{}));
+		link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{messages.menu_collapseAll}"));
+		link.setStyleClass("treeTopLink");
+		result.getChildren().add(link);
+
+		List menues = getCurrentTreeFactory().getCommonContextMenues();
+		for (int menueCount = 0; menueCount < menues.size(); menueCount++) {
+			TaskLauncherContextMenu contextMenu = (TaskLauncherContextMenu) menues.get(menueCount);
+			int items = contextMenu.getItemCount();
+			for (int i=0; i < items; i++)
+			{
+				if (i==0)
+				{
+					addHr(result);
+				}
+				
+				link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
+				link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.getCurrentOutcome}", new Class[]{}));
+				link.setActionListener(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.contextMenues[" + menueCount +"].menuItems[" + i +"].processEvent}", new Class[]{javax.faces.event.ActionEvent.class}));
+				link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{treeSelector.contextMenues[" + menueCount +"].menuItems[" + i +"].description}"));
+				link.setOnclick("hideActionMenue();" + contextMenu.getItem(i).getJavaScriptConfirmStatement() + " " + contextMenu.getItem(i).getJavaScriptWaitStatement());
+				link.setStyleClass("treeTopLink");
+				result.getChildren().add(link);
+			}
+		}
+		
+
+		if (getSelectedNode() != null)
+		{
+			TaskLauncherContextMenu contextMenu = getSelectedNode().getContextMenu();
+			int items = contextMenu.getItemCount();
+			for (int i=0; i < items; i++)
+			{
+				if (i==0)
+				{
+					addHr(result);
+				}
+				link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
+				link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.getCurrentOutcome}", new Class[]{}));
+				link.setActionListener(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.selectedNode.contextMenu.menuItems[" + i +"].processEvent}", new Class[]{javax.faces.event.ActionEvent.class}));
+				link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{treeSelector.selectedNode.contextMenu.menuItems[" + i +"].description}"));
+				link.setOnclick("hideActionMenue();" + contextMenu.getItem(i).getJavaScriptConfirmStatement() + " " + contextMenu.getItem(i).getJavaScriptWaitStatement());
+				link.setStyleClass("treeTopLink");
+				result.getChildren().add(link);
+			}
+		}
+		
+		
+		return result;
+	}
+
+
+	/**
+	 * Add a hr-Tag to the ContextMenue
+	 * @param result
+	 */
+	private void addHr(HtmlPanelGrid result) {
+		HtmlOutputText hr = (HtmlOutputText) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlOutputText.COMPONENT_TYPE);
+		hr.setValue("<hr class=\"actionsPopupSeparatorHr\"/>");
+		hr.setEscape(false);
+		result.getChildren().add(hr);
+	}
+	
+	public List getContextMenues() {
+		return getCurrentTreeFactory().getCommonContextMenues();
+	}
 	
     
     

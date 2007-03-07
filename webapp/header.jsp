@@ -55,45 +55,7 @@
 			/>
     </h:commandLink>
       <h:panelGroup style="visibility:hidden; position:absolute; top:0px; left:0px;" id="popup">
-          <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="actionsPopup" columnClasses="actionsPopupItem">
-		<h:commandLink       value="#{messages.updateTree}"
-					        action="#{treeSelector.currentTreeBacker.updateTree}"
-					    styleClass="treeTopLink"/>
-		<h:commandLink       value="#{messages.menu_expandAll}"
-      					    action="#{treeSelector.currentTreeBacker.expandAll}"
-               			styleClass="treeTopLink"/>
-
-		<h:commandLink       value="#{messages.menu_collapseAll}"
-					actionListener="#{treeSelector.currentTreeBacker.collapseAll}"
-              			styleClass="treeTopLink"/>
-
-		<h:panelGroup rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 1}">
-			<f:verbatim><hr class="actionsPopupSeparatorHr"/></f:verbatim>
-		</h:panelGroup>
-
-		<h:commandLink       value="#{treeSelector.selectedNode.contextMenu.menuItems[0].description}"
-					actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[0].processEvent}"
-	           				action="#{treeSelector.getCurrentOutcome}"
-	           			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 1}" styleClass="treeTopLink"
-	           			  onclick="hideActionMenue();#{treeSelector.selectedNode.contextMenu.menuItems[0].javaScriptConfirmStatement}
-	           			           #{treeSelector.selectedNode.contextMenu.menuItems[0].javaScriptWaitStatement}"/>
-
-		<h:commandLink           value="#{treeSelector.selectedNode.contextMenu.menuItems[1].description}"
-						actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[1].processEvent}"
-		           				action="#{treeSelector.getCurrentOutcome}"
-	    	       			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 2}" styleClass="treeTopLink" 
-	        	   			  onclick="hideActionMenue();#{treeSelector.selectedNode.contextMenu.menuItems[1].javaScriptConfirmStatement}
-	           				           #{treeSelector.selectedNode.contextMenu.menuItems[1].javaScriptWaitStatement}"/>
-
-		<h:commandLink           value="#{treeSelector.selectedNode.contextMenu.menuItems[2].description}"
-						actionListener="#{treeSelector.selectedNode.contextMenu.menuItems[2].processEvent}"
-		           				action="#{treeSelector.getCurrentOutcome}"
-	    	       			  rendered="#{treeSelector.selectedNode.contextMenu.itemCount >= 3}" styleClass="treeTopLink" 
-	        	   			  onclick="hideActionMenue();#{treeSelector.selectedNode.contextMenu.menuItems[2].javaScriptConfirmStatement}
-	           				           #{treeSelector.selectedNode.contextMenu.menuItems[2].javaScriptWaitStatement}"/>
-          <f:verbatim><br/></f:verbatim>
-		  <h:commandLink value="#{messages.close}" styleClass="treeTopLink" onclick="hideActionMenue();return;"/>          
-          </h:panelGrid>
+          <h:panelGrid binding="#{treeSelector.contextMenuTable}"/>
       </h:panelGroup>
 </h:panelGroup>
 <h:panelGroup rendered="#{!style.embedded}">

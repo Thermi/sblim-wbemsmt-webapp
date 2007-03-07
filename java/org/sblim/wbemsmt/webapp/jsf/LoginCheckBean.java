@@ -367,11 +367,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     {
     	try {
 			CimomTreeNode treeNode = (CimomTreeNode)treeSelector.getSelectedTaskLauncherTreeNode();
-			treeNode.setCimClient(null);
-			treeNode.getCimomData().setUser(null);
-			treeNode.updateName();
-			treeNode.buildTree();   
-			treeNode.readSubnodes(true);
+			treeNode.logout();
 			JsfBase.addMessage(Message.create(ErrCodes.MSG_LOGGED_OUT, Message.INFO, bundle, "loggedOutFrom",new Object[]{treeNode.getCimomData().getInfo()}));
 			return "cimomLogin";
 		} catch (WbemSmtException e) {

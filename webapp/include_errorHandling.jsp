@@ -3,9 +3,9 @@
 <h:graphicImage value="#{style.resourceDir}/images/inline-messages-error.gif" alt="#{messages.error}" title="#{messages.error}"/>
 <h:dataTable value="#{messageHandler.errorMessages}" var="msg" border="0" cellspacing="2" width="100%" columnClasses="messagesImage,messagesSummary">
 <h:column>
-	<h:outputText value="#{msg.messageCode}" styleClass="errorMessageTitle"/>
+	<h:outputText value="#{msg.messageCode}" styleClass="errorMessageTitle" escape="false"/>
 	<f:verbatim><br></f:verbatim>
-	<h:outputText value="#{msg.messageText}" styleClass="errorMessageText"/>
+	<h:outputText value="#{msg.messageText}" styleClass="errorMessageText" escape="false"/>
 	<f:verbatim><br><br></f:verbatim>
 </h:column>
 </h:dataTable>
@@ -18,9 +18,9 @@
 <h:graphicImage value="#{style.resourceDir}/images/inline-messages-warning.gif" alt="#{messages.warning}" title="#{messages.warning}"/>
 <h:dataTable value="#{messageHandler.warningMessages}" var="msg" border="0" cellspacing="2" width="100%" columnClasses="messagesImage,messagesSummary">
 <h:column>
-	<h:outputText value="#{msg.messageCode}" styleClass="warningMessageTitle"/>
+	<h:outputText value="#{msg.messageCode}" styleClass="warningMessageTitle" escape="false"/>
 	<f:verbatim><br></f:verbatim>
-	<h:outputText value="#{msg.messageText}" styleClass="warningMessageText"/>
+	<h:outputText value="#{msg.messageText}" styleClass="warningMessageText" escape="false"/>
 	<f:verbatim><br><br></f:verbatim>
 </h:column>
 </h:dataTable>
@@ -33,9 +33,9 @@
 <h:graphicImage value="#{style.resourceDir}/images/inline-messages-info.gif" alt="#{messages.info}" title="#{messages.info}"/>
 <h:dataTable value="#{messageHandler.infoMessages}" var="msg" border="0" cellspacing="2" width="100%" columnClasses="messagesImage,messagesSummary">
 <h:column>
-	<h:outputText value="#{msg.messageCode}" styleClass="infoMessageTitle"/>
+	<h:outputText value="#{msg.messageCode}" styleClass="infoMessageTitle" escape="false"/>
 	<f:verbatim><br></f:verbatim>
-	<h:outputText value="#{msg.messageText}" styleClass="infoMessageText"/>
+	<h:outputText value="#{msg.messageText}" styleClass="infoMessageText" escape="false"/>
 	<f:verbatim><br><br></f:verbatim>
 </h:column>
 </h:dataTable>
@@ -48,9 +48,9 @@
 <h:graphicImage value="#{style.resourceDir}/images/inline-messages-success.gif" alt="#{messages.success}" title="#{messages.success}"/>
 <h:dataTable value="#{messageHandler.successMessages}" var="msg" border="0" cellspacing="2" width="100%" columnClasses="messagesImage,messagesSummary">
 <h:column>
-	<h:outputText value="#{msg.messageCode}" styleClass="successMessageTitle"/>
+	<h:outputText value="#{msg.messageCode}" styleClass="successMessageTitle" escape="false"/>
 	<f:verbatim><br></f:verbatim>
-	<h:outputText value="#{msg.messageText}" styleClass="successMessageText"/>
+	<h:outputText value="#{msg.messageText}" styleClass="successMessageText" escape="false"/>
 	<f:verbatim><br><br></f:verbatim>
 </h:column>
 </h:dataTable>

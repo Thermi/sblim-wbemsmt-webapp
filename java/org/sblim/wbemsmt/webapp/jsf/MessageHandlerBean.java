@@ -101,6 +101,13 @@ public class MessageHandlerBean extends WbemsmtWebAppBean implements Cleanup {
 				//wbemsmtFacesMessage = new FacesMessageWrapper(msg);
 			}
 			
+			if (wbemsmtFacesMessage.getMessage() != null)
+			{
+				String txt = wbemsmtFacesMessage.getMessage().getMessage();
+				txt = txt.replaceAll("\\n", "<br>");
+				txt = txt.replaceAll("\\r", "");
+				wbemsmtFacesMessage.getMessage().setMsg(txt);
+			}
 			
 			if (!messageSet.contains(msg.getSummary())) {
 				

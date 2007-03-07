@@ -388,6 +388,10 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 	{
 		return jsfRootNode.find(taskLauncherTreeNode);
 	}
+
+	public TaskLauncherTreeFactory getTreeFactory() {
+		return treeFactory;
+	}
 	
 	
 	
