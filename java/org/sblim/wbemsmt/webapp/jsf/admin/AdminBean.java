@@ -142,6 +142,8 @@ public class AdminBean extends WbemsmtWebAppBean {
 					Cimom cimom = taskLauncherDoc.getTasklauncherconfig().addNewCimom();
 					hostEntry.setCimom(cimom);
 					hostEntry.setNew(false);
+				
+					JsfBase.addMessage(Message.create(ErrCodes.MSG_ADDED_HOST, Message.INFO, bundle, "addedHost",new Object[]{hostEntry.getHostname()}));					
 					
 					updateCimom(cimom, hostEntry);
 
@@ -154,6 +156,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 					hostEntry.setCimom(cimom);
 
 					updateCimom(cimom, hostEntry);
+					JsfBase.addMessage(Message.create(ErrCodes.MSG_SAVE_SUCCESS, Message.INFO, bundle, "save.success"));					
 				}
 			}
 			

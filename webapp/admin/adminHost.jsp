@@ -48,6 +48,8 @@
 	<f:verbatim><br><br></f:verbatim>
 	<h:outputText value="#{messages.editConfiguredHosts}" rendered="#{!admin.slpMode}" styleClass="fieldLabel"/>
 	<h:outputText value="#{messages.editSlpHosts}" rendered="#{admin.slpMode}" styleClass="fieldLabel"/>
+	<f:verbatim><br><br></f:verbatim>
+	<%@ include file="../include_errorHandling.jsp" %>
 </h:panelGroup>
 
 	<f:verbatim><br><br></f:verbatim>
@@ -110,8 +112,6 @@
 <f:verbatim><br><br></f:verbatim>
 <h:outputText value="#{messages.not_configured_hint}"></h:outputText>
 <h:outputText value="#{messages.not_installed_hint}"></h:outputText>
-<f:verbatim><br><br></f:verbatim>
-<%@ include file="/include_errorHandling.jsp" %>
 </h:panelGrid>
 </h:form>
 </body>

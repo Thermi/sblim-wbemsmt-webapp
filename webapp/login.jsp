@@ -28,8 +28,8 @@
 <html>
 <head>
 <h:outputText escape="false" value="<title>#{messages.webAppTitle}</title>"/>
-<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/login.css' rel='stylesheet' type='text/css'>"/>
-<h:outputText escape="false" value="<link href='#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDirAbsolute}/styles/login.css' rel='stylesheet' type='text/css'>"/>
+<h:outputText escape="false" value="<link href='#{style.resourceDirAbsolute}/styles/main.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<script src='scripts/showWait.js'></script>"/>
 </head>
 <body class="loginBody">
