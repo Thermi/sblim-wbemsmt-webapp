@@ -275,11 +275,16 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         return cimClient;
     }
     
+    /**
+     * called by the startscreen
+     * @param event
+     */
     public void login(ActionEvent event)
     {
 		try {
 			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 			session.setAttribute(RuntimeUtil.RUNTIME_MODE,RuntimeUtil.MODE_SINGLE);
+			RuntimeUtil.getInstance().setMode(RuntimeUtil.MODE_SINGLE);
 			logger.log(Level.INFO, "Runtime mode: " + RuntimeUtil.MODE_SINGLE);
 			login();
 		} catch (WbemSmtException e) {
@@ -480,6 +485,13 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			setValuesFromCimomData(data,true);
 			this.password = (String) d.readObject();
 			d.close();
+			
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			session.setAttribute(RuntimeUtil.RUNTIME_MODE,RuntimeUtil.MODE_SINGLE);
+			RuntimeUtil.getInstance().setMode(RuntimeUtil.MODE_SINGLE);
+			logger.log(Level.INFO, "Runtime mode: " + RuntimeUtil.MODE_SINGLE);
+
+			
 			login();
 		} catch (Exception e) {
 			JsfUtil.handleException(e);
