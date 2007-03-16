@@ -58,6 +58,7 @@
 			<h:outputText value="#{node.description}"
 						   rendered="#{node.enabled && t.nodeSelected}"
 						   styleClass="treeLink selected"
+						   escape="false"
 						   />
 			<h:outputText value="#{node.description}" escape="false" styleClass="treeDisabled" rendered="#{!node.enabled}"/>
 	    </h:panelGroup>

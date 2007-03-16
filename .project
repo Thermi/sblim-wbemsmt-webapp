@@ -6,6 +6,7 @@
 		<project>wbemsmt-commons</project>
 		<project>wbemsmt-samba</project>
 		<project>wbemsmt-dns</project>
+		<project>wbemsmt-metacluster</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

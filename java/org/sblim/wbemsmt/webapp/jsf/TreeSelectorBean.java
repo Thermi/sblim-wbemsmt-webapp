@@ -366,7 +366,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 		}
 		
 
-		if (getSelectedNode() != null)
+		if (getSelectedNode() != null && getSelectedNode().getContextMenu() != null)
 		{
 			TaskLauncherContextMenu contextMenu = getSelectedNode().getContextMenu();
 			int items = contextMenu.getItemCount();

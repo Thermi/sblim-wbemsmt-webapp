@@ -19,5 +19,5 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
-<h:panelGrid id="content" rowClasses="oddRow, evenRow">
+<h:panelGrid id="content" binding="#{objectActionController.welcomePanel}">
 </h:panelGrid>
