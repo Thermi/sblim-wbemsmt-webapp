@@ -181,7 +181,7 @@ a:hover {
 {
     font-size: xx-small;
 	color: #000000;
-	vertical-align: middle;
+	vertical-align: top;
 	width:100px;
 }
 
@@ -189,7 +189,7 @@ a:hover {
 {
     font-size: xx-small;
 	color: #000000;
-	vertical-align: middle;
+	vertical-align: top;
 	text-align: left;
 	width:100%;
 }
