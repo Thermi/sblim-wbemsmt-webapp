@@ -232,7 +232,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
     		{
         		treeSelectorBean.setSelectedTaskLauncherTreeNode(selectedNode);
 
-        		result = selectedNode.click();
+        		result = selectedNode.click(true);
 
         		objectActionController.setSelectedNode(selectedNode);
         		objectActionController.setSelectedTabIndex(selectTabIndex);
