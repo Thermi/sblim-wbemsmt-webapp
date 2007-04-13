@@ -25,20 +25,20 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 1.5.32
 BuildRequires: ant >= 1.6
-BuildRequires: sblim-cim-client >= 1.3.1
+BuildRequires: sblim-cim-client >= 1.3.2
 BuildRequires: sblim-wbemsmt-commons => 0.2.3
 BuildRequires: tomcat5-servlet-2.4-api >= 5.5.15
 BuildRequires: jakarta-commons-cli >= 1.0
 BuildRequires: jakarta-commons-lang >= 2.0
 BuildRequires: jakarta-commons-collections >= 3.1
-#BuildRequires:  myfaces >= 1.1.4
+#BuildRequires:  myfaces >= 1.1.5
 #BuildRequires:  tomahawk >= 1.1.3
 #BuildRequires:  xmlBeans >= 2.2.0
 
 ###############################################################################
 
 Requires: jpackage-utils >= 1.5.32
-Requires: sblim-cim-client >= 1.3.1
+Requires: sblim-cim-client >= 1.3.2
 Requires: sblim-wbemsmt-commons >= %{wbemsmt_commons_version}
 Requires: xerces-j2 >= 2.7.1
 Requires: xalan-j2 >= 2.7.0
@@ -60,7 +60,7 @@ Requires: xml-commons >= 1.3.02
 Requires: xml-commons-apis >= 1.3
 Requires: xml-commons-resolver >= 1.1
 Requires: struts >= 1.2.9
-#Requires:  myfaces >= 1.1.4
+#Requires:  myfaces >= 1.1.5
 #Requires:  tomahawk >= 1.1.3
 #Requires:  xmlBeans >= 2.2.0
 
