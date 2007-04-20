@@ -221,7 +221,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 		ObjectActionControllerBean objectActionController = (ObjectActionControllerBean)BeanNameConstants.OBJECT_ACTION_CONTROLLER.getBoundValue(facesContext);
 		TreeSelectorBean treeSelectorBean =  (TreeSelectorBean) BeanNameConstants.TREE_SELECTOR.getBoundValue(FacesContext.getCurrentInstance());
 
-		TaskLauncherTreeNode selectedNode = objectActionController.getSelectedNode();
+		ITaskLauncherTreeNode selectedNode = objectActionController.getSelectedNode();
 		int selectTabIndex = objectActionController.getSelectedTabIndex();
 		String selectTabId = objectActionController.getSelectedTabId();
 

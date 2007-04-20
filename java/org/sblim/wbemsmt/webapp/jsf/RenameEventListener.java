@@ -23,9 +23,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.myfaces.custom.tree2.HtmlTree;
+import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListenerImpl;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
 
 public class RenameEventListener extends TaskLauncherTreeNodeEventListenerImpl
 {
@@ -60,7 +60,7 @@ public class RenameEventListener extends TaskLauncherTreeNodeEventListenerImpl
         HtmlTree tree = (HtmlTree) action.getComponent();
         JsfTreeNode node = (JsfTreeNode) tree.getNode();
         
-        TaskLauncherTreeNode launcherNode = node.getTaskLauncherTreeNode();    
+        ITaskLauncherTreeNode launcherNode = node.getTaskLauncherTreeNode();    
         launcherNode.setName("haseee");
         
         return "";
