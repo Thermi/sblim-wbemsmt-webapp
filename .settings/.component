@@ -31,9 +31,6 @@
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/struts/struts/1.2.7/struts-1.2.7.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xerces/xerces/1.4.4/xerces-1.4.4.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xmlbeans/xbean/2.2.0/xbean-2.2.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -94,7 +91,10 @@
 <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster/wbemsmt-metacluster">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-wbemsmt-cim-schema/2.9/sblim-wbemsmt-cim-schema-2.9.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xercesImpl/xercesImpl/2.9.0/xercesImpl-2.9.0.jar">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xml-apis/xml-apis/2.9.0/xml-apis-2.9.0.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
         
