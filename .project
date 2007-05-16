@@ -7,6 +7,7 @@
 		<project>wbemsmt-samba</project>
 		<project>wbemsmt-dns</project>
 		<project>wbemsmt-metacluster</project>
+		<project>wbemsmt-sample</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -35,7 +36,7 @@
 		<link>
 			<name>webapp/scripts/dojo.js</name>
 			<type>1</type>
-			<locationURI>JAR_REPO/dojo/dojo/0.4/dojo.js</locationURI>
+			<locationURI>JAR_REPO/dojo/dojo/0.4.1/dojo.js</locationURI>
 		</link>
 		<link>
 			<name>webapp/help/plugins/org.sblim.wbemsmt.help.commons</name>
@@ -61,6 +62,11 @@
 			<name>webapp/help/plugins/org.sblim.wbemsmt.help.samba</name>
 			<type>2</type>
 			<locationURI>WORKSPACE/wbemsmt-samba/help/plugins/org.sblim.wbemsmt.help.samba</locationURI>
+		</link>
+		<link>
+			<name>webapp/help/plugins/org.sblim.wbemsmt.help.sample</name>
+			<type>2</type>
+			<locationURI>WORKSPACE/wbemsmt-sample/help/plugins/org.sblim.wbemsmt.help.sample</locationURI>
 		</link>
 		<link>
 			<name>webapp/help/plugins/org.sblim.wbemsmt.help.metacluster</name>
