@@ -100,6 +100,9 @@
 <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/struts/struts/1.2.7/struts-1.2.7.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster-devel/wbemsmt-metacluster-devel">
+<dependency-type>uses</dependency-type>
+</dependent-module>
         
         <property name="java-output-path" value="/target/classes/"/>
         <property name="context-root" value="wbemsmt-webapp"/>
