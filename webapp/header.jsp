@@ -2,7 +2,7 @@
 /**
  *  header.jsp
  *
- * Â© Copyright IBM Corp. 2005
+ * © Copyright IBM Corp. 2005
  *
  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
@@ -36,7 +36,7 @@
 <h:form id="breadcrumb">
 <h:panelGrid columns="2" width="100%" styleClass="editTableTopLink" cellpadding="5" columnClasses="editTableTopLinkColumnSelected, editTableTopLinkColumnInfo">
 <h:panelGroup>
-<h:outputText value="#{messages.selectedNode}" styleClass="fieldLabel"/><f:verbatim>&nbsp;</f:verbatim><h:outputText styleClass="fieldLabel" value="#{messages.noSelection}" rendered="#{treeSelector.selectedNode == null}"/><h:outputText value="#{treeSelector.selectedNode.description}" rendered="#{treeSelector.selectedNode != null}" styleClass="fieldLabel" escape="false"/>
+<h:outputText value="#{messages.selectedNode}" styleClass="fieldLabel"/><f:verbatim>&nbsp;</f:verbatim><h:outputText styleClass="fieldLabel" value="#{messages.noSelection}" rendered="#{treeSelector.selectedNode == null}"/><h:outputText value="#{treeSelector.selectedNode.plainDescription}" rendered="#{treeSelector.selectedNode != null}" styleClass="fieldLabel" escape="false"/>
 <f:verbatim>&nbsp;</f:verbatim>
 
     <h:commandLink styleClass="actionPanel" onclick="showActionMenue();return false;" id="actionLink">
