@@ -8,7 +8,6 @@
 		<project>wbemsmt-dns</project>
 		<project>wbemsmt-metacluster</project>
 		<project>wbemsmt-sample</project>
-		<project>wbemsmt-metacluster-devel</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
