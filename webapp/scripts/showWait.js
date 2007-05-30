@@ -1,7 +1,12 @@
 var clientX, clientY;
 var gotoWait = false;
 var gotoAction = false;
+var gotoInterval = false;
 var waitMessage = "";
+var intervalIcon;
+var intervalValue;
+var intervalId;
+
 function showWait()
 {
 
@@ -54,12 +59,17 @@ function saveXY (clickEvent) {
   	  gotoWait = false;
 	  showWait();
   }
-  	
 
   if (gotoAction)
   {
     gotoAction = false;
   	showActionMenue();
+  }
+
+  if (gotoInterval)
+  {
+    gotoInterval = false;
+  	toggleToolbox(intervalIcon,intervalValue,intervalId);
   }
 
 }
@@ -114,5 +124,60 @@ function hideActionMenue()
 	actionMenue.style.visibility = "hidden";
 	actionMenueVisible = false;
 }
+
+function toggleToolbox(toolboxIcon, value, id)
+{
+		intervalIcon = toolboxIcon;
+		intervalValue = value;
+		intervalId = id;
+
+		var dlg = document.getElementById("updateIntervalToolbox");
+		//Input Suffix is defined in BasePanel as Constant SUFFIX_INPUT
+		var input = document.getElementById("updateIntervalForm:updateIntervalInput");
+		var hidden = document.getElementById("updateIntervalForm:updateIntervalHidden");
+		
+		if (dlg.style.visibility == "hidden")
+		{
+				x=-1;
+				y=-1;
+
+				//ie doesn't care about the x/y property				
+				if (toolboxIcon.x)
+				{
+				   x = toolboxIcon.x;
+				   y = toolboxIcon.y;
+				}
+				else
+				{
+					if (clientX && clientY)
+					{
+					   x = clientX;
+					   y = clientY;
+					}
+					else
+					{
+						gotoInterval = true;
+					}
+				}
+			
+				if (x != -1)
+				{
+					dlg.style.position = "absolute";
+					dlg.style.left = x + "px";
+					dlg.style.top = (y + 15) + "px";
+					dlg.style.visibility = "visible";
+	
+					hidden.value = id;
+					
+					input.value = value;
+					input.select();
+					input.focus();
+				}
+		}
+		else
+		{
+			dlg.style.visibility = "hidden";
+		}
+};
 
 document.onclick = saveXY;

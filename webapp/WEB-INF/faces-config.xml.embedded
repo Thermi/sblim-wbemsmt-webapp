@@ -109,6 +109,15 @@
 			<property-name>treeSelector</property-name>
 			<value>#{treeSelector}</value>
 		</managed-property>
+		<managed-property>
+		    <!-- Defines the default update interval for the ajax panels -->
+			<property-name>
+			defaultUpdateInterval</property-name>
+			<property-class>
+			java.lang.String</property-class>
+			<value>
+			1.0</value>
+		</managed-property>
     </managed-bean>
 
     <managed-bean>

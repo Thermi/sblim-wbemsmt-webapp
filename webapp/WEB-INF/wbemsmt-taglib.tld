@@ -25,7 +25,7 @@
 			<name>periodicalUpdate</name>
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
-			<description>Does a periodical refresh of the partial page inside the ppr group. In milliseconds.</description>
+			<description>Does a periodical refresh of the partial page inside the ppr group. In Seconds. Use a point as decimal separator.</description>
 		</attribute>		
 	</tag>
 	<tag>
