@@ -8,6 +8,7 @@
 		<project>wbemsmt-dns</project>
 		<project>wbemsmt-metacluster</project>
 		<project>wbemsmt-sample</project>
+		<project>wbemsmt-metacluster-devel</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -64,14 +65,14 @@
 			<locationURI>WORKSPACE/wbemsmt-samba/help/plugins/org.sblim.wbemsmt.help.samba</locationURI>
 		</link>
 		<link>
-			<name>webapp/help/plugins/org.sblim.wbemsmt.help.sample</name>
-			<type>2</type>
-			<locationURI>WORKSPACE/wbemsmt-sample/help/plugins/org.sblim.wbemsmt.help.sample</locationURI>
-		</link>
-		<link>
 			<name>webapp/help/plugins/org.sblim.wbemsmt.help.metacluster</name>
 			<type>2</type>
 			<locationURI>WORKSPACE/wbemsmt-metacluster/help/plugins/org.sblim.wbemsmt.help.metacluster</locationURI>
+		</link>
+		<link>
+			<name>webapp/help/plugins/org.sblim.wbemsmt.help.sample</name>
+			<type>2</type>
+			<locationURI>WORKSPACE/wbemsmt-sample/help/plugins/org.sblim.wbemsmt.help.sample</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
