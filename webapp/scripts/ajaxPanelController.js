@@ -3,9 +3,9 @@ function addText(text)
 {
 	//alert(text)
 	//if (debugWindow.document.forms.debugform)
-	//{
+	{
 		//debugWindow.document.forms.debugform.debugOut.value = debugWindow.document.forms.debugform.debugOut.value + "\n" + text;
-	//}
+	}
 }
 
 
@@ -29,12 +29,13 @@ org.sblim.wbemsmt.ajax.AjaxPanelController = function(formId)
 
 org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.startPeriodicalUpdate = function(refreshTimeout, zoneId)
 {
-
 	addText("startPeriodicalUpdate");
-	
-    var content = new Array;
-    content["org.sblim.wbemsmt.ajax.AjaxPanelController.triggeredComponents"] = zoneId;
-    this.doAjaxSubmit(content, refreshTimeout, zoneId);
+	if (refreshTimeout > 0)
+	{
+	    var content = new Array;
+	    content["org.sblim.wbemsmt.ajax.AjaxPanelController.triggeredComponents"] = zoneId;
+	    this.doAjaxSubmit(content, refreshTimeout, zoneId);
+	}
 };
 
 org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.stopPeriodicalUpdate = function(zoneId)
@@ -146,8 +147,7 @@ org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.doAjaxSubmit = function(con
 
     if(refreshTimeout)
     {
-    	addText("New Timeout: " + zoneId);
-    
+    	addText("New Timeout: " + zoneId + " timeout " + refreshTimeout);
         this.windowTimeout[zoneId] = window.setTimeout(function() {
             ajaxCtrl.startPeriodicalUpdate(refreshTimeout, zoneId);
         }, refreshTimeout)
@@ -155,3 +155,4 @@ org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.doAjaxSubmit = function(con
 
     return false;
 };
+
