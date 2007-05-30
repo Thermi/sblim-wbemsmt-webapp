@@ -25,7 +25,9 @@ import java.util.logging.Logger;
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
+import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListenerImpl;
+
 
 public class RenameEventListener extends TaskLauncherTreeNodeEventListenerImpl
 {
@@ -75,4 +77,8 @@ public class RenameEventListener extends TaskLauncherTreeNodeEventListenerImpl
 		return true;
 	}
 
+	public Priority getPriority() {
+		return TaskLauncherTreeNodeEventListener.PRIO_LOWEST;
+	}
+    
 }

@@ -31,6 +31,7 @@ import javax.faces.event.AbortProcessingException;
 
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
+import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListenerImpl;
 import org.sblim.wbemsmt.tasklauncher.CIMClassNode;
 import org.sblim.wbemsmt.tasklauncher.CIMInstanceNode;
@@ -132,5 +133,9 @@ public class ShowInstancesActionListener extends TaskLauncherTreeNodeEventListen
 	public boolean isCustomListener() {
 		return true;
 	}
-    
+
+	public Priority getPriority() {
+		return TaskLauncherTreeNodeEventListener.PRIO_LOWEST;
+	}
+	
 }

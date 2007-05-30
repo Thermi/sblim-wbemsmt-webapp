@@ -21,6 +21,7 @@ package org.sblim.wbemsmt.webapp.jsf;
 import java.util.Properties;
 
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
+import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListenerImpl;
 
 public class InstanceEditActionListener extends TaskLauncherTreeNodeEventListenerImpl
@@ -48,4 +49,10 @@ public class InstanceEditActionListener extends TaskLauncherTreeNodeEventListene
 	public boolean isCustomListener() {
 		return true;
 	}
+	
+	public Priority getPriority() {
+		return TaskLauncherTreeNodeEventListener.PRIO_LOWEST;
+	}
+	
+	
 }

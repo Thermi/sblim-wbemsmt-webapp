@@ -393,6 +393,9 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener
 		return treeFactory;
 	}
 	
+	public Priority getPriority() {
+		return TaskLauncherTreeNodeEventListener.PRIO_LOWEST;
+	}
 	
 	
 	
