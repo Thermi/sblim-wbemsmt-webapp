@@ -118,6 +118,21 @@
 			<value>
 			1.0</value>
 		</managed-property>
+		<managed-property>
+		    <!-- 
+		    The Max age for the Cookies saving the updateInterval
+		    65 years as default should be enough for every user :-)
+		    
+		    Provides values in seconds (86400 = one day)
+		    
+		     -->
+			<property-name>
+			updateIntervalCookieMaxAge</property-name>
+			<property-class>
+			int</property-class>
+			<value>
+			86400</value>
+		</managed-property>
     </managed-bean>
 
     <managed-bean>
