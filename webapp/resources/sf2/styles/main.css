@@ -221,6 +221,9 @@ a:hover {
 {
 	background-color:#AF9F85;
 	height: 30px;
+    border-right: 1px solid #C0C0C0;
+    padding-right:3px;
+    padding-left:2px;
 }
 
 .multiLineHeaderContent
@@ -338,6 +341,15 @@ a:hover {
 	text-align:center;
 }
 
+.visible
+{
+   visibility:visible;
+}
+
+.hidden
+{
+   visibility:hidden;
+}
 /******************************************************************************/
 /* Styles for displaying messages
 /******************************************************************************/
