@@ -98,7 +98,7 @@
 	</context-param>
     <context-param>
 	  <param-name>wbemsmt-version</param-name>
-	  <param-value>0.2.1-1</param-value>
+	  <param-value>BETA_0_5_1_1</param-value>
 	</context-param>
 	<!-- Extensions Filter -->
     <filter>
