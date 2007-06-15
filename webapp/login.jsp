@@ -63,9 +63,15 @@
 			<h:outputText value="#{messages.password}" styleClass="fieldLabel"/>
 			<h:inputSecret value="#{loginCheck.password}" redisplay="true" disabled="#{loginCheck.loginDisabled}"  size="25" id="password" styleClass="textField"/>
 
+			<h:panelGroup>
+				<h:selectBooleanCheckbox id="remind" value="#{loginCheck.remindLoginData}" />
+				<h:outputText value="#{messages.remindData}"/>
+			</h:panelGroup>
 			<h:panelGroup  rendered="#{menueController.useSlp}">
 			<h:selectBooleanCheckbox  value="#{loginCheck.useSlp}" styleClass="checkbox"/><h:outputText value="#{messages.useSlp}"  id="useSlp"  styleClass="fieldLabel"/>
 			</h:panelGroup>
+			
+			<f:verbatim escape="false"><br><br></f:verbatim>
 
 			<h:commandButton 
 			       value="#{messages.login}"

@@ -77,7 +77,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     
     private CIMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String namespace, List treeconfigs) throws LoginException
     {
-        CIMClient cimClient;
+        CIMClient cimClient = null;
         try
         {
         	username = username == null ? "" : username; 
@@ -96,7 +96,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
             loggedIn = true;
             if(enumeration == null)
             {
-            	throw new LoginException(bundle.getString("cannot.connect.noElementsFound"));
+            	throw new LoginException(bundle.getString("cannot.connect.noElementsFound"),cimClient);
             }
         }
         catch(Exception e)
@@ -107,7 +107,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			}
             else
             {
-            	throw new LoginException(bundle.getString("internal.error"),e);
+            	throw new LoginException(bundle.getString("internal.error"),e,cimClient);
             }
         }
         if (initModel)
@@ -116,7 +116,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				this.taskLauncherController.init(hostname, cimClient,false,treeconfigs);
 				treeSelector.setTaskLauncherController(hostname,taskLauncherController);
 			}catch (WbemSmtException e) {
-				throw new LoginException(bundle.getString("internal.error"),e);
+				throw new LoginException(bundle.getString("internal.error"),e,cimClient);
 			}
         }
         return cimClient;

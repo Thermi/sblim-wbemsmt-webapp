@@ -185,6 +185,15 @@
 			<property-name>treeSelector</property-name>
 			<value>#{treeSelector}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>
+			objectActionController</property-name>
+			<property-class>
+			org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean</property-class>
+			<value>
+			#{objectActionController}</value>
+		</managed-property>
+		
     </managed-bean>
      -->
 	<!-- LoginCheck for  Embedded Mode-->

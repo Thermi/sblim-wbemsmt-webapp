@@ -47,16 +47,21 @@ import org.sblim.wbem.client.UserPrincipal;
 import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
+import org.sblim.wbemsmt.bl.adapter.MessageUtil;
+import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.exception.LoginException;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.CimomData;
+import org.sblim.wbemsmt.tasklauncher.login.CimomLoginLogoutListener;
 import org.sblim.wbemsmt.tasklauncher.login.LoginCheck;
 import org.sblim.wbemsmt.tools.jsf.JavascriptUtil;
 import org.sblim.wbemsmt.tools.jsf.JsfBase;
 import org.sblim.wbemsmt.tools.jsf.JsfUtil;
+import org.sblim.wbemsmt.tools.jsf.WbemsmtCookieUtil;
+import org.sblim.wbemsmt.tools.jsf.WbemsmtCookieUtil.LoginData;
 import org.sblim.wbemsmt.tools.resources.ResourceBundleManager;
 import org.sblim.wbemsmt.tools.resources.WbemSmtResourceBundle;
 import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
@@ -85,9 +90,11 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
                    namespace;
     private Vector presets;
     private boolean useSlp;
+    private boolean remindLoginData;
     
     private TaskLauncherController taskLauncherController;
     private TreeSelectorBean treeSelector;
+    private ObjectActionControllerBean objectActionController;  
     
     private HtmlSelectOneMenu presetSelection;
 
@@ -106,12 +113,24 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 
 	private CimomData selection;
 
+	/**
+	 * The LoginData from the Cookie
+	 */
+	private LoginData loginDataFromCookie;
+
     public LoginCheckBean()
     {
     	super();
     	final FacesContext fc = FacesContext.getCurrentInstance();
     	this.presetSelection = new HtmlSelectOneMenu();
     	presetSelection.setConverter(new IntegerConverter());
+    	
+		loginDataFromCookie = WbemsmtCookieUtil.getLoginDataFromCookie();
+		if (loginDataFromCookie != null)
+		{
+			setValuesFromCookie(loginDataFromCookie);
+		}
+		remindLoginData = loginDataFromCookie != null;
     	
 		Iterator requestLocales = fc.getExternalContext().getRequestLocales();
     	while (requestLocales.hasNext())
@@ -124,7 +143,8 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		presetSelection.getChildren().add(items);
     }
     
-    public List getPresetValues()
+
+	public List getPresetValues()
     {
     	return presetValues;    	
     }
@@ -160,7 +180,11 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				
 				if(presets.size() > selectedValue)
 				{
-					setValuesFromCimomData((CimomData) presets.get(selectedValue),true);
+					if (loginDataFromCookie == null)
+					{
+						setValuesFromCimomData((CimomData) presets.get(selectedValue),true);
+					}
+					
 					selection = (CimomData) presets.get(selectedValue);
 				}
 				else
@@ -218,6 +242,16 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     	//FacesContext.getCurrentInstance().getResponseComplete();
     }
     
+    
+    private void setValuesFromCookie(LoginData loginData) {
+    	this.username = loginData.getUser();
+    	this.password = loginData.getPassword();
+    	this.hostname = loginData.getHost();
+    	this.namespace = loginData.getNamespace();
+    	this.port = loginData.getPort();
+    	this.useSlp = loginData.isUseSlp();
+	}
+    
     private void setValuesFromCimomData(TaskLauncherConfig.CimomData data, boolean overwriteUserId)
     {
     	if (overwriteUserId)
@@ -232,7 +266,12 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     
     private CIMClient createCIMClient(boolean setCimClient) throws LoginException
     {
-        CIMClient cimClient;
+    	return createCIMClient(setCimClient,hostname,namespace,port, username,password);
+    }
+    
+    private CIMClient createCIMClient(boolean setCimClient, String hostname, String namespace, String port, String username, String password) throws LoginException
+    {
+        CIMClient cimClient = null;
         try
         {
         	username = username == null ? "" : username; 
@@ -249,7 +288,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
             Enumeration enumeration = cimClient.enumerateClasses();
             if(enumeration == null)
             {
-            	throw new LoginException(bundle.getString("cannot.connect.noElementsFound"));
+            	throw new LoginException(bundle.getString("cannot.connect.noElementsFound"),cimClient);
             }
         }
         catch(Exception e)
@@ -260,7 +299,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			}
             else
             {
-            	throw new LoginException(bundle.getString("internal.error"),e);
+            	throw new LoginException(bundle.getString("internal.error"),e,cimClient);
             }
         }
         if (setCimClient)
@@ -269,7 +308,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				this.taskLauncherController.init(hostname, cimClient,useSlp);
 				treeSelector.setTaskLauncherController(hostname,taskLauncherController);
 			}catch (WbemSmtException e) {
-				throw new LoginException(bundle.getString("internal.error"),e);
+				throw new LoginException(bundle.getString("internal.error"),e,cimClient);
 			}
         }
         return cimClient;
@@ -303,6 +342,17 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         logger.log(Level.INFO, "connection ok, good authentication, cimclient created");
         this.loggedIn = true;
         logger.log(Level.INFO, "loggin in user: " + this.username);
+        
+        if (remindLoginData)
+        {
+        	loginDataFromCookie =  new WbemsmtCookieUtil.LoginData(username,password,hostname,port,namespace,useSlp);
+        	WbemsmtCookieUtil.addLoginDataCookie(loginDataFromCookie);
+        }
+        else
+        {
+        	WbemsmtCookieUtil.removeLoginDataCookie();	
+        }
+        
     }
     
     
@@ -342,6 +392,19 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         session.invalidate();
         session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         session.setAttribute(RuntimeUtil.RUNTIME_MODE,runtimeMode);
+
+        if (runtimeMode.equals(RuntimeUtil.MODE_SINGLE))
+        {
+    		loginDataFromCookie = WbemsmtCookieUtil.getLoginDataFromCookie();
+    		if (loginDataFromCookie != null)
+    		{
+    			setValuesFromCookie(loginDataFromCookie);
+    		}
+    		remindLoginData = loginDataFromCookie != null;
+        }
+        
+
+		
         javax.faces.context.FacesContext.getCurrentInstance().renderResponse();
     }
 
@@ -352,21 +415,60 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
      */
     public String loginActionEmbedded()
     {
-    	try {
-			CimomTreeNode treeNode = (CimomTreeNode)treeSelector.getSelectedTaskLauncherTreeNode();
-			treeNode.setSlpLoader(useSlp ? taskLauncherController.getSlpLoader() : null);
-			setValuesFromCimomData(treeNode.getCimomData(),false);
-			CIMClient client = createCIMClient(false);
-			treeNode.setCimClient(client);
-			treeNode.getCimomData().setUser(username);
-			treeNode.updateName();
-			treeNode.buildTree();
-			treeNode.readSubnodes(true);
+    		
+    		List nodes = objectActionController.getCimomTreeNodesForLogin();
+    		for (Iterator iter = nodes.iterator(); iter.hasNext();) {
+    			try {
+					CimomTreeNode treeNode = (CimomTreeNode) iter.next();
+					String host = treeNode.getCimomData().getHostname();
+					String user = treeNode.getCimomData().getUser();
+					String passwd = treeNode.getPassword();
+					boolean emptyPassword = treeNode.isEmptyPassword();
+					
+					//handle the Node only if the user wants to use a empty password or he entered a password
+					
+					if (emptyPassword || StringUtils.isNotEmpty(passwd))
+					{
+						if (emptyPassword && StringUtils.isNotEmpty(passwd))
+						{
+							MessageUtil.addMessage(ErrCodes.MSGDEF_EMPTY_PASSWORD_AND_PASSWORD_SET, ResourceBundleManager.getCommonResourceBundle(),new Object[]{treeNode.getCimomData().getInfo()});
+						}
+						else
+						{
+							if (treeNode.isRemindPassword())
+							{
+								String passwordForCookie = emptyPassword ? WbemsmtCookieUtil.EMPTY : passwd;
+								WbemsmtCookieUtil.addPasswordCookie(host, user, passwordForCookie);
+							}
+							else
+							{
+								WbemsmtCookieUtil.deletePasswordCookie(host, user);
+							}
+
+							treeNode.setSlpLoader(treeNode.isUseSlp() ? taskLauncherController.getSlpLoader() : null);
+							setValuesFromCimomData(treeNode.getCimomData(),false);
+							
+							
+							String passwordForLogin = emptyPassword ? "" : passwd;
+							
+							CIMClient client = createCIMClient(false,
+									host,
+									treeNode.getCimomData().getNamespace(),
+									""+treeNode.getCimomData().getPort(),
+									user,
+									passwordForLogin);
+							treeNode.setCimClient(client);
+							treeNode.updateName();
+							treeNode.buildTree();
+							treeNode.readSubnodes(true);
+						}
+					}
+					
+    			} catch (Exception e) {
+    				JsfUtil.handleException(e);
+    			}
+			}
 			return startView;
-		} catch (WbemSmtException e) {
-			JsfUtil.handleException(e);
-			return startView;
-		}
     }
     public String logoutActionEmbedded()
     {
@@ -374,7 +476,8 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			CimomTreeNode treeNode = (CimomTreeNode)treeSelector.getSelectedTaskLauncherTreeNode();
 			treeNode.logout();
 			JsfBase.addMessage(Message.create(ErrCodes.MSG_LOGGED_OUT, Message.INFO, bundle, "loggedOutFrom",new Object[]{treeNode.getCimomData().getInfo()}));
-			return "cimomLogin";
+			//do the same as if the user has clicked on the treeNode...
+			return new CimomLoginLogoutListener().processEvent(new TaskLauncherTreeNodeEvent(this,treeNode,this,TaskLauncherTreeNodeEvent.TYPE_CLICKED));
 		} catch (WbemSmtException e) {
 			JsfUtil.handleException(e);
 			return "";
@@ -431,8 +534,18 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         else
             return "";
     }
+    
+    public boolean isRemindLoginData() {
+		return remindLoginData;
+	}
 
-    public void setLoginView(String loginView)
+
+	public void setRemindLoginData(boolean remindLoginData) {
+		this.remindLoginData = remindLoginData;
+	}
+
+
+	public void setLoginView(String loginView)
     {
         this.loginView = loginView;
     }
@@ -455,6 +568,13 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     
     public void setTreeSelector(TreeSelectorBean treeSelector) {
 		this.treeSelector = treeSelector;
+	}
+
+    
+    
+	public void setObjectActionController(
+			ObjectActionControllerBean objectActionController) {
+		this.objectActionController = objectActionController;
 	}
 
 	public void setLoginFilename(String filename)
@@ -583,7 +703,9 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		}
 	}
 	
+	public String getJavascriptShowWaitMulti()
+	{
+		return JavascriptUtil.getShowWaitCall(bundle.getString("login.to.multiple"));
+	}
 	
-	
-
 }
