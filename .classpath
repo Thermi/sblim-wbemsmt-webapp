@@ -7,13 +7,13 @@
 	<classpathentry kind="var" path="JAR_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/myfaces/tomahawk/1.1.3/tomahawk-1.1.3.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wbemsmt-commons"/>
-	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-slp-client/1.3.2/sblim-slp-client-1.3.2.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-wbemsmt-commons-launcher-config/0.2.3/sblim-wbemsmt-commons-launcher-config-0.2.3.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-cim-client/1.3.2/sblim-cim-client-1.3.2.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/xmlbeans/xbean/2.2.0/xbean-2.2.0.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-impl/1.1.5/myfaces-impl-1.1.5.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-api/1.1.5/myfaces-api-1.1.5.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/commons-codec/commons-codec/1.3/commons-codec-1.3.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-cim-client/1.3.3/sblim-cim-client-1.3.3.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-slp-client/1.3.3/sblim-slp-client-1.3.3.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
