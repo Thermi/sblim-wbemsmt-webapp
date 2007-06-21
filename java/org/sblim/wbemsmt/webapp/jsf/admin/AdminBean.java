@@ -376,7 +376,7 @@ public class AdminBean extends WbemsmtWebAppBean {
     {
 		if (slpLoader.getCanFindHosts())
 		{
-	    	TasklauncherconfigDocument result = SLPUtil.readFromSlp(slpLoader,taskLauncherDoc.getTasklauncherconfig().getTreeconfigArray());
+	    	TasklauncherconfigDocument result = SLPUtil.readFromSlp(slpLoader,treeconfigArray);
 			
 			//reload the displayed hosts
 			hostTable = null;
