@@ -1,8 +1,8 @@
 <%-- 
 /**
- *  loginFile.jsp
+ *  loginMulti.jsp
  *
- * Â© Copyright IBM Corp. 2005
+ * © Copyright IBM Corp. 2005
  *
  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
@@ -41,7 +41,15 @@
 <script>
 function submitLikeJSF()
 {
-	document.forms[0].elements['test:cmd1'].click();
+	document.forms[0].elements['test:useSlp'].value = '<%="true".equalsIgnoreCase(request.getParameter("useSlp"))%>';
+	
+	<% String forward = request.getParameter("forward") == null ? "true" : request.getParameter("forward");
+	   if ("true".equalsIgnoreCase(forward)) {
+	%>
+	   document.forms[0].elements['test:cmd1'].click();
+	<% } else { %>
+	   document.forms[0].elements['test:cmd1'].style.visibility = "visible";
+	<% } %>
 }
 </script>
 <body onLoad="submitLikeJSF();">
@@ -49,6 +57,7 @@ function submitLikeJSF()
 	<h:outputText value="#{messages.redirecting}" />
 	<h:form id="test">
 		<h:commandButton action="#{loginCheck.multiWithoutLogin}" value="Test" id="cmd1" style="visibility:hidden" />
+		<h:inputHidden id="useSlp" value="#{loginCheck.useSlp}" />
 	</h:form>
 </f:view>
 <body>

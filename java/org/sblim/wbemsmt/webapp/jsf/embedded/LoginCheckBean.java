@@ -69,13 +69,15 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 
 	private boolean loggedIn;
 
+	private boolean useSlp;
+
 
     public LoginCheckBean()
     {
     	super();
     }
     
-    private CIMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String namespace, List treeconfigs) throws LoginException
+    private CIMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String namespace, List treeconfigs,boolean useSlp) throws LoginException
     {
         CIMClient cimClient = null;
         try
@@ -84,13 +86,13 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         	password = StringUtils.isEmpty(password) ? " " : password; 
         	hostname = hostname == null ? "" : hostname; 
         	port = port == null ? "" : port; 
-        	namespace = namespace == null ? "" : namespace; 
+        	namespace = namespace == null ? "" : namespace.trim(); 
         	
-        	String url = "HTTP://" + hostname + ":" + port.trim() + namespace.trim();
+        	String url = "HTTP://" + hostname + ":" + port.trim();
         	
         	logger.info("Coonecting to " + url + " with user " + username);
         	
-            cimClient = new CIMClient(new CIMNameSpace(url), new UserPrincipal(username.trim()), new PasswordCredential(password.toCharArray()));
+            cimClient = new CIMClient(new CIMNameSpace(url,namespace), new UserPrincipal(username.trim()), new PasswordCredential(password.toCharArray()));
             Enumeration enumeration = cimClient.enumerateClasses();
             
             loggedIn = true;
@@ -113,7 +115,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         if (initModel)
         {
         	try {
-				this.taskLauncherController.init(hostname, cimClient,false,treeconfigs);
+				this.taskLauncherController.init(hostname, cimClient,useSlp,treeconfigs	);
 				treeSelector.setTaskLauncherController(hostname,taskLauncherController);
 			}catch (WbemSmtException e) {
 				throw new LoginException(bundle.getString("internal.error"),e,cimClient);
@@ -211,7 +213,8 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				data.getHostname(), 
 				"" + data.getPort(), 
 				data.getNamespace(),
-				data.getTreeConfigs()
+				data.getTreeConfigs(),
+				false
 				);
 	}
 
@@ -233,7 +236,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 						cimomNode.getCimomData().getHostname(), 
 						"" + cimomNode.getCimomData().getPort(), 
 						cimomNode.getCimomData().getNamespace(),
-						cimomNode.getCimomData().getTreeConfigs()));
+						cimomNode.getCimomData().getTreeConfigs(),false));
 				
 				cimomNode.getCimomData().setUser(cimomNode.getCimomData().getUser());
 				cimomNode.setName(cimomNode.getCimomData().getHostname());
@@ -319,7 +322,13 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		this.targetsForTasks = targetsForTasks;
 	}
 
-	
+	public boolean isUseSlp() {
+		return useSlp;
+	}
+
+	public void setUseSlp(boolean useSlp) {
+		this.useSlp = useSlp;
+	}	
 
 	
 	

@@ -68,7 +68,7 @@
 				<h:outputText value="#{messages.remindData}"/>
 			</h:panelGroup>
 			<h:panelGroup  rendered="#{menueController.useSlp}">
-			<h:selectBooleanCheckbox  value="#{loginCheck.useSlp}" styleClass="checkbox"/><h:outputText value="#{messages.useSlp}"  id="useSlp"  styleClass="fieldLabel"/>
+			<h:selectBooleanCheckbox  id="useSlpCheckbox" value="#{loginCheck.useSlp}" styleClass="checkbox"/><h:outputText value="#{messages.useSlp}"  id="useSlp"  styleClass="fieldLabel"/>
 			</h:panelGroup>
 			
 			<f:verbatim escape="false"><br><br></f:verbatim>

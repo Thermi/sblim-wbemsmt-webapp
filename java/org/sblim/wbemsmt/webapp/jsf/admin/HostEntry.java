@@ -30,6 +30,7 @@ import java.util.Set;
 
 import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
+import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.CimomData;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.TreeConfigData;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.CimomDocument.Cimom;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigReferenceDocument.TreeconfigReference;
@@ -41,6 +42,7 @@ public class HostEntry
 	boolean addToFile = false;
 	String hostname;
 	String namespace;
+	String applicationNamespace;
 	String user;
 	int port;
 	List services = new ArrayList();
@@ -58,6 +60,7 @@ public class HostEntry
 		port = cimom.getPort();
 		user = cimom.getUser();
 		namespace = cimom.getNamespace();
+		applicationNamespace = cimom.getApplicationNamespace();
 		
 		Set installedServices = new HashSet();
 		for (int i = 0; i < services.length; i++) {
@@ -88,7 +91,7 @@ public class HostEntry
 			boolean configured = installedServices.contains(service);
 			serviceInHost.setConfigured(configured);
 
-			boolean installed = isServiceInstalled(config, service);
+			boolean installed = isServiceInstalled(config, service,new CimomData(cimom));
 			serviceInHost.setInstalled(installed);
 			
 			this.services.add(serviceInHost);
@@ -104,23 +107,13 @@ public class HostEntry
 		servicesAsString = sb.toString();
 		
 	}
-	private boolean isServiceInstalled(TaskLauncherConfig config, String service) {
-		
-		Boolean installed = (Boolean) serviceInstallationStates.get(service);
-		if (installed == null)
-		{
-			TreeConfigData treeConfigDataByTaskname = config.getTreeConfigDataByTaskname(service);
-			installed = new Boolean(treeConfigDataByTaskname != null && 
-							new CustomTreeConfig(treeConfigDataByTaskname).isLoaded());
-			serviceInstallationStates.put(service,installed);
-		}
-		return installed.booleanValue();
-	}
+	
 	public HostEntry(TaskLauncherConfig config, String[] services)
 	{
 		isNew = true;
 		hostname = AdminBean.NEW_HOST;
 		namespace = TaskLauncherConfig.DEFAULT_NAMESPACE;
+		applicationNamespace = TaskLauncherConfig.DEFAULT_NAMESPACE;
 		port = TaskLauncherConfig.DEFAULT_PORT;
 		user = TaskLauncherConfig.DEFAULT_USER;
 		
@@ -131,12 +124,26 @@ public class HostEntry
 			serviceInHost.setEnabled(false);
 			serviceInHost.setConfigured(true);
 			
-			boolean installed = isServiceInstalled(config, service);
+			boolean installed = isServiceInstalled(config, service, new CimomData(hostname,port,namespace,applicationNamespace,user));
 			serviceInHost.setInstalled(installed);
 			
 			this.services.add(serviceInHost);
 		}		
 	}
+	
+	private boolean isServiceInstalled(TaskLauncherConfig config, String service, CimomData cimomData) {
+		
+		Boolean installed = (Boolean) serviceInstallationStates.get(service);
+		if (installed == null)
+		{
+			TreeConfigData treeConfigDataByTaskname = config.getTreeConfigDataByTaskname(service);
+			installed = new Boolean(treeConfigDataByTaskname != null && 
+							new CustomTreeConfig(treeConfigDataByTaskname,cimomData).isLoaded());
+			serviceInstallationStates.put(service,installed);
+		}
+		return installed.booleanValue();
+	}
+
 	public boolean isDelete() {
 		return delete;
 	}
@@ -166,7 +173,13 @@ public class HostEntry
 	public void setNamespace(String namespace) {
 		this.namespace = namespace;
 	}
-
+	
+	public String getApplicationNamespace() {
+		return applicationNamespace;
+	}
+	public void setApplicationNamespace(String applicationNamespace) {
+		this.applicationNamespace = applicationNamespace;
+	}
 	public int getPort() {
 		return port;
 	}

@@ -205,6 +205,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 		
 		cimom.setHostname(hostEntry.getHostname());
 		cimom.setNamespace(hostEntry.getNamespace());
+		cimom.setApplicationNamespace(hostEntry.getApplicationNamespace());
 		cimom.setPort(hostEntry.port);
 		cimom.setUser(hostEntry.user);
 
@@ -310,7 +311,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 
 			TreeConfigData treeConfigDataByTaskname = taskLauncherController.getTaskLauncherConfig().getTreeConfigDataByTaskname(treeconfig.getName());
 			Boolean installed = new Boolean(treeConfigDataByTaskname != null && 
-							new CustomTreeConfig(treeConfigDataByTaskname).isLoaded());
+								new CustomTreeConfig(treeConfigDataByTaskname,null).isLoaded());
 			result.add(new Task(treeconfig.getName(),true,installed.booleanValue()));
 		 }
 		 return result;

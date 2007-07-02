@@ -31,6 +31,7 @@
 					<h:outputText value="#{messages.loginTo} #{cimom.cimomData.info}"/>
 				</f:facet>
 				<h:outputLabel for="username" value="#{messages.user}"/>
+				<h:inputHidden id="cimominfo" value="#{cimom.cimomData.info}"/>
 				<h:inputText id="username" value="#{cimom.cimomData.user}"/>
 				<h:outputLabel for="password" value="#{messages.password}"/>
 				<h:inputSecret id="password"  value="#{cimom.password}" redisplay="true" />
@@ -43,15 +44,15 @@
 					<h:outputLabel value="#{messages.remindPassword}"/>
 				</h:panelGroup>
 			</h:panelGrid>
-			<h:panelGrid columns="1" styleClass="mainTable" rendered="#{menueController.useSlp}">
+			<h:panelGrid columns="1" styleClass="mainTable" rendered="#{menueController.useSlp && cimom.slpRendered}">
 				<h:panelGroup>
-				<h:selectBooleanCheckbox  value="#{cimom.useSlp}"/><h:outputText value="#{messages.useSlp}"/>
+				<h:selectBooleanCheckbox id="useSlp"  value="#{cimom.useSlp}"/><h:outputText value="#{messages.useSlp}"/>
 				</h:panelGroup>
 			</h:panelGrid>
 			
 			<f:facet name="footer">
 				<h:panelGroup>
-					<h:commandButton value="#{messages.login}" action="#{loginCheck.loginActionEmbedded}" onclick="#{loginCheck.javascriptShowWaitMulti}"/>
+					<h:commandButton value="#{messages.login}" action="#{loginCheck.loginActionEmbedded}" onclick="#{loginCheck.javascriptShowWaitMulti}" id="login"/>
 					<f:verbatim escape="false"><br><br></f:verbatim>
 					<h:panelGroup>
 						<h:graphicImage value="#{style.resourceDir}/images/info.gif" alt="#{messages.info}" title="#{messages.info}" />
