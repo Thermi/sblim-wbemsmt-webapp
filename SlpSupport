@@ -1,0 +1,94 @@
+The application can be configured so that it uses SLP for the discovery of the endpoints and the tasks
+
+**************************
+* Configuration  
+**************************
+To configure the application for SLP you need to do the following:
+
+1. Set use SLP to true
+    <managed-bean>
+        <managed-bean-name>menueController</managed-bean-name>
+        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.MenueControllerBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>treeSelector</property-name>
+			<value>#{treeSelector}</value>
+			</managed-property>
+		<managed-property>
+			<property-name>useSlp</property-name>
+			<value>true</value>
+		</managed-property>
+		<managed-property>
+			<property-name>testMode</property-name>
+			<value>true</value>
+		</managed-property>
+    </managed-bean>
+
+2. Specify a SlpLoader class
+
+    <managed-bean>
+        <managed-bean-name>slpLoader</managed-bean-name>
+	    <managed-bean-class>org.sblim.wbemsmt.tools.slp.SblimSLPClientSLPLoader</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+		<managed-property>
+			<property-name>sleepInterval</property-name>
+			<value>1000</value>
+		</managed-property>
+	    <!-- A List of Strings for InetAddress.getByName
+	    that specify the directory agents to look for. -->
+    </managed-bean>
+    
+    Alternative: org.sblim.wbemsmt.tools.slp.SLPDummyLoader
+                
+                 This class uses the file <user.dir>\sblim-wbemsmt\dummySLPConfig.xml to simulate a SLP lookup Result.
+                 The xml must be valid against: /wbemsmt-commons/commons-bl/conf/tasklauncher-config.xsd
+                 
+                 Example:
+					<?xml version="1.0" encoding="UTF-8"?>
+					<tas:tasklauncherconfig version="VERSION_2_1" xmlns:tas="http://sblim.org/wbemsmt/tasklauncher/tasklauncherconfig">
+						<tas:cimom hostname="racoon" namespace="/root/PG_InterOp" port="5988" user="pegasus">
+							<tas:treeconfigReference name="DNS"/>
+						</tas:cimom>
+						<tas:cimom hostname="wrongSrv" namespace="/root/PG_InterOp" port="5988" user="pegasus">
+							<tas:treeconfigReference name="DNS"/>
+						</tas:cimom>
+						<tas:treeconfig name="DNS" filename="metaclusterTree.xml" slpServicename="IBM:Container Management Profile" classForServerTaskLookup="org.sblim.wbemsmt.metacluster.lookup.LookupServerTask" embeddedFilter="org.sblim.wbemsmt.metacluster.filter.EmbeddedFilter" welcomeListener="org.sblim.wbemsmt.metacluster.listener.WelcomeListener">
+							<tas:fcoPackage name="org.sblim.wbemsmt.metacluster.bl.fco"/>
+							<tas:resourceBundle name="messages"/>
+							<tas:resourceBundle name="messagesMetacluster"/>
+						</tas:treeconfig>
+					</tas:tasklauncherconfig>
+		
+**************************
+* Usage
+**************************
+
+There are 4 different usage scenarios       
+
+1. Admin Console
+
+Url: /wbemsmt-webapp/admin/
+
+Within the admin console you can choose SLP discovery to find all endpoints and their advertised registered slp profiles.
+After clicking 'edit Hosts' you can add some/all of the found hosts to the list managed by the Admin Console
+
+2. Single Host Mode
+
+Url: /wbemsmt-webapp/login.jsf?
+
+During login to a single endpoint you can check the 'Use slp'-checkbox to load all the task of that that are advertised through
+SLP. The manually configured tasks for that endpoint are overwritten within the current session
+
+3. Multi Host Mode for task discovery
+
+Url: /wbemsmt-webapp/loginMulti.jsf?locale=en&useSlp=false
+
+Use Slp within multi host mode NOT to find the hosts.
+During login to one of the hosts you can decide if you want use SLP discovery to find the correct set of tasks.
+
+4. Multi Host Mode for Host and task discovery
+
+Url: /wbemsmt-webapp/loginMulti.jsf?locale=en&useSlp=true
+
+Use Slp within multi host mode to find the hosts and the related tasks
+During login to one of the hosts SLP discovery is always used to find the correct set of tasks.
