@@ -1,13 +1,62 @@
+Changes in 0.5.0-1 :
+==============================================================================
+- 1746923  wbemsmt-webapp: docu for slp config/usage
+- 1746585  wbemsmt-admin: namespace for application
+- 1740803  wbemsmt-slp: use treeconfig to check for slp hosts
+- 1737773  wbemsmt-jsf: Save Data at login
+- 1737049  wbemsmt-jsf: parallel logon for multiple hosts
+- 1731237  wbemsmt-jsf: store updateInterval in Cookies
+- 1731236  wbemsmt-jsf: childrenTables as HtmlDataTable
+- 1728152  wbemsmt-common: priority for eventlisteners
+- 1727285  wbemsmt-jsf: configurable ajax update interval
+- 1728151  wbemsmt-jsf: scrollable childTables
+- 1724637  wbemsmt-common: InstanceNaming based in FCO
+- 1724664  wbemsmt-jsf: fixed with for tabs in tabbedPanel
+- 1724636  wbemsmt-common: add Session objec
+- 1707399  wbemsmt: change file encoding to utf8
+- 1704409  wbemsmt:dynamically build tree node by the usage of a class
+- 1674057  wbemsmt: update to sblim-cimclient-1.3.2
+- 1671504  wbemsmt-webapp: update to myfaces-core-1.1.5
+- 1699791  wbemsmt-webapp: revert changes after selecting new treenode
+- 1681993  wbemsmt-common: new UITypes
+- 1680547  wbemsmt-webapp: welcome screens
+- 1680566  wbemsmt-admin: feedback messages
+- 1675864  wbemsmt-webapp: common contextMenu
+- 1671545  wbemsmt-common: version-attribute for treeConfig.xml
+- 1658315  wbemsmt-webapp help integration
+- 1655037  wbemsmt-webapp: after failed login old treeConfig is shown
+- 1655036  wbemsmt-webapp: ajax integration
+- 1652247  wbemsmt-webapp display only requested tasks in embeddedMode
+- 1648068  wbemsmt-webapp: Login for Portlet containers
+- 1648024  wbemsmt-webapp: confirmation at pending changes
+- 1648025  wbemsmt-webapp: hide help  and logout
+- 1645083  wbemsmt-webapp: multilineTable - row deletion
+- 1638601  wbemsmt-webapp: remove update link
+- 1638397  wbemsmt-webapp: add action menue
+- 1638396  wbemsmt-webapp: add close link to wait indicator
+- 1636031  wbemsmt-webapp: theme for SourceForge
+- 1634187  wbemsmt-webapp: Rework AdminConsole&WelcomePage
+- 1631455  wbemsmt-webapp: prompt while cancelling a wizard
+- 1620646  wbemsmt-webapp: indicator for longrunning actions
+- 1619945  wbemsmt-webapp: TreeSynchronisation
+- 1619423  wbemsmt-webapp: rework ui: field indicators
+- 1619411  wbemsmt-webapp: rework ui: changes for IE,opera...
+- 1618646  wbemsmt-webapp: rework ui: messages
+- 1615822  wbemsmt-webapp: rework ui: wizards
+- 1613959  wbemsmt-webapp: rework ui: content of editPanels
+- 1613893  wbemsmt-webapp: rework UI: L&F Tree and EditPanels
+- 1613888  Rework UI: Logon Panel
+
 Changes in 0.2.3-1 :
 ==============================================================================
 
-- #1609070  wbemsmt-webapp: admin console
+- 1609070  wbemsmt-webapp: admin console
 
 
 Changes in 0.2.2-1 :
 ==============================================================================
 
-- #1575096  Tasklauncher: NPE switching from AdminConsole to Login
-- #1574472  Cleanup for client projects
-- #1573746  Preset handling for Login
+- 1575096  Tasklauncher: NPE switching from AdminConsole to Login
+- 1574472  Cleanup for client projects
+- 1573746  Preset handling for Login
 

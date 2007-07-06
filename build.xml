@@ -21,7 +21,7 @@
         Build file for SBLIM wbemsmt-webapp package
     </description>
 	
-    <property name="Manifest.version"    value="0.2.3"/>
+    <property name="Manifest.version"    value="0.5.0"/>
     <property name="Manifest.release"    value="1"/>
     <property name="Manifest.title"      value="WBEM-SMT: Web Based Task Launcher"/>
     <property name="Manifest.url"        value="http://sblim.sourceforge.net"/>
@@ -58,7 +58,8 @@
                compiler    ="${javac.compiler}"
                srcdir      ="${basedir}/java"
                deprecation ="${javac.deprecation}"
-               optimize    ="${javac.optimize}">
+               optimize    ="${javac.optimize}"
+               encoding    ="UTF-8">
             <classpath refid ="project.class.path"/>
         </javac>
 
@@ -73,7 +74,7 @@
     <!-- ================================= 
           target: build-webapp
          ================================= -->
-    <target name="build-webapp" depends="clean, compile" description="Build the WebApplication">
+    <target name="build-webapp" depends="clean, compile" description="--> Build the WebApplication">
         <mkdir dir="${dir.package.output}/sblim-${ant.project.name}"/>
         <mkdir dir="${dir.package.output}/sblim-${ant.project.name}/META-INF"/>
         <mkdir dir="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/classes"/>
@@ -142,7 +143,8 @@
           	          MultipleHostSupport,
           	          StandaloneSupport,
           	          PortletContainerSupport,
-          	          TroubleShooting,
+          	          TroubleShooting,,
+                          SlpSupport,
           	          sblim-${ant.project.name}.spec"
             excludes=".settings/**, .ant-targets-build.xml, pom.xml, target/**"
             prefix="sblim-${ant.project.name}"/>
@@ -153,7 +155,7 @@
     <!-- ================================= 
           target: package-bin
          ================================= -->
-    <target name="package-bin-tar" depends="build-webapp" description="Package binaries into tar ball">
+    <target name="package-bin-tar" depends="build-webapp" description="--> Package binaries into tar ball">
         <mkdir dir="${dir.release.output}"/>
         <tar destfile="${dir.release.output}/sblim-${ant.project.name}-${Manifest.version}-${Manifest.release}-bin.tar.bz2"
              compression="bzip2" longfile="${tar.longfile}">
@@ -165,7 +167,8 @@
                       NEWS,
                       README,
                       MultipleHostSupport,
-                      TroubleShooting"
+                      TroubleShooting,
+                      SlpSupport"
             prefix="sblim-${ant.project.name}"/>
           <tarfileset
             dir="${dir.package.output}"

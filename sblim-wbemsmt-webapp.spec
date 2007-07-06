@@ -1,5 +1,5 @@
 %define name                    sblim-wbemsmt-webapp
-%define version                 0.2.3
+%define version                 0.5.0
 %define build_release           1
 %define release                 %{build_release}jpp
 %define section                 free
@@ -25,8 +25,8 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 1.5.32
 BuildRequires: ant >= 1.6
-BuildRequires: sblim-cim-client >= 1.3.2
-BuildRequires: sblim-wbemsmt-commons => 0.2.3
+BuildRequires: sblim-cim-client >= 1.3.3
+BuildRequires: sblim-wbemsmt-commons => 0.5.0
 BuildRequires: tomcat5-servlet-2.4-api >= 5.5.15
 BuildRequires: jakarta-commons-cli >= 1.0
 BuildRequires: jakarta-commons-lang >= 2.0
@@ -38,8 +38,8 @@ BuildRequires: jakarta-commons-collections >= 3.1
 ###############################################################################
 
 Requires: jpackage-utils >= 1.5.32
-Requires: sblim-cim-client >= 1.3.2
-Requires: sblim-wbemsmt-commons >= %{wbemsmt_commons_version}
+Requires: sblim-cim-client >= 1.3.3
+Requires: sblim-wbemsmt-commons >= 0.5.0
 Requires: xerces-j2 >= 2.7.1
 Requires: xalan-j2 >= 2.7.0
 Requires: jakarta-commons-beanutils >= 1.7.0
@@ -83,7 +83,7 @@ other tasks.
 
 %build
 CLASSPATH=$(build-classpath sblim-cim-client sblim-slp-client)
-CLASSPATH=$(build-classpath tomcat5-servlet-2.4-api):$CLASSPATH
+CLASSPATH=$(build-classpath tomcat5-servlet-2.4-api tomcat5-jsp-2.0-api):$CLASSPATH
 CLASSPATH=$(build-classpath commons-collections commons-lang):$CLASSPATH
 CLASSPATH=$(build-classpath xbean jsr173_1.0_api myfaces-api myfaces-impl tomahawk):$CLASSPATH
 CLASSPATH=$(build-classpath sblim-wbemsmt/sblim-wbemsmt-commons sblim-wbemsmt/sblim-wbemsmt-commons-launcher-config):$CLASSPATH
@@ -108,8 +108,11 @@ install COPYING   $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/COPYING
 install NEWS      $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/NEWS
 install README    $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/README
 
-install MultipleHostSupport  $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/MultipleHostSupport
-install TroubleShooting      $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/TroubleShooting
+install MultipleHostSupport     $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/MultipleHostSupport
+install TroubleShooting         $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/TroubleShooting
+install PortletContainerSupport $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/PortletContainerSupport
+install SlpSupport              $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/SlpSupport
+install StandaloneSupport       $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/StandaloneSupport
 
 # Installation of WebApplication
 mv target/package/%{name}/* $RPM_BUILD_ROOT/%{wbemsmt_webapp_dir}
@@ -127,16 +130,16 @@ unset JAVA_HOME
 [ -z "$JAVA_HOME" ] && [ -r %{_sysconfdir}/java/java.conf ] && \
     . %{_sysconfdir}/java/java.conf
 [ -z "$JAVA_HOME" ] && JAVA_HOME=%{_jvmdir}/java
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons 
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons-launcher-config
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib commons-collections commons-lang commons-logging commons-digester 
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib commons-beanutils commons-codec commons-el commons-fileupload commons-validator
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib taglibs-core taglibs-standard
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib tomcat5-servlet-2.4-api servletapi5
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib xerces-j2 xml-commons-resolver xml-commons-apis
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib xalan-j2 xalan-j2-serializer 
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib myfaces-api myfaces-impl tomahawk xbean jsr173_1.0_api
-build-jar-repository %{wbemsmt_webapp_instdir}/WEB-INF/lib struts
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons 
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons-launcher-config
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib commons-collections commons-lang commons-logging commons-digester 
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib commons-beanutils commons-codec commons-el commons-fileupload commons-validator
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib taglibs-core taglibs-standard
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib tomcat5-servlet-2.4-api tomcat5-jsp-2.0-api servletapi5
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib xerces-j2 xml-commons-resolver xml-commons-apis
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib xalan-j2 xalan-j2-serializer 
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib myfaces-api myfaces-impl tomahawk xbean jsr173_1.0_api
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib struts
 %{_bindir}/rebuild-gcj-db
 
 
@@ -164,11 +167,63 @@ fi
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/README
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/MultipleHostSupport
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/TroubleShooting
+%attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/PortletContainerSupport
+%attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/SlpSupport
+%attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/StandaloneSupport
 %{wbemsmt_webapp_dir}/*
 %{tomcat_webapp_dir}/*
 
 ###############################################################################
 %changelog
+* Fri Jul 6 2007 Wolfgang Taphorn <taphorn@de.ibm.com> 0.5.0-1
+  - Inclusion of fixes for the following issues:
+    o 1746923  wbemsmt-webapp: docu for slp config/usage
+    o 1746585  wbemsmt-admin: namespace for application
+    o 1740803  wbemsmt-slp: use treeconfig to check for slp hosts
+    o 1737773  wbemsmt-jsf: Save Data at login
+    o 1737049  wbemsmt-jsf: parallel logon for multiple hosts
+    o 1731237  wbemsmt-jsf: store updateInterval in Cookies
+    o 1731236  wbemsmt-jsf: childrenTables as HtmlDataTable
+    o 1728152  wbemsmt-common: priority for eventlisteners
+    o 1727285  wbemsmt-jsf: configurable ajax update interval
+    o 1728151  wbemsmt-jsf: scrollable childTables
+    o 1724637  wbemsmt-common: InstanceNaming based in FCO
+    o 1724664  wbemsmt-jsf: fixed with for tabs in tabbedPanel
+    o 1724636  wbemsmt-common: add Session objec
+    o 1707399  wbemsmt: change file encoding to utf8
+    o 1704409  wbemsmt:dynamically build tree node by the usage of a class
+    o 1674057  wbemsmt: update to sblim-cimclient-1.3.2
+    o 1671504  wbemsmt-webapp: update to myfaces-core-1.1.5
+    o 1699791  wbemsmt-webapp: revert changes after selecting new treenode
+    o 1681993  wbemsmt-common: new UITypes
+    o 1680547  wbemsmt-webapp: welcome screens
+    o 1680566  wbemsmt-admin: feedback messages
+    o 1675864  wbemsmt-webapp: common contextMenu
+    o 1671545  wbemsmt-common: version-attribute for treeConfig.xml
+    o 1658315  wbemsmt-webapp help integration
+    o 1655037  wbemsmt-webapp: after failed login old treeConfig is shown
+    o 1655036  wbemsmt-webapp: ajax integration
+    o 1652247  wbemsmt-webapp display only requested tasks in embeddedMode
+    o 1648068  wbemsmt-webapp: Login for Portlet containers
+    o 1648024  wbemsmt-webapp: confirmation at pending changes
+    o 1648025  wbemsmt-webapp: hide help  and logout
+    o 1645083  wbemsmt-webapp: multilineTable - row deletion
+    o 1638601  wbemsmt-webapp: remove update link
+    o 1638397  wbemsmt-webapp: add action menue
+    o 1638396  wbemsmt-webapp: add close link to wait indicator
+    o 1636031  wbemsmt-webapp: theme for SourceForge
+    o 1634187  wbemsmt-webapp: Rework AdminConsole&WelcomePage
+    o 1631455  wbemsmt-webapp: prompt while cancelling a wizard
+    o 1620646  wbemsmt-webapp: indicator for longrunning actions
+    o 1619945  wbemsmt-webapp: TreeSynchronisation
+    o 1619423  wbemsmt-webapp: rework ui: field indicators
+    o 1619411  wbemsmt-webapp: rework ui: changes for IE,opera...
+    o 1618646  wbemsmt-webapp: rework ui: messages
+    o 1615822  wbemsmt-webapp: rework ui: wizards
+    o 1613959  wbemsmt-webapp: rework ui: content of editPanels
+    o 1613893  wbemsmt-webapp: rework UI: L&F Tree and EditPanels
+    o 1613888  Rework UI: Logon Panel
+
 * Mon Dec 4 2006 Wolfgang Taphorn <taphorn@de.ibm.com> 0.2.3-1
   - Inclusion of fixes for the following bug entries:
     o 1609070 wbemsmt-webapp: admin console

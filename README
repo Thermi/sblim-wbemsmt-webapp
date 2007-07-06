@@ -60,7 +60,7 @@ or the Release of the package
   - sblim-wbemsmt-commons
 
 Third-Party Libraries (and their dependent jar-Files):
- - sblim-cim-client 1.3.2 or later from http://www.sblim.org/
+ - sblim-cim-client 1.3.3 or later from http://www.sblim.org/
  - MyFaces 1.1.5 and Tomahawk 1.1.3 or later from http://myfaces.apache.org/
  - XMLBeans 2.2.0 from http://xmlbeans.apache.org/
  - Jakarta-Commons Collections from http://jakarta.apache.org/commons/collections/
