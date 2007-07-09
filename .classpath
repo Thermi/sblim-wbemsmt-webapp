@@ -4,16 +4,16 @@
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v5.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="JAR_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/myfaces/tomahawk/1.1.3/tomahawk-1.1.3.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/commons-lang/commons-lang/current/commons-lang.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/myfaces/tomahawk/current/tomahawk.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wbemsmt-commons"/>
-	<classpathentry kind="var" path="JAR_REPO/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-wbemsmt-commons-launcher-config/0.2.3/sblim-wbemsmt-commons-launcher-config-0.2.3.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/xmlbeans/xbean/2.2.0/xbean-2.2.0.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-impl/1.1.5/myfaces-impl-1.1.5.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-api/1.1.5/myfaces-api-1.1.5.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/commons-codec/commons-codec/1.3/commons-codec-1.3.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-cim-client/1.3.3/sblim-cim-client-1.3.3.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-slp-client/1.3.3/sblim-slp-client-1.3.3.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/javax/servlet/servlet-api/current/servlet-api.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-wbemsmt-commons-launcher-config/current/sblim-wbemsmt-commons-launcher-config.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/xmlbeans/xbean/current/xbean.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-impl/current/myfaces-impl.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-api/current/myfaces-api.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/commons-codec/commons-codec/current/commons-codec.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-cim-client/current/sblim-cim-client.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-slp-client/current/sblim-slp-client.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>

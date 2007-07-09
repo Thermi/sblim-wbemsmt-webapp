@@ -41,6 +41,11 @@
 			<locationURI>JAR_REPO/dojo/dojo/0.4.1/dojo.js</locationURI>
 		</link>
 		<link>
+			<name>webapp/help/plugins/org.sblim.wbemsmt.help.commons</name>
+			<type>2</type>
+			<locationURI>WORKSPACE/wbemsmt-commons/help/plugins/org.sblim.wbemsmt.help.commons</locationURI>
+		</link>
+		<link>
 			<name>webapp/help/plugins/org.sblim.wbemsmt.help.dns</name>
 			<type>2</type>
 			<locationURI>WORKSPACE/wbemsmt-dns/help/plugins/org.sblim.wbemsmt.help.dns</locationURI>
@@ -56,16 +61,6 @@
 			<locationURI>JAR_REPO/sblim/sblim-wbemsmt-webapp/webapp/resources/style1</locationURI>
 		</link>
 		<link>
-			<name>webapp/help/plugins/org.sblim.wbemsmt.help.metacluster</name>
-			<type>2</type>
-			<locationURI>WORKSPACE/wbemsmt-metacluster/help/plugins/org.sblim.wbemsmt.help.metacluster</locationURI>
-		</link>
-		<link>
-			<name>webapp/help/plugins/org.sblim.wbemsmt.help.commons</name>
-			<type>2</type>
-			<locationURI>WORKSPACE/wbemsmt-commons/help/plugins/org.sblim.wbemsmt.help.commons</locationURI>
-		</link>
-		<link>
 			<name>webapp/help/plugins/org.sblim.wbemsmt.help.samba</name>
 			<type>2</type>
 			<locationURI>WORKSPACE/wbemsmt-samba/help/plugins/org.sblim.wbemsmt.help.samba</locationURI>
@@ -74,6 +69,11 @@
 			<name>webapp/help/plugins/org.sblim.wbemsmt.help.sample</name>
 			<type>2</type>
 			<locationURI>WORKSPACE/wbemsmt-sample/help/plugins/org.sblim.wbemsmt.help.sample</locationURI>
+		</link>
+		<link>
+			<name>webapp/help/plugins/org.sblim.wbemsmt.help.metacluster</name>
+			<type>2</type>
+			<locationURI>WORKSPACE/wbemsmt-metacluster/help/plugins/org.sblim.wbemsmt.help.metacluster</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
