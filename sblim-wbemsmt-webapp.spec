@@ -6,7 +6,6 @@
 
 ###############################################################################
 
-%define tomcat_webapp_dir       /var/lib/tomcat5/webapps/
 %define wbemsmt_webapp_dir      %{_localstatedir}/lib/%{name}/webapps/%{name}
 
 ###############################################################################
@@ -97,8 +96,8 @@ ant build-webapp
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}/sblim-wbemsmt
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/sblim-wbemsmt
 install -d $RPM_BUILD_ROOT%{wbemsmt_webapp_dir}
-install -d $RPM_BUILD_ROOT%{tomcat_webapp_dir}
 install -d $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 # Installation of documentation files
@@ -114,12 +113,10 @@ install PortletContainerSupport $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/Por
 install SlpSupport              $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/SlpSupport
 install StandaloneSupport       $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/StandaloneSupport
 
+install target/package/etc/sblim-wbemsmt/%{name}.conf $RPM_BUILD_ROOT%{_sysconfdir}/sblim-wbemsmt/%{name}.conf
+
 # Installation of WebApplication
 mv target/package/%{name}/* $RPM_BUILD_ROOT/%{wbemsmt_webapp_dir}
-(
-  cd $RPM_BUILD_ROOT/%{tomcat_webapp_dir} &&
-    ln -s %{wbemsmt_webapp_dir} %{name}
-)
 
 
 ###############################################################################
@@ -127,8 +124,14 @@ mv target/package/%{name}/* $RPM_BUILD_ROOT/%{wbemsmt_webapp_dir}
 %post
 unset JAVA_HOME
 [ -r %{_sysconfdir}/tomcat5/tomcat5.conf ] && . %{_sysconfdir}/tomcat5/tomcat5.conf
-[ -z "$JAVA_HOME" ] && [ -r %{_sysconfdir}/java/java.conf ] && \
-    . %{_sysconfdir}/java/java.conf
+[ -z "$CATALINA_HOME" ] && CATALINA_HOME=/var/lib/tomcat5
+ln -sf %{wbemsmt_webapp_dir} $CATALINA_HOME/webapps/%{name}
+
+[ -r %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-commons.conf ] && . %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-commons.conf
+[ -z "$WBEMSMT_HELPDIR" ] && WBEMSMT_HELPDIR=/var/lib/sblim-wbemsmt/help
+ln -sf $WBEMSMT_HELPDIR %{wbemsmt_webapp_dir}/help
+
+[ -z "$JAVA_HOME" ] && [ -r %{_sysconfdir}/java/java.conf ] && . %{_sysconfdir}/java/java.conf
 [ -z "$JAVA_HOME" ] && JAVA_HOME=%{_jvmdir}/java
 build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons 
 build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons-launcher-config
@@ -148,7 +151,11 @@ build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib struts
 
 %preun
 [ -r %{_sysconfdir}/tomcat5/tomcat5.conf ] && . %{_sysconfdir}/tomcat5/tomcat5.conf
-unlink $CATALINA_HOME/webapps/%{wbemsmt_webapp}
+[ -z "$CATALINA_HOME" ] && CATALINA_HOME=/var/lib/tomcat5
+unlink $CATALINA_HOME/webapps/%{name}
+
+unlink %{wbemsmt_webapp_dir}/help
+
 if [ $1 = 0 ]; then
     find %{wbemsmt_webapp_dir}/WEB-INF/lib  \
          -name '\[*\]*.jar' \
@@ -170,13 +177,14 @@ fi
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/PortletContainerSupport
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/SlpSupport
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/StandaloneSupport
+%attr(664,root,root) %config(noreplace) %{_sysconfdir}/sblim-wbemsmt/%{name}.conf
 %{wbemsmt_webapp_dir}/*
-%{tomcat_webapp_dir}/*
 
 ###############################################################################
 %changelog
 * Fri Jul 6 2007 Wolfgang Taphorn <taphorn@de.ibm.com> 0.5.0-1
   - Inclusion of fixes for the following issues:
+    o 1754931  wbemsmt-webapp: Upgrade to build environment
     o 1746923  wbemsmt-webapp: docu for slp config/usage
     o 1746585  wbemsmt-admin: namespace for application
     o 1740803  wbemsmt-slp: use treeconfig to check for slp hosts

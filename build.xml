@@ -51,6 +51,7 @@
          ================================= -->
     <target name="compile" description="--> Compile the sources of ${ant.project.name}">
         <mkdir dir="${dir.compile.output}"/>
+        <mkdir dir="${dir.compile.output}/etc/sblim-wbemsmt"/>
 
         <javac destdir="${dir.compile.output}"
                debug       ="${javac.debug}"
@@ -67,6 +68,14 @@
             <fileset dir="java">
                 <exclude name="**/*.java"/>
             </fileset>
+            <fileset dir="${basedir}">
+                <include name="webapp/**"/>
+            </fileset>
+        </copy>
+        <copy todir="${dir.compile.output}/etc/sblim-wbemsmt" includeemptydirs="false">
+            <fileset dir="${basedir}">
+                <include name="sblim-${ant.project.name}.conf"/>
+            </fileset>
         </copy>
     </target>
 
@@ -75,6 +84,7 @@
           target: build-webapp
          ================================= -->
     <target name="build-webapp" depends="clean, compile" description="--> Build the WebApplication">
+        <mkdir dir="${dir.package.output}/etc/sblim-wbemsmt"/>
         <mkdir dir="${dir.package.output}/sblim-${ant.project.name}"/>
         <mkdir dir="${dir.package.output}/sblim-${ant.project.name}/META-INF"/>
         <mkdir dir="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/classes"/>
@@ -96,15 +106,17 @@
         <copy todir="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/classes">
             <fileset dir="${dir.compile.output}">
                 <include name="**/*" />
+                <exclude name="webapp/**" />
             </fileset>
         </copy>
         <copy todir="${dir.package.output}/sblim-${ant.project.name}">
-            <fileset dir="webapp">
-                <include name="**/*.css" />
-                <include name="**/*.gif" />
-                <include name="**/*.html" />
-                <include name="**/*.js" />
-                <include name="**/*.jsp" />
+            <fileset dir="${dir.compile.output}/webapp">
+                <include name="**/*" />
+            </fileset>
+        </copy>
+        <copy todir="${dir.package.output}/etc/sblim-wbemsmt" includeemptydirs="false">
+            <fileset dir="${dir.compile.output}/etc/sblim-wbemsmt">
+                <include name="sblim-${ant.project.name}.conf"/>
             </fileset>
         </copy>
     </target>
@@ -132,7 +144,7 @@
                       **/*.js,
                       **/*.html,
                       **/*.gif,
-			          **/*.css,
+                      **/*.css,
                       **/*.xml,
                       **/build.xml,
                       AUTHORS,
@@ -140,12 +152,13 @@
                       COPYING,
                       NEWS,
                       README,
-          	          MultipleHostSupport,
-          	          StandaloneSupport,
-          	          PortletContainerSupport,
-          	          TroubleShooting,,
-                          SlpSupport,
-          	          sblim-${ant.project.name}.spec"
+                      MultipleHostSupport,
+                      StandaloneSupport,
+                      PortletContainerSupport,
+                      TroubleShooting,,
+                      SlpSupport,
+          	      sblim-${ant.project.name}.conf,
+          	      sblim-${ant.project.name}.spec"
             excludes=".settings/**, .ant-targets-build.xml, pom.xml, target/**"
             prefix="sblim-${ant.project.name}"/>
         </tar>
@@ -172,7 +185,8 @@
             prefix="sblim-${ant.project.name}"/>
           <tarfileset
             dir="${dir.package.output}"
-          	includes="sblim-${ant.project.name}/**"
+            includes="sblim-${ant.project.name}/**,
+                      etc/**"
             prefix="sblim-${ant.project.name}"/>
         </tar>
     </target>

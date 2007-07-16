@@ -1,5 +1,6 @@
 Changes in 0.5.0-1 :
 ==============================================================================
+- 1754931  wbemsmt-webapp: Upgrade to build environment
 - 1746923  wbemsmt-webapp: docu for slp config/usage
 - 1746585  wbemsmt-admin: namespace for application
 - 1740803  wbemsmt-slp: use treeconfig to check for slp hosts
