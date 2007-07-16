@@ -1,5 +1,18 @@
-// =========================================================================
-// new in version 0.5.0-1 :
+2007-07-16 19:48  taphorn
+
+	* NEWS, build.xml, sblim-wbemsmt-webapp.conf,
+	  sblim-wbemsmt-webapp.spec: Fix for issue [ 1754931 ]
+	  wbemsmt-webapp: Upgrade to build environment
+
+2007-07-09 09:48  mbauschert
+
+	* .classpath, .project, .settings/.component: Fix [ 1750200 ]
+	  wbemsmt-client: update jar references
+
+2007-07-07 00:06  taphorn
+
+	* ChangeLog, NEWS, README, build.xml, sblim-wbemsmt-webapp.spec:
+	  Preparation for 0.5.0 release
 
 2007-07-03 08:53  mbauschert
 
@@ -442,7 +455,6 @@
 	  webapp/resources/sf/styles/main.css,
 	  webapp/resources/sf2/styles/edit.css,
 	  webapp/resources/sf2/styles/main.css, .settings/.component,
-	  java/org/apache/myfaces/custom/popup/resource/JSPopupContexteMenue.js,
 	  webapp/header.jsp, webapp/include_errorHandling.jsp,
 	  webapp/include_showWait.jsp, webapp/layout.jsp,
 	  webapp/resources/sf/images/actions.gif,
@@ -520,7 +532,7 @@
 	  webapp/include_showWait.jsp, webapp/layout.jsp, webapp/login.jsp,
 	  webapp/welcome.jsp, webapp/WEB-INF/faces-config.xml,
 	  webapp/admin/adminHost.jsp, webapp/admin/index.jsp,
-	  webapp/scripts/showWait.js, webapp/styles/main.css,
+	  webapp/scripts/showWait.js,
 	  .metadata/webapp/WEB-INF/faces-config.pageflow,
 	  java/org/sblim/wbemsmt/webapp/jsf/admin/AdminBean.java,
 	  java/org/sblim/wbemsmt/webapp/jsf/admin/Task.java: [ 1634187 ]
@@ -581,9 +593,8 @@
 2006-12-21 08:02  mbauschert
 
 	* java/org/sblim/wbemsmt/webapp/jsf/: webapp_messages.properties,
-	  webapp_messages_de.properties, webapp_messages_en.properties,
-	  style/StyleBean.java: Fix Bug# 1619423 wbemsmt-webapp: rework ui:
-	  field indicators
+	  webapp_messages_de.properties, webapp_messages_en.properties: Fix
+	  Bug# 1619423 wbemsmt-webapp: rework ui: field indicators
 
 2006-12-20 14:11  mbauschert
 
@@ -624,12 +635,6 @@
 
 	* .project: added linked resources
 
-2006-12-18 18:22  mbauschert
-
-	* webapp/resources/ibm/: images/banner.gif, images/title.png,
-	  styles/edit.css, styles/login.css, styles/main.css: removed
-	  resources
-
 2006-12-18 18:11  mbauschert
 
 	* webapp/WEB-INF/faces-config.xml: using style1 as active style
@@ -661,9 +666,8 @@
 	* java/org/sblim/wbemsmt/webapp/jsf/webapp_messages.properties,
 	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_de.properties,
 	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_en.properties,
-	  webapp/resources/ibm/styles/edit.css,
-	  webapp/resources/ibm/styles/main.css, webapp/tree.jsp,
-	  webapp/WEB-INF/faces-config.xml, webapp/editPage.jsp,
+	  webapp/tree.jsp, webapp/WEB-INF/faces-config.xml,
+	  webapp/editPage.jsp,
 	  java/org/apache/myfaces/custom/tabbedpane/resource/defaultStyles.css,
 	  webapp/header.jsp, webapp/layout.jsp: fix  1613893
 	  wbemsmt-webapp: rework UI: L&F Tree and EditPanels
@@ -675,93 +679,11 @@
 	  java/org/sblim/wbemsmt/webapp/jsf/webapp_sf_messages.properties,
 	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_de.properties,
 	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_en.properties,
-	  java/org/sblim/wbemsmt/webapp/jsf/style/StyleBean.java,
 	  webapp/login.jsp, webapp/resources/sf/images/banner.gif,
 	  webapp/resources/sf/images/.cvsignore,
 	  webapp/resources/sf/images/title.png,
 	  webapp/WEB-INF/faces-config.xml,
-	  webapp/resources/ibm/styles/main.css,
-	  webapp/resources/ibm/images/banner.gif,
-	  webapp/resources/ibm/images/title.png,
-	  webapp/resources/ibm/styles/login.css,
 	  webapp/resources/sf/styles/login.css,
 	  webapp/resources/sf/styles/main.css: Fix for	1613888 Rework UI:
 	  Logon Panel
-
-// =========================================================================
-// new in version 0.2.3-1 :
-
-2006-12-04 23:41  taphorn
-
-	* .classpath, webapp/admin/adminHost.jsp,
-	  webapp/admin/adminService.jsp, webapp/admin/index.jsp,
-	  .cvsignore, .project, MultipleHostSupport, README,
-	  TroubleShooting, build.xml, pom.xml, sblim-wbemsmt-webapp.spec,
-	  java/org/sblim/wbemsmt/webapp/jsf/JsfTreeNode.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/LoginFileGenerator.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/ObjectActionControllerBean.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/RenameEventListener.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/SessionInvalidationListener.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_en.properties,
-	  java/org/sblim/wbemsmt/webapp/jsf/AuthorizationFilter.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/LoginCheckBean.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/ManagedBeanInitializer.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/MenueControllerBean.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/MessageHandlerBean.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/ShowInstancesActionListener.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/TreeBacker.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/TreeNodeActionListener.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/WbemsmtWebAppBean.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/WbemsmtWebAppTreeState.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages.properties,
-	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_de.properties,
-	  java/org/sblim/wbemsmt/webapp/jsf/ContextMenuActionListener.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/FacesMessagesComparator.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/InstanceEditActionListener.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/LocaleManagerBean.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/NavigationHandler.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/ShowPropertiesAction.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/TreeSelectorBean.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/WbemsmtWebAppViewHandlerImpl.java,
-	  webapp/layout.jsp, java/ReadSerializedView.java,
-	  webapp/cimomLogin.jsp, webapp/login.jsp, webapp/loginMulti.jsp,
-	  webapp/tree.jsp, webapp/wizardPage.jsp, .settings/.component,
-	  .settings/org.eclipse.wst.common.project.facet.core.xml,
-	  .settings/org.eclipse.wst.validation.prefs,
-	  java/SerializationTest.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/admin/AdminBean.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/admin/ServiceInHost.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/admin/HostEntry.java,
-	  java/org/sblim/wbemsmt/webapp/jsf/admin/ServiceEntry.java,
-	  webapp/WEB-INF/faces-config.xml, webapp/WEB-INF/web.xml,
-	  webapp/styles/main.css: Added diffs between 0.2.2-1 and 0.2.3-1
-
-	  Fix [1609070] wbemsmt-webapp: admin console
-
-// =========================================================================
-// new in version 0.2.2-1 :
-
-2006-10-11 11:57  mbauschert
-
-	* .settings/org.eclipse.wst.validation.prefs: FIX [ 1574472 ]
-	  Cleanup for client projects
-
-2006-10-11 10:03  mbauschert
-
-	* java/org/sblim/wbemsmt/webapp/jsf/AuthorizationFilter.java: FIX [
-	  1575096 ] Tasklauncher: NPE switching from AdminConsole to Login
-
-2006-10-10 14:55  mbauschert
-
-	* .classpath, .project, .settings/.component: FIX [ 1574472 ]
-	  Cleanup for client projects
-
-2006-10-09 15:54  mbauschert
-
-	* webapp/WEB-INF/.cvsignore: [no log message]
-
-2006-10-09 15:52  mbauschert
-
-	* java/org/sblim/wbemsmt/webapp/jsf/LoginCheckBean.java: Fix [
-	  1573746 ] Preset handling for Login
 
