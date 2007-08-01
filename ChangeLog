@@ -1,3 +1,12 @@
+2007-07-18 18:51  mbauschert
+
+	* webapp/scripts/ajaxPanelController.js: Fix [ 1756335 ]
+	  wbemsmt-webapp: synchronize concurrent ajax requests
+
+2007-07-16 19:49  taphorn
+
+	* ChangeLog: Added latest changes to ChangeLog
+
 2007-07-16 19:48  taphorn
 
 	* NEWS, build.xml, sblim-wbemsmt-webapp.conf,

@@ -114,7 +114,7 @@
                 <include name="**/*" />
             </fileset>
         </copy>
-        <copy todir="${dir.package.output}/etc/sblim-wbemsmt" includeemptydirs="false">
+        <copy todir="${dir.package.output}/etc/sblim-wbemsmt">
             <fileset dir="${dir.compile.output}/etc/sblim-wbemsmt">
                 <include name="sblim-${ant.project.name}.conf"/>
             </fileset>
@@ -140,13 +140,8 @@
             dir="${basedir}"
             includes="**/*.java,
                       **/*.properties,
-                      **/*.jsp,
-                      **/*.js,
-                      **/*.html,
-                      **/*.gif,
-                      **/*.css,
-                      **/*.xml,
                       **/build.xml,
+                      webapp/**,
                       AUTHORS,
                       ChangeLog,
                       COPYING,

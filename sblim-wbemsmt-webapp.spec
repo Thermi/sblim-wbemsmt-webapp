@@ -24,12 +24,12 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 1.5.32
 BuildRequires: ant >= 1.6
-BuildRequires: sblim-cim-client >= 1.3.3
+BuildRequires: sblim-cim-client >= 1.3
 BuildRequires: sblim-wbemsmt-commons => 0.5.0
 BuildRequires: tomcat5-servlet-2.4-api >= 5.5.15
-BuildRequires: jakarta-commons-cli >= 1.0
 BuildRequires: jakarta-commons-lang >= 2.0
 BuildRequires: jakarta-commons-collections >= 3.1
+#BuildRequires: jakarta-commons-cli >= 1.0
 #BuildRequires:  myfaces >= 1.1.5
 #BuildRequires:  tomahawk >= 1.1.3
 #BuildRequires:  xmlBeans >= 2.2.0
@@ -37,12 +37,11 @@ BuildRequires: jakarta-commons-collections >= 3.1
 ###############################################################################
 
 Requires: jpackage-utils >= 1.5.32
-Requires: sblim-cim-client >= 1.3.3
+Requires: sblim-cim-client >= 1.3
 Requires: sblim-wbemsmt-commons >= 0.5.0
 Requires: xerces-j2 >= 2.7.1
 Requires: xalan-j2 >= 2.7.0
 Requires: jakarta-commons-beanutils >= 1.7.0
-Requires: jakarta-commons-cli >= 1.0
 Requires: jakarta-commons-codec >= 1.3
 Requires: jakarta-commons-collections >= 3.1
 Requires: jakarta-commons-digester >= 1.7
@@ -59,6 +58,7 @@ Requires: xml-commons >= 1.3.02
 Requires: xml-commons-apis >= 1.3
 Requires: xml-commons-resolver >= 1.1
 Requires: struts >= 1.2.9
+#Requires: jakarta-commons-cli >= 1.0
 #Requires:  myfaces >= 1.1.5
 #Requires:  tomahawk >= 1.1.3
 #Requires:  xmlBeans >= 2.2.0
@@ -97,6 +97,7 @@ ant build-webapp
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}/sblim-wbemsmt
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/sblim-wbemsmt
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/sblim-wbemsmt/tasklauncher.d
 install -d $RPM_BUILD_ROOT%{wbemsmt_webapp_dir}
 install -d $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
@@ -117,6 +118,8 @@ install target/package/etc/sblim-wbemsmt/%{name}.conf $RPM_BUILD_ROOT%{_sysconfd
 
 # Installation of WebApplication
 mv target/package/%{name}/* $RPM_BUILD_ROOT/%{wbemsmt_webapp_dir}
+install $RPM_BUILD_ROOT%{wbemsmt_webapp_dir}/WEB-INF/web.xml.standalone $RPM_BUILD_ROOT%{wbemsmt_webapp_dir}/WEB-INF/web.xml
+install $RPM_BUILD_ROOT%{wbemsmt_webapp_dir}/WEB-INF/faces-config.xml.standalone $RPM_BUILD_ROOT%{wbemsmt_webapp_dir}/WEB-INF/faces-config.xml
 
 
 ###############################################################################
@@ -133,6 +136,7 @@ ln -sf $WBEMSMT_HELPDIR %{wbemsmt_webapp_dir}/help
 
 [ -z "$JAVA_HOME" ] && [ -r %{_sysconfdir}/java/java.conf ] && . %{_sysconfdir}/java/java.conf
 [ -z "$JAVA_HOME" ] && JAVA_HOME=%{_jvmdir}/java
+build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-cim-client sblim-slp-client
 build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons 
 build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons-launcher-config
 build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib commons-collections commons-lang commons-logging commons-digester 
@@ -177,6 +181,7 @@ fi
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/PortletContainerSupport
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/SlpSupport
 %attr(644,root,root) %doc %{_docdir}/%{name}-%{version}/StandaloneSupport
+%dir %{_sysconfdir}/sblim-wbemsmt/tasklauncher.d
 %attr(664,root,root) %config(noreplace) %{_sysconfdir}/sblim-wbemsmt/%{name}.conf
 %{wbemsmt_webapp_dir}/*
 
@@ -184,6 +189,7 @@ fi
 %changelog
 * Fri Jul 6 2007 Wolfgang Taphorn <taphorn@de.ibm.com> 0.5.0-1
   - Inclusion of fixes for the following issues:
+    o 1756335  wbemsmt-webapp: synchronize concurrent ajax requests
     o 1754931  wbemsmt-webapp: Upgrade to build environment
     o 1746923  wbemsmt-webapp: docu for slp config/usage
     o 1746585  wbemsmt-admin: namespace for application
