@@ -19,14 +19,7 @@
   */
 package org.sblim.wbemsmt.webapp.jsf.admin;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
@@ -52,7 +45,13 @@ public class HostEntry
 	private String servicesAsString;
 	private static Map serviceInstallationStates = new HashMap();
 	
-	public HostEntry(TaskLauncherConfig config, Cimom cimom, String[] services)
+	/**
+	 * Entry for an existing host
+	 * @param config
+	 * @param cimom
+	 * @param references
+	 */
+	public HostEntry(AdminBean bean, TaskLauncherConfig config, Cimom cimom, TreeconfigReference[] references)
 	{
 		this.cimom = cimom;
 		isNew = false;
@@ -62,36 +61,42 @@ public class HostEntry
 		namespace = cimom.getNamespace();
 		applicationNamespace = cimom.getApplicationNamespace();
 		
+		Map referencesByName = new HashMap();
 		Set installedServices = new HashSet();
-		for (int i = 0; i < services.length; i++) {
-			installedServices.add(services[i]);
+		Set referencedServices = new HashSet();
+
+		/**
+		 * first get all tasks which are installed on a server
+		 */
+		for (int i = 0; i < references.length; i++) {
+			
+			TreeconfigReference reference = references[i];
+			referencesByName.put(reference.getName(),reference);
+			installedServices.add(reference.getName());
 		}
 
+		/**
+		 * get those which are used on a host
+		 */
 		TreeconfigReference[] treeconfigReferenceArray = cimom.getTreeconfigReferenceArray();
-		Set referencedServices = new HashSet();
 		for (int i = 0; i < treeconfigReferenceArray.length; i++) {
-			referencedServices.add(treeconfigReferenceArray[i].getName());
+			TreeconfigReference reference = treeconfigReferenceArray[i];
+			referencesByName.put(reference.getName(),reference);
+			referencedServices.add(reference.getName());
 		}
-		
-		Set allServicesSet = new HashSet();
-		allServicesSet.addAll(installedServices);
-		allServicesSet.addAll(referencedServices);
-		
-		List allServices = new ArrayList();
-		allServices.addAll(allServicesSet);
-		Collections.sort(allServices, new StringComparator());
+
+		String[] keys = (String[]) referencesByName.keySet().toArray(new String[referencesByName.keySet().size()]);
+		Arrays.sort(keys, new StringComparator());
 
 		StringBuffer sb = new StringBuffer();
 		
-		for (Iterator iter = allServices.iterator(); iter.hasNext();) {
-			String service = (String) iter.next();
-			ServiceInHost serviceInHost = new ServiceInHost(service);
-			serviceInHost.setEnabled(referencedServices.contains(service));
-			
-			boolean configured = installedServices.contains(service);
-			serviceInHost.setConfigured(configured);
+		for (int i = 0; i < keys.length; i++) {
+			TreeconfigReference reference = (TreeconfigReference) referencesByName.get(keys[i]);
+			ServiceInHost serviceInHost = new ServiceInHost(reference, bean.getTreeconfigByTaskname(reference.getName()));
+			serviceInHost.setEnabled(referencedServices.contains(reference.getName()));
+			serviceInHost.setConfigured(installedServices.contains(reference.getName()));
 
-			boolean installed = isServiceInstalled(config, service,new CimomData(cimom));
+			boolean installed = isServiceInstalled(config, reference,new CimomData(cimom));
 			serviceInHost.setInstalled(installed);
 			
 			this.services.add(serviceInHost);
@@ -101,14 +106,19 @@ public class HostEntry
 				{
 					sb.append(", ");
 				}
-				sb.append(serviceInHost.getService());
+				sb.append(serviceInHost.getReference().getName());
 			}
 		}
 		servicesAsString = sb.toString();
 		
 	}
 	
-	public HostEntry(TaskLauncherConfig config, String[] services)
+	/**
+	 * Entry for a new host
+	 * @param config
+	 * @param services
+	 */
+	public HostEntry(AdminBean bean, TaskLauncherConfig config, TreeconfigReference[] services)
 	{
 		isNew = true;
 		hostname = AdminBean.NEW_HOST;
@@ -118,25 +128,25 @@ public class HostEntry
 		user = TaskLauncherConfig.DEFAULT_USER;
 		
 		for (int i = 0; i < services.length; i++) {
-			String service = services[i];
+			TreeconfigReference configReference = services[i];
 			
-			ServiceInHost serviceInHost = new ServiceInHost(service);
+			ServiceInHost serviceInHost = new ServiceInHost(configReference, bean.getTreeconfigByTaskname(configReference.getName()));
 			serviceInHost.setEnabled(false);
 			serviceInHost.setConfigured(true);
 			
-			boolean installed = isServiceInstalled(config, service, new CimomData(hostname,port,namespace,applicationNamespace,user));
+			boolean installed = isServiceInstalled(config, configReference, new CimomData(hostname,port,namespace,applicationNamespace,user));
 			serviceInHost.setInstalled(installed);
 			
 			this.services.add(serviceInHost);
 		}		
 	}
 	
-	private boolean isServiceInstalled(TaskLauncherConfig config, String service, CimomData cimomData) {
+	private boolean isServiceInstalled(TaskLauncherConfig config, TreeconfigReference service, CimomData cimomData) {
 		
 		Boolean installed = (Boolean) serviceInstallationStates.get(service);
 		if (installed == null)
 		{
-			TreeConfigData treeConfigDataByTaskname = config.getTreeConfigDataByTaskname(service);
+			TreeConfigData treeConfigDataByTaskname = config.getTreeConfigDataByTaskname(service.getName());
 			installed = new Boolean(treeConfigDataByTaskname != null && 
 							new CustomTreeConfig(treeConfigDataByTaskname,cimomData).isLoaded());
 			serviceInstallationStates.put(service,installed);
@@ -192,8 +202,32 @@ public class HostEntry
 	public void setUser(String user) {
 		this.user = user;
 	}
+	
+	/**
+	 * return a list of Service in Host objects
+	 * @return
+	 */
 	public List getServices() {
 		return services;
+	}
+
+	
+	/**
+	 * Return only the enabled services
+	 * @return
+	 */
+	public List getEnabledServices() {
+		List result = new ArrayList();
+		
+		for (Iterator iter = services.iterator(); iter.hasNext();) {
+			ServiceInHost serviceInHost = (ServiceInHost) iter.next();
+			if (serviceInHost.isEnabled())
+			{
+				result.add(serviceInHost);
+			}
+		}
+		
+		return result;
 	}
 
 	public String getServicesAsString() {

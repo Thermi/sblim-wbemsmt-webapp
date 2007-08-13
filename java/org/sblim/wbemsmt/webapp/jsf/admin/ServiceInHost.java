@@ -19,32 +19,70 @@
   */
 package org.sblim.wbemsmt.webapp.jsf.admin;
 
+import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.ConfigurationDefinitionDocument.ConfigurationDefinition;
+import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.ConfigurationValueDocument.ConfigurationValue;
+import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigDocument.Treeconfig;
+import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigReferenceDocument.TreeconfigReference;
+import org.sblim.wbemsmt.tools.resources.ResourceBundleManager;
+import org.sblim.wbemsmt.tools.resources.WbemSmtResourceBundle;
+
 public class ServiceInHost
 {
-	String service;
 	boolean enabled;
 	boolean installed;
 	boolean configured;
+	private TreeconfigReference reference;
+	private TaskConfigurationItem[] items;
 
-	ServiceInHost(String service)
+	ServiceInHost(TreeconfigReference reference,Treeconfig referencedConfig)
 	{
-		this.service = service;
+		this.reference = reference;
+		
+		
+		ConfigurationDefinition[] definitions = referencedConfig.getConfigurationDefinitionArray();
+
+		WbemSmtResourceBundle bundle = ResourceBundleManager.getResourceBundle(referencedConfig.getResourceBundleArray());
+		
+		items = new TaskConfigurationItem[definitions.length];
+		for (int i = 0; i < items.length; i++) {
+			items[i] = new TaskConfigurationItem(bundle,definitions[i],getValue(definitions [i]));
+		}
+	}
+
+	private ConfigurationValue getValue(ConfigurationDefinition definition) {
+		
+		for (int i = 0; i < reference.getConfigurationValueArray().length; i++) {
+			ConfigurationValue value = reference.getConfigurationValueArray()[i];
+			if (value.getName().equals(definition.getName()))
+			{
+				return value;
+			}
+		}
+		
+		ConfigurationValue value = reference.addNewConfigurationValue();
+		value.setName(definition.getName());
+		value.setValue(definition.getDefaultValue());
+		return value;
 	}
 
 	public boolean isEnabled() {
 		return enabled;
 	}
 
+	public boolean isConfigurable() {
+		return items.length > 0;
+	}
+
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
 
-	public String getService() {
-		return service;
+	public TreeconfigReference getReference() {
+		return reference;
 	}
 
-	public void setService(String service) {
-		this.service = service;
+	public void setReference(TreeconfigReference reference) {
+		this.reference = reference;
 	}
 
 	public boolean isInstalled() {
@@ -63,6 +101,9 @@ public class ServiceInHost
 		this.configured = configured;
 	}
 	
-	
+	public TaskConfigurationItem[] getConfigurationItems()
+	{
+		return items;
+	}
 	
 }

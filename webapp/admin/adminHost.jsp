@@ -21,15 +21,18 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
 <f:view>
 <html>
 <head>
 <h:outputText escape="false" value="<title>#{messages.webAppTitleAdmin}</title>"/>
+<h:outputText escape="false" value="<script type='text/javascript' src='../scripts/tooltip.js'></script>"/>
 <h:outputText escape="false" value="<link href='../#{style.resourceDir}/styles/admin.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='../#{style.resourceDir}/styles/main.css' rel='stylesheet' type='text/css'>"/>
 <h:outputText escape="false" value="<link href='../#{style.resourceDir}/styles/edit.css' rel='stylesheet' type='text/css'>"/>
+<h:outputText escape="false" value="<link href='../#{style.resourceDir}/styles/tooltip.css' rel='stylesheet' type='text/css'>"/>
 </head>
 <body>
 
@@ -58,7 +61,7 @@
 <h:dataTable 
 	width="100%" 
 	value="#{admin.hostTable}" var="host" 
-	columnClasses="multiLineContentFirst left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContentLast left" 
+	columnClasses="multiLineContentFirst left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContentLast left" 
 	rowClasses="multiLineRowWhite,multiLineRowGray"
 	headerClass="multiLineHeader left adminTableHeaderHeight"
 	cellpadding="0" cellspacing="0" > 
@@ -80,18 +83,35 @@
 		<h:outputText value="#{messages.tasks}"/>
 	</h:panelGroup>
 	</f:facet>
-	<h:dataTable  value="#{host.services}" var="service">
+	<h:dataTable  value="#{host.services}" var="service" rowClasses="serviceTableEmpty,serviceTableHighlighted" cellpadding="5" cellspacing="0" width="100%">
 		<h:column>
 			<h:selectBooleanCheckbox  value="#{service.enabled}" disabled="#{admin.slpMode}"></h:selectBooleanCheckbox>
 		</h:column>
 		<h:column>
-			<h:outputText value="#{service.service}"></h:outputText>
+			<h:outputText value="#{service.reference.name}"></h:outputText>
 		</h:column>
 		<h:column>
 			<h:outputText value="<nobr>#{service.configured ? '' : messages.not_configured}</nobr>" escape="false"></h:outputText>
 		</h:column>
 		<h:column>
 			<h:outputText value="<nobr>#{service.installed ? '' : messages.not_installed}<nobr>" escape="false"></h:outputText>
+		</h:column>
+		<h:column rendered="#{!admin.slpMode}">
+			<h:panelGroup rendered="#{service.enabled && service.configurable}">
+			<h:dataTable var="item" value="#{service.configurationItems}">
+				<h:column>
+						<h:outputText value="#{item.value.name}" style="white-space:no-wrap;padding-right:5px"/>
+				</h:column>
+				<h:column>
+						<h:inputText value="#{item.value.value}"/>
+				</h:column>
+				<h:column>
+						<h:commandLink onmouseover="showTooltip(event,'#{item.infoTranslated}')" onmouseout="hideTooltip(event)" onclick="return false">
+							<h:graphicImage value="../images/info.gif" styleClass="noBorder"/>
+						</h:commandLink>
+				</h:column>
+			</h:dataTable>
+			</h:panelGroup>
 		</h:column>
 	</h:dataTable>
 	</h:column>
@@ -116,6 +136,11 @@
 <h:outputText value="#{messages.applicationNamespace_hint}" rendered="#{!admin.slpMode}" ></h:outputText>
 </h:panelGrid>
 </h:form>
+
+<t:div id="tooltipPanel" forceId="true" styleClass="tip">
+	<h:outputText id="tooltiptext">test</h:outputText>
+</t:div>
+
 </body>
 </html>
 </f:view>

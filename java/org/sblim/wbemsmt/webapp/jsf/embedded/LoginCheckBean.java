@@ -184,7 +184,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				}
 				else
 				{
-					datas[i].addTreeConfig(treeConfig);
+					datas[i].addTreeConfig(treeConfig,null);
 				}
 			}
 			this.cimClient = null;

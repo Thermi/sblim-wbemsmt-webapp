@@ -17,3 +17,11 @@
     text-decoration: underline;
     line-height:180%;
 }
+
+.serviceTableEmpty {
+	
+}
+
+.serviceTableHighlighted {
+   background-color:#E8E8D8;
+}

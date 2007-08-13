@@ -21,9 +21,7 @@ package org.sblim.wbemsmt.webapp.jsf.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +35,8 @@ import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.TreeConfigData;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TasklauncherconfigDocument;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.CimomDocument.Cimom;
+import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.ConfigurationDefinitionDocument.ConfigurationDefinition;
+import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.ConfigurationValueDocument.ConfigurationValue;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigDocument.Treeconfig;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigReferenceDocument.TreeconfigReference;
 import org.sblim.wbemsmt.tools.jsf.JsfBase;
@@ -148,7 +148,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 					updateCimom(cimom, hostEntry);
 
 					//add a new Host
-					hostTable.add(new HostEntry(taskLauncherController.getTaskLauncherConfig(), getServices()));				
+					hostTable.add(new HostEntry(this,taskLauncherController.getTaskLauncherConfig(), getTreeconfigReferences()));				
 				}
 				else if (hostEntry.getCimom() != null)
 				{
@@ -209,17 +209,46 @@ public class AdminBean extends WbemsmtWebAppBean {
 		cimom.setPort(hostEntry.port);
 		cimom.setUser(hostEntry.user);
 
-		while (cimom.getTreeconfigReferenceArray().length > 0)
-		{
-			cimom.removeTreeconfigReference(0);
+		TreeconfigReference[] treeconfigReferenceArray = cimom.getTreeconfigReferenceArray();
+		Map referencesByName = new HashMap();
+		
+		for (int i = 0; i < treeconfigReferenceArray.length; i++) {
+			TreeconfigReference reference = treeconfigReferenceArray[i];
+			referencesByName.put(reference.getName(), reference);
 		}
 		List services = hostEntry.getServices();
 		for (Iterator iter = services.iterator(); iter.hasNext();) {
 			ServiceInHost serviceInHost = (ServiceInHost) iter.next();
-			if (serviceInHost.isEnabled())
+			TreeconfigReference refInCimom = (TreeconfigReference) referencesByName.get(serviceInHost.getReference().getName());
+			
+			//If checkbox was selected but reference not exists -> add the ref from the 
+			if (serviceInHost.isEnabled() && refInCimom == null)
 			{
 				TreeconfigReference reference = cimom.addNewTreeconfigReference();
-				reference.setName(serviceInHost.getService());
+				reference.set(serviceInHost.getReference().copy());
+			}
+			//If checkbox was not selected but reference exists -> delete the ref from the cimom
+			else if (!serviceInHost.isEnabled() && refInCimom != null)
+			{
+				deleteRef(cimom,refInCimom);
+			}
+			
+		}
+	}
+
+	/**
+	 * Delete the ref if contained in the cimom
+	 * @param cimom
+	 * @param refInCimom
+	 */
+	private void deleteRef(Cimom cimom, TreeconfigReference refInCimom) {
+		TreeconfigReference[] treeconfigReferenceArray = cimom.getTreeconfigReferenceArray();
+		for (int i = 0; i < treeconfigReferenceArray.length; i++) {
+			TreeconfigReference reference = treeconfigReferenceArray[i];
+			if (reference == refInCimom)
+			{
+				cimom.removeTreeconfigReference(i);
+				return;
 			}
 		}
 	}
@@ -260,16 +289,14 @@ public class AdminBean extends WbemsmtWebAppBean {
 		{
 			hostTable = new ArrayList();
 			try {
-				String[] services = getServices();
-				
 				Cimom[] cimomArray = taskLauncherDoc.getTasklauncherconfig().getCimomArray();
 				for (int i = 0; i < cimomArray.length; i++) {
 					Cimom cimom = cimomArray[i];
-					hostTable.add(new HostEntry(taskLauncherController.getTaskLauncherConfig(), cimom,services));
+					hostTable.add(new HostEntry(this,taskLauncherController.getTaskLauncherConfig(), cimom,getTreeconfigReferences()));
 				}
 				if (!slpMode)
 				{
-					hostTable.add(new HostEntry(taskLauncherController.getTaskLauncherConfig(),services));
+					hostTable.add(new HostEntry(this,taskLauncherController.getTaskLauncherConfig(),getTreeconfigReferences()));
 				}
 			} catch (WbemSmtException e) {
 				JsfUtil.handleException(e);
@@ -303,6 +330,61 @@ public class AdminBean extends WbemsmtWebAppBean {
 		 return result;
 	}
 
+	/**
+	 * Get new Treeconfig references with all the the configuation values
+	 * @return
+	 * @throws WbemSmtException
+	 */
+	public TreeconfigReference[] getTreeconfigReferences() throws WbemSmtException
+	{
+		TreeconfigReference[] result = new TreeconfigReference[treeconfigArray.length];
+		 for (int i = 0; i < treeconfigArray.length; i++) {
+			Treeconfig treeconfig = treeconfigArray[i];
+			result[i] = TreeconfigReference.Factory.newInstance();
+			result[i].setName(treeconfig.getName());
+			for (int j = 0; j < treeconfig.getConfigurationDefinitionArray().length; j++) {
+				ConfigurationDefinition definition = treeconfig.getConfigurationDefinitionArray()[j];
+				ConfigurationValue value = result[i].addNewConfigurationValue();
+				value.setName(definition.getName());
+				value.setValue(definition.getDefaultValue());
+			}
+			
+		 }
+		 return result;
+	}	
+	
+	/**
+	 * Get the Configuration Definitions for a specific task
+	 * @return
+	 * @throws WbemSmtException
+	 */
+	public ConfigurationDefinition[] getConfigDefinitionsByTaskname(String taskname)
+	{
+		 for (int i = 0; i < treeconfigArray.length; i++) {
+			if (treeconfigArray[i].getName().equals(taskname))
+			{
+				return treeconfigArray[i].getConfigurationDefinitionArray();
+			}
+		 }
+		 return null;
+	}	
+
+	/**
+	 * Get the Configuration Definitions for a specific task
+	 * @return
+	 * @throws WbemSmtException
+	 */
+	public Treeconfig getTreeconfigByTaskname(String taskname)
+	{
+		 for (int i = 0; i < treeconfigArray.length; i++) {
+			if (treeconfigArray[i].getName().equals(taskname))
+			{
+				return treeconfigArray[i];
+			}
+		 }
+		 return null;
+	}	
+	
 	public List getTasks() throws WbemSmtException
 	{
 		 List result = new ArrayList();
