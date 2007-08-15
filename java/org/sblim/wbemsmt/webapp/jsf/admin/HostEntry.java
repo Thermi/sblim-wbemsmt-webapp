@@ -35,7 +35,6 @@ public class HostEntry
 	boolean addToFile = false;
 	String hostname;
 	String namespace;
-	String applicationNamespace;
 	String user;
 	int port;
 	List services = new ArrayList();
@@ -59,7 +58,6 @@ public class HostEntry
 		port = cimom.getPort();
 		user = cimom.getUser();
 		namespace = cimom.getNamespace();
-		applicationNamespace = cimom.getApplicationNamespace();
 		
 		Map referencesByName = new HashMap();
 		Set installedServices = new HashSet();
@@ -123,7 +121,6 @@ public class HostEntry
 		isNew = true;
 		hostname = AdminBean.NEW_HOST;
 		namespace = TaskLauncherConfig.DEFAULT_NAMESPACE;
-		applicationNamespace = TaskLauncherConfig.DEFAULT_NAMESPACE;
 		port = TaskLauncherConfig.DEFAULT_PORT;
 		user = TaskLauncherConfig.DEFAULT_USER;
 		
@@ -134,7 +131,7 @@ public class HostEntry
 			serviceInHost.setEnabled(false);
 			serviceInHost.setConfigured(true);
 			
-			boolean installed = isServiceInstalled(config, configReference, new CimomData(hostname,port,namespace,applicationNamespace,user));
+			boolean installed = isServiceInstalled(config, configReference, new CimomData(hostname,port,namespace,user));
 			serviceInHost.setInstalled(installed);
 			
 			this.services.add(serviceInHost);
@@ -184,12 +181,6 @@ public class HostEntry
 		this.namespace = namespace;
 	}
 	
-	public String getApplicationNamespace() {
-		return applicationNamespace;
-	}
-	public void setApplicationNamespace(String applicationNamespace) {
-		this.applicationNamespace = applicationNamespace;
-	}
 	public int getPort() {
 		return port;
 	}

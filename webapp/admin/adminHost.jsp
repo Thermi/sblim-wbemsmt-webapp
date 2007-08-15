@@ -75,7 +75,6 @@
 	<h:column><f:facet name="header"><h:outputText value="#{messages.hostname}"></h:outputText></f:facet><h:inputText value="#{host.hostname}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
 	<h:column><f:facet name="header"><h:outputText value="#{messages.port}"></h:outputText></f:facet><h:inputText value="#{host.port}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
 	<h:column><f:facet name="header"><h:outputText value="#{messages.namespace}"></h:outputText></f:facet><h:inputText value="#{host.namespace}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
-	<h:column  rendered="#{!admin.slpMode}"><f:facet name="header"><h:outputText value="#{messages.applicationNamespace}"></h:outputText></f:facet><h:inputText value="#{host.applicationNamespace}" size="30"></h:inputText></h:column>
 	<h:column><f:facet name="header"><h:outputText value="#{messages.user}"></h:outputText></f:facet><h:inputText value="#{host.user}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
 	<h:column>
 	<f:facet name="header">

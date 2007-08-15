@@ -205,7 +205,6 @@ public class AdminBean extends WbemsmtWebAppBean {
 		
 		cimom.setHostname(hostEntry.getHostname());
 		cimom.setNamespace(hostEntry.getNamespace());
-		cimom.setApplicationNamespace(hostEntry.getApplicationNamespace());
 		cimom.setPort(hostEntry.port);
 		cimom.setUser(hostEntry.user);
 

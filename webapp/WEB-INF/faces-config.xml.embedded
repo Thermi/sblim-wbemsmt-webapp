@@ -356,7 +356,7 @@
     	<managed-bean-name>
     	wbemsmtSessionBean</managed-bean-name>
     	<managed-bean-class>
-    	org.sblim.wbemsmt.session.WbemsmtSessionBean</managed-bean-class>
+    	org.sblim.wbemsmt.session.jsf.WbemsmtSessionBean</managed-bean-class>
     	<managed-bean-scope>
     	session</managed-bean-scope>
     </managed-bean>    		

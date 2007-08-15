@@ -32,7 +32,7 @@ public class LoginFileGenerator {
 	 */
 	public static void main(String[] args) {
 		try {
-			   TaskLauncherConfig.CimomData data = new TaskLauncherConfig.CimomData(args[0],Integer.parseInt(args[1]),args[2],args[2],args[3]);
+			   TaskLauncherConfig.CimomData data = new TaskLauncherConfig.CimomData(args[0],Integer.parseInt(args[1]),args[2],args[3]);
 			
 		       XMLEncoder e = new XMLEncoder(
                        new BufferedOutputStream(

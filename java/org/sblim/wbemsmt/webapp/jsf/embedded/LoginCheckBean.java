@@ -18,23 +18,17 @@
 
 package org.sblim.wbemsmt.webapp.jsf.embedded;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
-import org.sblim.wbem.cim.CIMNameSpace;
 import org.sblim.wbem.client.CIMClient;
-import org.sblim.wbem.client.PasswordCredential;
-import org.sblim.wbem.client.UserPrincipal;
 import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
 import org.sblim.wbemsmt.exception.LoginException;
 import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.session.WbemsmtSession;
 import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherDelegaterTreeNode;
@@ -92,7 +86,9 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         	
         	logger.info("Coonecting to " + url + " with user " + username);
         	
-            cimClient = new CIMClient(new CIMNameSpace(url,namespace), new UserPrincipal(username.trim()), new PasswordCredential(password.toCharArray()));
+        	WbemsmtSession.getSession().createCIMClientPool(hostname,port,username,password);
+        	cimClient = WbemsmtSession.getSession().getCIMClientPool(hostname).getCIMClient(namespace);
+
             Enumeration enumeration = cimClient.enumerateClasses();
             
             loggedIn = true;
