@@ -229,7 +229,20 @@
 				</map-entry>
 			</map-entries>
 		</managed-property>
-    </managed-bean>
+		<managed-property>
+			<property-name>namespacesForTasks</property-name>
+			<map-entries>
+				<map-entry>
+					<key>SAMBA</key>
+					<value>/root/cimv2</value>
+				</map-entry>
+				<map-entry>
+					<key>DNS</key>
+					<value>/root/cimv2</value>
+				</map-entry>
+			</map-entries>
+		</managed-property>    
+	</managed-bean>
     <!-- -->
 
     <managed-bean>

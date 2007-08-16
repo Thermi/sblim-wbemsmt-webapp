@@ -50,6 +50,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 	private static final Logger logger = Logger.getLogger("org.sblim.wbemsmt.tasklauncher.jsf");
     
     private String target = "",
+    			   namespace = "",
                    startView = "start",
                    timeoutView = "timeout",
                    task = "";
@@ -58,6 +59,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     private TreeSelectorBean treeSelector;
     
     private Map targetsForTasks = new HashMap();
+    private Map namespacesForTasks = new HashMap();
     
 	private CIMClient cimClient;
 
@@ -142,7 +144,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			}
 			
 			String[] targets = null;
-			
+
 			if (StringUtils.isEmpty(target))
 			{
 				Object targetsFromConfig = targetsForTasks.get(task);
@@ -156,20 +158,47 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 					JsfUtil.addMessage(message);
 					return startView;
 				}
-				
 			}
 			else
 			{
 				targets = new StringTokenizer(target,",").asArray(true, false);
 			}
 			
-			CimomData datas[] = new CimomData[targets.length];
+			String[] namespaces = null;
+			if (StringUtils.isEmpty(namespace))
+			{
+				Object namespacesFromConfig = namespacesForTasks.get(task);
+				if (namespacesFromConfig != null)
+				{
+					namespaces = new StringTokenizer((String) namespacesFromConfig,",").asArray(true, false);
+				}
+				else
+				{
+					Message message = Message.create(ErrCodes.MSG_TASK_NOT_SUPPORTED, Message.ERROR, bundle, "namespace.not.specified");
+					JsfUtil.addMessage(message);
+					return startView;
+				}
+				
+			}
+			else
+			{
+				namespaces = new StringTokenizer(namespace,",").asArray(true, false);
+			}
+
+			//first check if we have the same amount of target hosts and namespaces
+			if (namespaces.length != targets.length)
+			{
+				Message message = Message.create(ErrCodes.MSG_TASK_NOT_SUPPORTED, Message.ERROR, bundle, "nr.of.namespaces.and.targets.not.matching");
+				JsfUtil.addMessage(message);
+				return startView;
+			}
 			
+			CimomData datas[] = new CimomData[targets.length];
 			for (int i = 0; i < targets.length; i++) {
 				datas[i] = new CimomData();
 				datas[i].setHostname(targets[i]);
 				datas[i].setPort(5988);
-				datas[i].setNamespace("/root/cimv2");
+				datas[i].setNamespace(namespaces[i]);
 				datas[i].setUser("pegasus");
 				
 				TreeConfigData treeConfig = taskLauncherController.getTaskLauncherConfig().getTreeConfigDataByTaskname(task);
@@ -316,6 +345,14 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 
 	public void setTargetsForTasks(Map targetsForTasks) {
 		this.targetsForTasks = targetsForTasks;
+	}
+	
+	public Map getNamespacesForTasks() {
+		return namespacesForTasks;
+	}
+
+	public void setNamespacesForTasks(Map namespacesForTasks) {
+		this.namespacesForTasks = namespacesForTasks;
 	}
 
 	public boolean isUseSlp() {
