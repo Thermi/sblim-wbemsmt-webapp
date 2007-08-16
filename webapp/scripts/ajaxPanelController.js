@@ -26,11 +26,16 @@ dojo.require("dojo.dom.*");
 //flag to synchronize the requests
 var ajaxRequestIsRunning = false;
 
+var stopAllAjaxRequests = false;
+	
+
+
 org.sblim.wbemsmt.ajax.AjaxPanelController = function(formId)
 {
     this.form = dojo.byId(formId);
     this.windowTimeout = new Array();
     this.threads = new Array();
+    stopAllAjaxRequests = false;
     
     if(typeof this.form == "undefined" || this.form.tagName.toLowerCase() != "form")
     {
@@ -46,7 +51,7 @@ org.sblim.wbemsmt.ajax.AjaxPanelController = function(formId)
 org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.startPeriodicalUpdate = function(refreshTimeout, zoneId)
 {
 	console.log("startPeriodicalUpdate");
-	if (refreshTimeout > 0)
+	if (refreshTimeout > 0 && stopAllAjaxRequests == false)
 	{
 		var idx = this.threads.length;
 		this.threads[idx] = new Object();
@@ -72,7 +77,7 @@ org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.stopPeriodicalUpdate = func
 // waits a few milliseconds and execute itself again
 org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.execute = function()
 {
-	if (this.threads.length > 0)
+	if (this.threads.length > 0 && stopAllAjaxRequests == false)
 	{
 		var zoneId = this.threads[0]["zoneId"];
 		var refreshTimeout = this.threads[0]["refreshTimeout"];
@@ -87,7 +92,10 @@ org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.execute = function()
 	
 	//call the same method again
 	var ajaxCtrl = this;  
-	window.setTimeout(function() {ajaxCtrl.execute();}, 200)	
+	if (stopAllAjaxRequests == false)
+	{
+		window.setTimeout(function() {ajaxCtrl.execute();}, 200)	
+	}
 }
 
 org.sblim.wbemsmt.ajax.AjaxPanelController.prototype.togglePeriodicalUpdate = function(refreshTimeout, zoneId)
