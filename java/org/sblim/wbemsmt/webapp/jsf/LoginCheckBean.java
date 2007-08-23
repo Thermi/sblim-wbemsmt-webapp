@@ -63,6 +63,7 @@ import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 import org.sblim.wbemsmt.tools.slp.SLPHostDefinition;
 import org.sblim.wbemsmt.tools.slp.SLPLoader;
 import org.sblim.wbemsmt.tools.slp.SLPUtil;
+import org.sblim.wbemsmt.webapp.jsf.admin.HostEntry;
 
 
 
@@ -85,6 +86,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
                    port,
                    password,
                    hostname,
+                   protocol,
                    namespace;
     private Vector presets;
     public boolean useSlp;
@@ -247,6 +249,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     	this.hostname = loginData.getHost();
     	this.namespace = loginData.getNamespace();
     	this.port = loginData.getPort();
+    	this.protocol = loginData.getProtocol();
     	this.useSlp = loginData.isUseSlp();
 	}
     
@@ -264,10 +267,10 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     
     private CIMClient createCIMClient(boolean setCimClient) throws LoginException
     {
-    	return createCIMClient(setCimClient,hostname,namespace,port, username,password,useSlp);
+    	return createCIMClient(setCimClient,hostname,namespace,""+getPortAsInt(), protocol,  username,password,useSlp);
     }
     
-    private CIMClient createCIMClient(boolean setCimClient, String hostname, String namespace, String port, String username, String password, boolean useSlp) throws LoginException
+    private CIMClient createCIMClient(boolean setCimClient, String hostname, String namespace, String port, String protocol, String username, String password, boolean useSlp) throws LoginException
     {
         CIMClient cimClient = null;
         try
@@ -276,9 +279,10 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         	password = StringUtils.isEmpty(password) ? " " : password; 
         	hostname = hostname == null ? "" : hostname; 
         	port = port == null ? "" : port; 
-        	namespace = namespace == null ? "" : namespace.trim(); 
+        	namespace = namespace == null ? "" : namespace.trim();
+        	protocol = StringUtils.isNotEmpty(protocol) ? protocol : TaskLauncherConfig.DEFAULT_PROTOCOL;
         	
-        	String url = "HTTP://" + hostname + ":" + port.trim();
+        	String url = protocol.toLowerCase() + "://" + hostname + ":" + port.trim();
         	
         	logger.info("Coonecting to " + url + " with user " + username);
         	
@@ -346,7 +350,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         
         if (remindLoginData)
         {
-        	loginDataFromCookie =  new WbemsmtCookieUtil.LoginData(username,password,hostname,port,namespace,useSlp);
+        	loginDataFromCookie =  new WbemsmtCookieUtil.LoginData(username,password,hostname,port,protocol, namespace,useSlp);
         	WbemsmtCookieUtil.addLoginDataCookie(loginDataFromCookie);
         }
         else
@@ -459,6 +463,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 									host,
 									treeNode.getCimomData().getNamespace(),
 									""+treeNode.getCimomData().getPort(),
+									treeNode.getCimomData().getProtocol(),
 									user,
 									passwordForLogin,
 									nodeUsesSlp);
@@ -526,12 +531,65 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         this.hostname = hostname;
     }
 
-    public String getPort() {
-		return port;
+	public String getPort() {
+		
+		if ((TaskLauncherConfig.HTTP.equalsIgnoreCase(protocol) || protocol == null) 
+			&& (""+TaskLauncherConfig.HTTP_PORT_DEFAULT).equals(port))
+		{
+			port = HostEntry.DEFAULT_TOKEN;
+		}
+		if (TaskLauncherConfig.HTTPS.equalsIgnoreCase(protocol) 
+			&& (""+TaskLauncherConfig.HTTPS_PORT_DEFAULT).equals(port))
+		{
+			port = HostEntry.DEFAULT_TOKEN;
+		}
+		
+		return  port;
+	}
+
+	public int getPortAsInt() {
+		
+		boolean useDefault = false;
+		try {
+			useDefault = HostEntry.DEFAULT_TOKEN.equalsIgnoreCase(port) || Integer.parseInt(port) == -1;
+		} catch (NumberFormatException e) {
+			logger.warning("port is no number (int) " + port);
+			useDefault = true;
+			port = HostEntry.DEFAULT_TOKEN;
+		} 
+		
+		if (useDefault)
+		{
+			if (TaskLauncherConfig.HTTP.equalsIgnoreCase(protocol))
+			{
+				return TaskLauncherConfig.HTTP_PORT_DEFAULT;
+			}
+			else if (TaskLauncherConfig.HTTPS.equalsIgnoreCase(protocol))
+			{
+				return TaskLauncherConfig.HTTPS_PORT_DEFAULT;
+			}
+			else
+			{
+				logger.warning("Cannot handle protocol " + protocol);
+				return TaskLauncherConfig.HTTP_PORT_DEFAULT;
+			}
+		}
+		else
+		{
+			return Integer.parseInt(port);
+		}
 	}
 
 	public void setPort(String port) {
 		this.port = port;
+	}
+
+	public String getProtocol() {
+		return protocol;
+	}
+
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
 	}
 
 	public String getNamespace()

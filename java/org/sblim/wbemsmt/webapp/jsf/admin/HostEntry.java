@@ -20,7 +20,9 @@
 package org.sblim.wbemsmt.webapp.jsf.admin;
 
 import java.util.*;
+import java.util.logging.Logger;
 
+import org.apache.commons.lang.StringUtils;
 import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.CimomData;
@@ -31,12 +33,16 @@ import org.sblim.wbemsmt.util.StringComparator;
 
 public class HostEntry
 {
+	protected static final Logger logger = Logger.getLogger(HostEntry.class.getName());
+
+	public static final String DEFAULT_TOKEN = "<default>";
 	boolean delete;
 	boolean addToFile = false;
 	String hostname;
 	String namespace;
 	String user;
-	int port;
+	String protocol;
+	String port;
 	List services = new ArrayList();
 	boolean isNew = false;
 	boolean changePassword;
@@ -55,9 +61,10 @@ public class HostEntry
 		this.cimom = cimom;
 		isNew = false;
 		hostname = cimom.getHostname();
-		port = cimom.getPort();
+		port = cimom.getPort() == -1 ? DEFAULT_TOKEN : "" + cimom.getPort();
 		user = cimom.getUser();
 		namespace = cimom.getNamespace();
+		protocol =  StringUtils.isNotEmpty(cimom.getProtocol()) ? cimom.getProtocol() : TaskLauncherConfig.DEFAULT_PROTOCOL;
 		
 		Map referencesByName = new HashMap();
 		Set installedServices = new HashSet();
@@ -121,7 +128,8 @@ public class HostEntry
 		isNew = true;
 		hostname = AdminBean.NEW_HOST;
 		namespace = TaskLauncherConfig.DEFAULT_NAMESPACE;
-		port = TaskLauncherConfig.DEFAULT_PORT;
+		port = ""+TaskLauncherConfig.DEFAULT_PORT;
+		protocol = TaskLauncherConfig.DEFAULT_PROTOCOL;
 		user = TaskLauncherConfig.DEFAULT_USER;
 		
 		for (int i = 0; i < services.length; i++) {
@@ -131,7 +139,7 @@ public class HostEntry
 			serviceInHost.setEnabled(false);
 			serviceInHost.setConfigured(true);
 			
-			boolean installed = isServiceInstalled(config, configReference, new CimomData(hostname,port,namespace,user));
+			boolean installed = isServiceInstalled(config, configReference, new CimomData(hostname,getPortAsInt(),protocol,namespace,user));
 			serviceInHost.setInstalled(installed);
 			
 			this.services.add(serviceInHost);
@@ -181,10 +189,22 @@ public class HostEntry
 		this.namespace = namespace;
 	}
 	
-	public int getPort() {
-		return port;
+	public String getPort() {
+		
+		if (TaskLauncherConfig.HTTP.equalsIgnoreCase(protocol) 
+			&& (""+TaskLauncherConfig.HTTP_PORT_DEFAULT).equals(port))
+		{
+			port = DEFAULT_TOKEN;
+		}
+		if (TaskLauncherConfig.HTTPS.equalsIgnoreCase(protocol) 
+			&& (""+TaskLauncherConfig.HTTPS_PORT_DEFAULT).equals(port))
+		{
+			port = DEFAULT_TOKEN;
+		}
+		
+		return  port;
 	}
-	public void setPort(int port) {
+	public void setPort(String port) {
 		this.port = port;
 	}
 	public String getUser() {
@@ -194,6 +214,16 @@ public class HostEntry
 		this.user = user;
 	}
 	
+	
+
+	public String getProtocol() {
+		return protocol;
+	}
+
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
+	}
+
 	/**
 	 * return a list of Service in Host objects
 	 * @return
@@ -248,6 +278,39 @@ public class HostEntry
 	}
 	public void setCimom(Cimom cimom) {
 		this.cimom = cimom;
+	}
+
+	public int getPortAsInt() {
+		
+		boolean useDefault = false;
+		try {
+			useDefault = DEFAULT_TOKEN.equalsIgnoreCase(port) || Integer.parseInt(port) == -1;
+		} catch (NumberFormatException e) {
+			logger.warning("port is no number (int) " + port);
+			useDefault = true;
+			port = DEFAULT_TOKEN;
+		} 
+		
+		if (useDefault)
+		{
+			if (TaskLauncherConfig.HTTP.equalsIgnoreCase(protocol))
+			{
+				return TaskLauncherConfig.HTTP_PORT_DEFAULT;
+			}
+			else if (TaskLauncherConfig.HTTPS.equalsIgnoreCase(protocol))
+			{
+				return TaskLauncherConfig.HTTPS_PORT_DEFAULT;
+			}
+			else
+			{
+				logger.warning("Cannot handle protocol " + protocol);
+				return TaskLauncherConfig.HTTP_PORT_DEFAULT;
+			}
+		}
+		else
+		{
+			return Integer.parseInt(port);
+		}
 	}
 	
 	

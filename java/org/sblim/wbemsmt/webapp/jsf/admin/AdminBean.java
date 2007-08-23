@@ -27,10 +27,12 @@ import java.util.logging.Logger;
 
 import javax.faces.model.SelectItem;
 
+import org.apache.commons.lang.StringUtils;
 import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
+import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.TreeConfigData;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TasklauncherconfigDocument;
@@ -205,8 +207,9 @@ public class AdminBean extends WbemsmtWebAppBean {
 		
 		cimom.setHostname(hostEntry.getHostname());
 		cimom.setNamespace(hostEntry.getNamespace());
-		cimom.setPort(hostEntry.port);
+		cimom.setPort(hostEntry.getPortAsInt());
 		cimom.setUser(hostEntry.user);
+		cimom.setProtocol(StringUtils.isNotEmpty(hostEntry.protocol) ? hostEntry.protocol : TaskLauncherConfig.DEFAULT_PROTOCOL );
 
 		TreeconfigReference[] treeconfigReferenceArray = cimom.getTreeconfigReferenceArray();
 		Map referencesByName = new HashMap();

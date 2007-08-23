@@ -61,7 +61,7 @@
 <h:dataTable 
 	width="100%" 
 	value="#{admin.hostTable}" var="host" 
-	columnClasses="multiLineContentFirst left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContentLast left" 
+	columnClasses="multiLineContentFirst left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContentLast left" 
 	rowClasses="multiLineRowWhite,multiLineRowGray"
 	headerClass="multiLineHeader left adminTableHeaderHeight"
 	cellpadding="0" cellspacing="0" > 
@@ -72,10 +72,16 @@
 			  </h:panelGroup>
 	</h:column>
 	          
+	<h:column><f:facet name="header"><h:outputText value="#{messages.protocol}"></h:outputText></f:facet>
+		<h:selectOneMenu value="#{host.protocol}" disabled="#{admin.slpMode}" id="protocol" styleClass="comboBox" style="width:60px">
+			<f:selectItem itemValue="http" itemLabel="http"/>
+			<f:selectItem itemValue="https" itemLabel="https"/>
+		</h:selectOneMenu>
+	</h:column>
 	<h:column><f:facet name="header"><h:outputText value="#{messages.hostname}"></h:outputText></f:facet><h:inputText value="#{host.hostname}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.port}"></h:outputText></f:facet><h:inputText value="#{host.port}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.namespace}"></h:outputText></f:facet><h:inputText value="#{host.namespace}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.user}"></h:outputText></f:facet><h:inputText value="#{host.user}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.port}"></h:outputText></f:facet><h:inputText value="#{host.port}" size="12" disabled="#{admin.slpMode}"></h:inputText></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.namespace}"></h:outputText></f:facet><h:inputText value="#{host.namespace}" size="20" disabled="#{admin.slpMode}"></h:inputText></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.user}"></h:outputText></f:facet><h:inputText value="#{host.user}" size="15" disabled="#{admin.slpMode}"></h:inputText></h:column>
 	<h:column>
 	<f:facet name="header">
 	<h:panelGroup>

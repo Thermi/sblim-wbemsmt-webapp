@@ -48,11 +48,17 @@
 
 			<h:outputText value="#{messages.pleaseLogin}" rendered="#{!loginCheck.loginDisabled}" styleClass="fieldCaption"/>
 
+			<h:outputText value="#{messages.protocol}" styleClass="fieldLabel"/>
+			<h:selectOneMenu value="#{loginCheck.protocol}" disabled="#{loginCheck.loginDisabled}" style="width:60px" id="protocol" styleClass="comboBox">
+					<f:selectItem itemValue="http" itemLabel="http"/>
+					<f:selectItem itemValue="https" itemLabel="https"/>
+			</h:selectOneMenu>
+
 			<h:outputText value="#{messages.hostname}" styleClass="fieldLabel"/>
 			<h:inputText value="#{loginCheck.hostname}" disabled="#{loginCheck.loginDisabled}" style="width:300px" id="host"  styleClass="textField" size="50"/>
 
 			<h:outputText value="#{messages.port}" styleClass="fieldLabel"/>
-			<h:inputText value="#{loginCheck.port}" disabled="#{loginCheck.loginDisabled}" size="5" id="port" styleClass="textField"/>
+			<h:inputText value="#{loginCheck.port}" disabled="#{loginCheck.loginDisabled}" size="12" id="port" styleClass="textField"/>
 
 			<h:outputText value="#{messages.namespace}" styleClass="fieldLabel"/>
 			<h:inputText value="#{loginCheck.namespace}" disabled="#{loginCheck.loginDisabled}"  size="25" id="namespace" styleClass="textField"/>

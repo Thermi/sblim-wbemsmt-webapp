@@ -64,14 +64,13 @@
 		<h:column>
 		<f:facet name="header">
 		<h:panelGroup styleClass="multiLineHeaderContent adminTableHeaderHeight">
-		<h:outputText value="#{messages.hostname}"/>
+		<h:outputText value="#{messages.url}"/>
 		<f:verbatim>&nbsp;&nbsp;</f:verbatim>
 		
 		</h:panelGroup>
 		</f:facet>
-		<h:outputText value="#{host.hostname}"/>
+		<h:outputText value="#{host.protocol}://#{host.hostname}:#{host.portAsInt}"/>
 		</h:column>
-		<h:column><f:facet name="header"><h:outputText value="#{messages.port}" styleClass="multiLineHeaderContent"></h:outputText></f:facet><h:outputText value="#{host.port}"></h:outputText></h:column>
 		<h:column><f:facet name="header"><h:outputText value="#{messages.namespace}" styleClass="multiLineHeaderContent"></h:outputText></f:facet><h:outputText value="#{host.namespace}"></h:outputText></h:column>
 		<h:column><f:facet name="header"><h:outputText value="#{messages.user}" styleClass="multiLineHeaderContent"></h:outputText></f:facet><h:outputText value="#{host.user}"></h:outputText></h:column>
 		<h:column>
