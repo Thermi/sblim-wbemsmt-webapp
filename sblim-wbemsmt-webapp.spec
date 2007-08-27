@@ -1,5 +1,5 @@
 %define name                    sblim-wbemsmt-webapp
-%define version                 0.5.0
+%define version                 0.5.1
 %define build_release           1
 %define release                 %{build_release}jpp
 %define section                 free
@@ -187,6 +187,15 @@ fi
 
 ###############################################################################
 %changelog
+* Mon Aug 27 2007 Wolfgang Taphorn <taphorn@de.ibm.com> 0.5.1-1
+  - Inclusion of fixes for the following issues:
+    o 1780048  wbemsmt-webapp: add protocol to login settings
+    o 1775196  wbemsmt-webapp: confugurable namespace for embed login
+    o 1775191  wbemsmt-webapp: stop ajax requests before a page request
+    o 1774772  wbemsmt-webapp: remove application namespace
+    o 1773221  wbemsmt-webapp: add configurable properties to tasks
+    o 1768402  wbemsmt-webapp: remove dummy-config for not-configured task
+
 * Fri Jul 6 2007 Wolfgang Taphorn <taphorn@de.ibm.com> 0.5.0-1
   - Inclusion of fixes for the following issues:
     o 1756335  wbemsmt-webapp: synchronize concurrent ajax requests

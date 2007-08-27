@@ -1,3 +1,12 @@
+Changes in 0.5.1-1 :
+==============================================================================
+- 1780048  wbemsmt-webapp: add protocol to login settings
+- 1775196  wbemsmt-webapp: confugurable namespace for embed login
+- 1775191  wbemsmt-webapp: stop ajax requests before a page request
+- 1774772  wbemsmt-webapp: remove application namespace
+- 1773221  wbemsmt-webapp: add configurable properties to tasks
+- 1768402  wbemsmt-webapp: remove dummy-config for not-configured task
+
 Changes in 0.5.0-1 :
 ==============================================================================
 - 1756335  wbemsmt-webapp: synchronize concurrent ajax requests
