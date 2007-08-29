@@ -19,6 +19,7 @@
   */
 package org.sblim.wbemsmt.webapp.jsf.admin;
 
+import org.apache.commons.lang.StringUtils;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.ConfigurationDefinitionDocument.ConfigurationDefinition;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.ConfigurationValueDocument.ConfigurationValue;
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigDocument.Treeconfig;
@@ -37,16 +38,36 @@ public class ServiceInHost
 	ServiceInHost(TreeconfigReference reference,Treeconfig referencedConfig)
 	{
 		this.reference = reference;
-		
-		
-		ConfigurationDefinition[] definitions = referencedConfig.getConfigurationDefinitionArray();
 
-		WbemSmtResourceBundle bundle = ResourceBundleManager.getResourceBundle(referencedConfig.getResourceBundleArray());
-		
-		items = new TaskConfigurationItem[definitions.length];
-		for (int i = 0; i < items.length; i++) {
-			items[i] = new TaskConfigurationItem(bundle,definitions[i],getValue(definitions [i]));
+		if (referencedConfig != null)
+		{
+			ConfigurationDefinition[] definitions = referencedConfig.getConfigurationDefinitionArray();
+
+			WbemSmtResourceBundle bundle = ResourceBundleManager.getResourceBundle(referencedConfig.getResourceBundleArray());
+
+			// add the namespace as the first configuration value
+			ConfigurationDefinition namespaceDefinition = ConfigurationDefinition.Factory.newInstance();
+			namespaceDefinition.setDefaultValue(referencedConfig.getNamespace());
+			namespaceDefinition.setName("namespace");
+			namespaceDefinition.setInfo("info.namespace");
+
+			ConfigurationValue namespaceValue = ConfigurationValue.Factory.newInstance();
+			namespaceValue.setName("namespace");
+			namespaceValue.setValue(StringUtils.isNotEmpty(reference.getNamespace()) ? reference.getNamespace() : referencedConfig.getNamespace() );
+			
+			
+			items = new TaskConfigurationItem[definitions.length+1];
+			items[0] = new TaskConfigurationItem(bundle,namespaceDefinition,namespaceValue);
+			
+			for (int i = 1; i < items.length; i++) {
+				items[i] = new TaskConfigurationItem(bundle,definitions[i-1],getValue(definitions [i-1]));
+			}
 		}
+		else
+		{
+			items = new TaskConfigurationItem[0];
+		}
+		
 	}
 
 	private ConfigurationValue getValue(ConfigurationDefinition definition) {
@@ -67,10 +88,6 @@ public class ServiceInHost
 
 	public boolean isEnabled() {
 		return enabled;
-	}
-
-	public boolean isConfigurable() {
-		return items.length > 0;
 	}
 
 	public void setEnabled(boolean enabled) {
@@ -104,6 +121,11 @@ public class ServiceInHost
 	public TaskConfigurationItem[] getConfigurationItems()
 	{
 		return items;
+	}
+	
+	public String getNamespace()
+	{
+		return items[0].getValue().getValue();
 	}
 	
 }

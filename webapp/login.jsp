@@ -60,9 +60,6 @@
 			<h:outputText value="#{messages.port}" styleClass="fieldLabel"/>
 			<h:inputText value="#{loginCheck.port}" disabled="#{loginCheck.loginDisabled}" size="12" id="port" styleClass="textField"/>
 
-			<h:outputText value="#{messages.namespace}" styleClass="fieldLabel"/>
-			<h:inputText value="#{loginCheck.namespace}" disabled="#{loginCheck.loginDisabled}"  size="25" id="namespace" styleClass="textField"/>
-
 			<h:outputText value="#{messages.user}" styleClass="fieldLabel"/>
 			<h:inputText value="#{loginCheck.username}" disabled="#{loginCheck.loginDisabled}"   size="25" id="username" styleClass="textField"/>
 

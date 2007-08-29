@@ -58,7 +58,7 @@
 		align="center" 
 		width="100%" 
 		value="#{admin.hostTableForDisplay}" var="host" 
-		columnClasses="multiLineContentFirst left,multiLineContent left,multiLineContent left,multiLineContent left,,multiLineContent left,multiLineContentLast left" 
+		columnClasses="multiLineContentFirst left topAlignment topPadding,multiLineContent left topAlignment topPadding,multiLineContentLast left nopadding topAlignment topPadding" 
 		rowClasses="multiLineRowWhite,multiLineRowGray"
 		headerClass="multiLineHeader left adminTableHeaderHeight"> 
 		<h:column>
@@ -69,9 +69,13 @@
 		
 		</h:panelGroup>
 		</f:facet>
-		<h:outputText value="#{host.protocol}://#{host.hostname}:#{host.portAsInt}"/>
+		
+		<h:commandLink styleClass="adminLink" value="#{host.protocol}://#{host.hostname}:#{host.portAsInt}" action="adminHost" actionListener="#{admin.selectSingleHost}"> 
+			<f:param name="hostname" value="#{host}"/>
+		</h:commandLink>
+		
+		
 		</h:column>
-		<h:column><f:facet name="header"><h:outputText value="#{messages.namespace}" styleClass="multiLineHeaderContent"></h:outputText></f:facet><h:outputText value="#{host.namespace}"></h:outputText></h:column>
 		<h:column><f:facet name="header"><h:outputText value="#{messages.user}" styleClass="multiLineHeaderContent"></h:outputText></f:facet><h:outputText value="#{host.user}"></h:outputText></h:column>
 		<h:column>
 			<f:facet name="header">
@@ -81,12 +85,12 @@
 					<f:verbatim>&nbsp;&nbsp;</f:verbatim>
 				</h:panelGroup>
 			</f:facet>
-			<h:dataTable var="service" value="#{host.enabledServices}" rowClasses="serviceTableEmpty,serviceTableHighlighted" cellpadding="5" cellspacing="0" width="100%">
+			<h:dataTable var="service" value="#{host.enabledServices}" width="100%" columnClasses="width200px topAlignment,width0 topAlignment" cellpadding="0" cellspacing="0" width="100%">
 				<h:column>
 						<h:outputText value="#{service.reference.name}" style="white-space:no-wrap;padding-right:5px"/>
 				</h:column>
 				<h:column>
-					<h:dataTable var="item" value="#{service.configurationItems}">
+					<h:dataTable var="item" value="#{service.configurationItems}" columnClasses="width200px topAlignment, width200px topAlignment,width0 topAlignment" cellpadding="0" cellspacing="0">
 						<h:column>
 								<h:outputText value="#{item.value.name}" style="white-space:no-wrap;padding-right:5px"/>
 						</h:column>
@@ -144,7 +148,7 @@
 <%@ include file="/include_errorHandling.jsp" %>
 </h:panelGrid>
 <h:panelGrid columns="1" width="80%" align="center" rendered="#{admin.adminEnabled}">
-<h:commandLink styleClass="adminLink" value="#{messages.edithost}" action="adminHost"/>
+<h:commandLink styleClass="adminLink" value="#{messages.edithost}" action="adminHost" actionListener="#{admin.selectAllHosts}"/>
 <h:commandLink styleClass="adminLink" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode }"/>
 </h:panelGrid>
 </h:form>

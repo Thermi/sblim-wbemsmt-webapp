@@ -36,7 +36,7 @@
 </head>
 <body>
 
-<h:form>
+<h:form id="adminForm">
 <f:verbatim><br><br></f:verbatim>
 <h:panelGrid columns="1" width="80%" align="center" headerClass="left" >
 <f:facet name="header">
@@ -61,11 +61,11 @@
 <h:dataTable 
 	width="100%" 
 	value="#{admin.hostTable}" var="host" 
-	columnClasses="multiLineContentFirst left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContent left,multiLineContentLast left" 
+	columnClasses="multiLineContentFirst left  topAlignment topPadding,multiLineContent left topAlignment topPadding,multiLineContent left topAlignment topPadding,multiLineContent left topAlignment topPadding,multiLineContent left topAlignment topPadding,multiLineContentLast left nopadding topAlignment topPadding" 
 	rowClasses="multiLineRowWhite,multiLineRowGray"
 	headerClass="multiLineHeader left adminTableHeaderHeight"
 	cellpadding="0" cellspacing="0" > 
-	<h:column><h:panelGroup>
+	<h:column ><h:panelGroup>
 			  <h:selectBooleanCheckbox value="#{host.delete}" rendered="#{!host.new && !admin.slpMode}"></h:selectBooleanCheckbox>
 	          <h:selectBooleanCheckbox value="#{host.addToFile}" rendered="#{admin.slpMode}"></h:selectBooleanCheckbox>
 	          <f:verbatim>&nbsp;</f:verbatim>
@@ -78,37 +78,38 @@
 			<f:selectItem itemValue="https" itemLabel="https"/>
 		</h:selectOneMenu>
 	</h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.hostname}"></h:outputText></f:facet><h:inputText value="#{host.hostname}" size="30" disabled="#{admin.slpMode}"></h:inputText></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.hostname}"></h:outputText></f:facet><h:inputText value="#{host.hostname}" size="30" disabled="#{admin.slpMode}" onblur="#{host.onBlur}"></h:inputText></h:column>
 	<h:column><f:facet name="header"><h:outputText value="#{messages.port}"></h:outputText></f:facet><h:inputText value="#{host.port}" size="12" disabled="#{admin.slpMode}"></h:inputText></h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.namespace}"></h:outputText></f:facet><h:inputText value="#{host.namespace}" size="20" disabled="#{admin.slpMode}"></h:inputText></h:column>
 	<h:column><f:facet name="header"><h:outputText value="#{messages.user}"></h:outputText></f:facet><h:inputText value="#{host.user}" size="15" disabled="#{admin.slpMode}"></h:inputText></h:column>
+
 	<h:column>
 	<f:facet name="header">
 	<h:panelGroup>
 		<h:outputText value="#{messages.tasks}"/>
 	</h:panelGroup>
 	</f:facet>
-	<h:dataTable  value="#{host.services}" var="service" rowClasses="serviceTableEmpty,serviceTableHighlighted" cellpadding="5" cellspacing="0" width="100%">
+	<h:dataTable  value="#{host.services}" var="service" columnClasses="width0 topAlignment,width0 topAlignment toppaddingServiceTexts,width0 topAlignment,width0 topAlignment,width100 topAlignment" cellpadding="0" cellspacing="0" width="100%">
 		<h:column>
-			<h:selectBooleanCheckbox  value="#{service.enabled}" disabled="#{admin.slpMode}"></h:selectBooleanCheckbox>
+			<h:selectBooleanCheckbox  value="#{service.enabled}" onchange="#{admin.clickBlindButton}" disabled="#{admin.slpMode || host.new}"></h:selectBooleanCheckbox>
 		</h:column>
 		<h:column>
 			<h:outputText value="#{service.reference.name}"></h:outputText>
 		</h:column>
-		<h:column>
-			<h:outputText value="<nobr>#{service.configured ? '' : messages.not_configured}</nobr>" escape="false"></h:outputText>
+		<h:column rendered="#{!admin.slpMode && (!service.installed || !service.configured) }">
+			<h:panelGroup>
+				<h:outputText value="<nobr>#{service.configured ? '' : messages.not_configured}</nobr>" escape="false"></h:outputText>
+				<h:outputText value="<br>" escape="false" rendered="#{!service.installed && !service.configured }"></h:outputText>
+				<h:outputText value="<nobr>#{service.installed ? '' : messages.not_installed}<nobr>" escape="false"></h:outputText>
+			</h:panelGroup>
 		</h:column>
-		<h:column>
-			<h:outputText value="<nobr>#{service.installed ? '' : messages.not_installed}<nobr>" escape="false"></h:outputText>
-		</h:column>
-		<h:column rendered="#{!admin.slpMode}">
-			<h:panelGroup rendered="#{service.enabled && service.configurable}">
-			<h:dataTable var="item" value="#{service.configurationItems}">
+		<h:column rendered="#{!admin.slpMode && service.installed && service.configured }">
+			<h:panelGroup>
+			<h:dataTable var="item" value="#{service.configurationItems}" columnClasses="width100 topAlignment toppaddingServiceTexts,width0 topAlignment,width0 topAlignment" cellpadding="0" cellspacing="0">
 				<h:column>
 						<h:outputText value="#{item.value.name}" style="white-space:no-wrap;padding-right:5px"/>
 				</h:column>
 				<h:column>
-						<h:inputText value="#{item.value.value}"/>
+						<h:inputText value="#{item.value.value}" disabled="#{!service.enabled}"/>
 				</h:column>
 				<h:column>
 						<h:commandLink onmouseover="showTooltip(event,'#{item.infoTranslated}')" onmouseout="hideTooltip(event)" onclick="return false">
@@ -127,18 +128,22 @@
 <h:commandButton value="#{messages.useSelectedSLPConfig}" action="#{admin.saveSelectedSlpHosts}" rendered="#{menueController.useSlp && admin.slpMode}"/>
 </h:panelGroup>
 <f:verbatim><br><br></f:verbatim>
+<h:panelGroup>
+	<h:selectBooleanCheckbox id="bulkChanges" value="#{admin.bulkChanges}" disabled="#{admin.slpMode}"></h:selectBooleanCheckbox>
+	<h:outputText value="#{messages.bulkChanges}"/>
+</h:panelGroup>
 <h:commandButton value="#{messages.save}" action="#{admin.saveHost}" rendered="#{!admin.slpMode}"/>
+<h:commandButton value="#{messages.save}" id="blindSubmit" action="#{admin.saveHostSilent}" rendered="#{!admin.slpMode}" style="visibility:hidden"/>
 <f:verbatim><br><br></f:verbatim>
 
 <h:commandLink styleClass="adminLink" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode}"/>
 <h:commandLink styleClass="adminLink" value="#{messages.reloadSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && admin.slpMode}"/>
 <h:commandLink styleClass="adminLink" value="#{messages.useAllSLPConfig}" action="#{admin.saveHost}" rendered="#{menueController.useSlp && admin.slpMode}"/>
 <h:commandLink styleClass="adminLink" value="#{messages.useOldConfig}" action="#{admin.reloadFromFile}" rendered="#{menueController.useSlp && admin.slpMode}"/>
-<h:commandLink styleClass="adminLink" value="#{messages.summary}" action="adminIndex"/>
+<h:commandLink styleClass="adminLink" value="#{messages.summary}" action="adminIndex" actionListener="#{admin.selectAllHosts}"/>
 <f:verbatim><br><br></f:verbatim>
 <h:outputText value="#{messages.not_configured_hint}"></h:outputText>
 <h:outputText value="#{messages.not_installed_hint}"></h:outputText>
-<h:outputText value="#{messages.applicationNamespace_hint}" rendered="#{!admin.slpMode}" ></h:outputText>
 </h:panelGrid>
 </h:form>
 

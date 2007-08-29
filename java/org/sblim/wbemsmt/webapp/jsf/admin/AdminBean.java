@@ -25,7 +25,10 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.component.UIParameter;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.Cookie;
 
 import org.apache.commons.lang.StringUtils;
 import org.sblim.wbemsmt.bl.ErrCodes;
@@ -43,12 +46,15 @@ import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigDocument.Tree
 import org.sblim.wbemsmt.tasklauncher.tasklauncherconfig.TreeconfigReferenceDocument.TreeconfigReference;
 import org.sblim.wbemsmt.tools.jsf.JsfBase;
 import org.sblim.wbemsmt.tools.jsf.JsfUtil;
+import org.sblim.wbemsmt.tools.jsf.WbemsmtCookieUtil;
 import org.sblim.wbemsmt.tools.slp.SLPLoader;
 import org.sblim.wbemsmt.tools.slp.SLPUtil;
 import org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppBean;
 
 public class AdminBean extends WbemsmtWebAppBean {
 
+	private static final String COOKIE_KEY_BULKCHANGES = "WBEMSMT-ADMIN-BULKCHANGES";
+	public static final String CLICK_BLIND_BUTTON_HANDLER = "if (document.getElementById('adminForm:bulkChanges').checked == false) {document.getElementById('adminForm:blindSubmit').click();};";
 	private List hostTable;
 	private List serviceXmls;
 	private TasklauncherconfigDocument taskLauncherDoc;
@@ -56,6 +62,9 @@ public class AdminBean extends WbemsmtWebAppBean {
     private TaskLauncherController taskLauncherController;
     private boolean welcomeSettingsEnabled;
     private boolean welcomeTasksEnabled;
+    
+    //true if the user wants no onBlur and onClick events
+    private boolean bulkChanges = false;
     
 	/**
 	 * True if the slp config is shown
@@ -71,6 +80,8 @@ public class AdminBean extends WbemsmtWebAppBean {
 	
 	private SLPLoader slpLoader;
 	private Treeconfig[] treeconfigArray;
+	private boolean allHosts = true;
+	private HostEntry selectedHost;
 	/**
 	 * @throws WbemSmtException 
 	 * 
@@ -79,6 +90,13 @@ public class AdminBean extends WbemsmtWebAppBean {
 	{
 		super();
 		init();
+
+		Cookie cookie = WbemsmtCookieUtil.getCookie(COOKIE_KEY_BULKCHANGES);
+		if (cookie != null)
+		{
+			bulkChanges = "true".equalsIgnoreCase(cookie.getValue());			
+		}
+		
 		
 	}
 	
@@ -132,34 +150,56 @@ public class AdminBean extends WbemsmtWebAppBean {
 		return "";
 	}
 	
+	public String saveHostSilent()
+	{
+		return saveHost(true);
+	}
+
 	public String saveHost()
 	{
+		return saveHost(false);
+	}
+
+	public String saveHost(boolean silent)
+	{
+		
 		try {
-			for (int i=hostTable.size()-1; i >= 0 ; i--)
+			if (allHosts)
 			{
-				HostEntry hostEntry = (HostEntry) hostTable.get(i);
-				if ((hostEntry.isNew() || hostEntry.isAddToFile()) && !NEW_HOST.equals(hostEntry.hostname))
+				for (int i=hostTable.size()-1; i >= 0 ; i--)
 				{
-					logger.info("Creating new host " + hostEntry.getHostname());
-					Cimom cimom = taskLauncherDoc.getTasklauncherconfig().addNewCimom();
-					hostEntry.setCimom(cimom);
-					hostEntry.setNew(false);
-				
-					JsfBase.addMessage(Message.create(ErrCodes.MSG_ADDED_HOST, Message.INFO, bundle, "addedHost",new Object[]{hostEntry.getHostname()}));					
-					
-					updateCimom(cimom, hostEntry);
-
-					//add a new Host
-					hostTable.add(new HostEntry(this,taskLauncherController.getTaskLauncherConfig(), getTreeconfigReferences()));				
+					HostEntry hostEntry = (HostEntry) hostTable.get(i);
+					if ((hostEntry.isNew() || hostEntry.isAddToFile()) && !NEW_HOST.equals(hostEntry.hostname))
+					{
+						logger.info("Creating new host " + hostEntry.getHostname());
+						Cimom cimom = taskLauncherDoc.getTasklauncherconfig().addNewCimom();
+						hostEntry.setCimom(cimom);
+						hostEntry.setNew(false);
+						if (!silent)
+							JsfBase.addMessage(Message.create(ErrCodes.MSG_ADDED_HOST, Message.INFO, bundle, "addedHost",new Object[]{hostEntry.getHostname()}));					
+						
+						updateCimom(cimom, hostEntry);
+						
+						//add a new Host
+						hostTable.add(new HostEntry(this,taskLauncherController.getTaskLauncherConfig(), getTreeconfigReferences()));				
+					}
+					else if (hostEntry.getCimom() != null)
+					{
+						Cimom cimom = hostEntry.getCimom();
+						hostEntry.setCimom(cimom);
+						
+						updateCimom(cimom, hostEntry);
+						if (!silent)
+							JsfBase.addMessage(Message.create(ErrCodes.MSG_SAVE_SUCCESS, Message.INFO, bundle, "save.success"));					
+					}
 				}
-				else if (hostEntry.getCimom() != null)
-				{
-					Cimom cimom = hostEntry.getCimom();
-					hostEntry.setCimom(cimom);
-
-					updateCimom(cimom, hostEntry);
+			}
+			else
+			{
+				Cimom cimom = selectedHost.getCimom();
+				updateCimom(cimom, selectedHost);
+				if (!silent)
 					JsfBase.addMessage(Message.create(ErrCodes.MSG_SAVE_SUCCESS, Message.INFO, bundle, "save.success"));					
-				}
 			}
 			
 			save();
@@ -196,7 +236,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 			hosts.add(addNewHostItem);
 			
 			//save the hosts
-			saveHost();
+			saveHost(false);
 		} catch (Exception e) {
 			handleSaveException(e);
 		}
@@ -206,7 +246,6 @@ public class AdminBean extends WbemsmtWebAppBean {
 	private void updateCimom(Cimom cimom, HostEntry hostEntry) {
 		
 		cimom.setHostname(hostEntry.getHostname());
-		cimom.setNamespace(hostEntry.getNamespace());
 		cimom.setPort(hostEntry.getPortAsInt());
 		cimom.setUser(hostEntry.user);
 		cimom.setProtocol(StringUtils.isNotEmpty(hostEntry.protocol) ? hostEntry.protocol : TaskLauncherConfig.DEFAULT_PROTOCOL );
@@ -224,10 +263,17 @@ public class AdminBean extends WbemsmtWebAppBean {
 			TreeconfigReference refInCimom = (TreeconfigReference) referencesByName.get(serviceInHost.getReference().getName());
 			
 			//If checkbox was selected but reference not exists -> add the ref from the 
-			if (serviceInHost.isEnabled() && refInCimom == null)
+			if (serviceInHost.isEnabled())
 			{
-				TreeconfigReference reference = cimom.addNewTreeconfigReference();
-				reference.set(serviceInHost.getReference().copy());
+				if ( refInCimom == null )
+				{
+					TreeconfigReference reference = cimom.addNewTreeconfigReference();
+					reference.set(serviceInHost.getReference().copy());
+				}
+				else
+				{
+					refInCimom.setNamespace(serviceInHost.getNamespace());
+				}
 			}
 			//If checkbox was not selected but reference exists -> delete the ref from the cimom
 			else if (!serviceInHost.isEnabled() && refInCimom != null)
@@ -275,8 +321,19 @@ public class AdminBean extends WbemsmtWebAppBean {
 		} catch (Exception e) {
 			handleSaveException(e);
 		}
+		
+		if (allHosts)
+		{
+			return "adminHost";
+		}
+		else
+		{
+			//if there is only one item we can go back to the overview
+			allHosts = true;
+			return "adminIndex";
+		}
+		
 
-		return "adminHost";
 	}
 
 	private void save() throws IOException
@@ -304,7 +361,26 @@ public class AdminBean extends WbemsmtWebAppBean {
 				JsfUtil.handleException(e);
 			}
 		}
-		return hostTable;
+		
+		if (allHosts)
+		{
+			return hostTable;
+		}
+		else
+		{
+			for (Iterator iterator = hostTable.iterator(); iterator.hasNext();) {
+				HostEntry entry = (HostEntry) iterator.next();
+				if (entry.getHostname().equals(selectedHost.getHostname()))
+				{
+					List result = new ArrayList();
+					result.add(entry);
+					return result;
+				}
+			}
+			return null;
+		}
+
+		
 	}
 
 	public List getHostTableForDisplay()
@@ -395,7 +471,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 
 			TreeConfigData treeConfigDataByTaskname = taskLauncherController.getTaskLauncherConfig().getTreeConfigDataByTaskname(treeconfig.getName());
 			Boolean installed = new Boolean(treeConfigDataByTaskname != null && 
-								new CustomTreeConfig(treeConfigDataByTaskname,null).isLoaded());
+								CustomTreeConfig.isLoaded(treeConfigDataByTaskname));
 			result.add(new Task(treeconfig.getName(),true,installed.booleanValue()));
 		 }
 		 return result;
@@ -480,7 +556,7 @@ public class AdminBean extends WbemsmtWebAppBean {
 	}
 
 	public void setTaskLauncherController (
-			TaskLauncherController taskLauncherController) throws WbemSmtException {
+		TaskLauncherController taskLauncherController) throws WbemSmtException {
 		this.taskLauncherController = taskLauncherController;
 		init();
 	}
@@ -501,7 +577,33 @@ public class AdminBean extends WbemsmtWebAppBean {
 		this.welcomeTasksEnabled = welcomeTasksEnabled;
 	}
 	
+	public void selectSingleHost(ActionEvent event)
+	{
+		List children = event.getComponent().getChildren();
+		UIParameter parameter = (UIParameter) children.get(0);
+		allHosts = false;
+		selectedHost = (HostEntry)parameter.getValue();
+	}
 	
+	public void selectAllHosts(ActionEvent event)
+	{
+		allHosts = true;
+	}
+
+	public boolean isBulkChanges() {
+		return bulkChanges;
+	}
+
+	public void setBulkChanges(boolean bulkChanges) {
+		this.bulkChanges = bulkChanges;
+		WbemsmtCookieUtil.addCookie(COOKIE_KEY_BULKCHANGES,""+bulkChanges);
+	}
 	
+	public String getClickBlindButton()
+	{
+		return CLICK_BLIND_BUTTON_HANDLER;
+	}
+	
+
 }
 

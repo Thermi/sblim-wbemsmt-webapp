@@ -18,10 +18,24 @@
     line-height:180%;
 }
 
-.serviceTableEmpty {
-	
+.width200px
+{
+  width:200px;
 }
 
-.serviceTableHighlighted {
-   background-color:#E8E8D8;
+
+.nopadding
+{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+
+.toppadding
+{
+	padding-top: 10px !important;
+}
+
+.toppaddingServiceTexts
+{
+	padding-top: 2px !important;
 }

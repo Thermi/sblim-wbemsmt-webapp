@@ -18,8 +18,10 @@
 
 package org.sblim.wbemsmt.webapp.jsf.embedded;
 
-import java.util.*;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.sblim.wbem.client.CIMClient;
@@ -28,7 +30,6 @@ import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
 import org.sblim.wbemsmt.exception.LoginException;
 import org.sblim.wbemsmt.exception.WbemSmtException;
-import org.sblim.wbemsmt.session.WbemsmtSession;
 import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherDelegaterTreeNode;
@@ -47,7 +48,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 	/**
      * This logger is used to create internal log entries
      */
-	private static final Logger logger = Logger.getLogger("org.sblim.wbemsmt.tasklauncher.jsf");
+//	private static final Logger logger = Logger.getLogger("org.sblim.wbemsmt.tasklauncher.jsf");
     
     private String target = "",
     			   namespace = "",
@@ -73,53 +74,53 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     	super();
     }
     
-    private CIMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String namespace, List treeconfigs,boolean useSlp) throws LoginException
+    private CIMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String protocol, List treeconfigs,boolean useSlp) throws LoginException
     {
-        CIMClient cimClient = null;
-        try
-        {
-        	username = username == null ? "" : username; 
-        	password = StringUtils.isEmpty(password) ? " " : password; 
-        	hostname = hostname == null ? "" : hostname; 
-        	port = port == null ? "" : port; 
-        	namespace = namespace == null ? "" : namespace.trim(); 
-        	
-        	String url = "HTTP://" + hostname + ":" + port.trim();
-        	
-        	logger.info("Coonecting to " + url + " with user " + username);
-        	
-        	WbemsmtSession.getSession().createCIMClientPool(hostname,port,username,password);
-        	cimClient = WbemsmtSession.getSession().getCIMClientPool(hostname).getCIMClient(namespace);
-
-            Enumeration enumeration = cimClient.enumerateClasses();
-            
-            loggedIn = true;
-            if(enumeration == null)
-            {
-            	throw new LoginException(bundle.getString("cannot.connect.noElementsFound"),cimClient);
-            }
-        }
-        catch(Exception e)
-        {
-            if (e instanceof LoginException) {
-            	LoginException exception = (LoginException) e;
-            	throw exception;
-			}
-            else
-            {
-            	throw new LoginException(bundle.getString("internal.error"),e,cimClient);
-            }
-        }
+//        CIMClient cimClient = null;
+//        try
+//        {
+//        	username = username == null ? "" : username; 
+//        	password = StringUtils.isEmpty(password) ? " " : password; 
+//        	hostname = hostname == null ? "" : hostname; 
+//        	port = port == null ? "" : port; 
+//        	namespace = namespace == null ? "" : namespace.trim(); 
+//        	
+//        	String url = "HTTP://" + hostname + ":" + port.trim();
+//        	
+//        	logger.info("Coonecting to " + url + " with user " + username);
+//        	
+//        	WbemsmtSession.getSession().createCIMClientPool(hostname,port,username,password);
+//        	cimClient = WbemsmtSession.getSession().getCIMClientPool(hostname).getCIMClient(namespace);
+//
+//            Enumeration enumeration = cimClient.enumerateClasses();
+//            
+//            loggedIn = true;
+//            if(enumeration == null)
+//            {
+//            	throw new LoginException(bundle.getString("cannot.connect.noElementsFound"),cimClient);
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            if (e instanceof LoginException) {
+//            	LoginException exception = (LoginException) e;
+//            	throw exception;
+//			}
+//            else
+//            {
+//            	throw new LoginException(bundle.getString("internal.error"),e,cimClient);
+//            }
+//        }
         if (initModel)
         {
         	try {
-				this.taskLauncherController.init(hostname, cimClient,useSlp,treeconfigs	);
+				this.taskLauncherController.init(hostname, port,protocol,username,password,useSlp,treeconfigs	);
 				treeSelector.setTaskLauncherController(hostname,taskLauncherController);
 			}catch (WbemSmtException e) {
 				throw new LoginException(bundle.getString("internal.error"),e,cimClient);
 			}
         }
-        return cimClient;
+        return null;
     }
     
 
@@ -198,7 +199,6 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				datas[i] = new CimomData();
 				datas[i].setHostname(targets[i]);
 				datas[i].setPort(5988);
-				datas[i].setNamespace(namespaces[i]);
 				datas[i].setUser("pegasus");
 				
 				TreeConfigData treeConfig = taskLauncherController.getTaskLauncherConfig().getTreeConfigDataByTaskname(task);
@@ -236,8 +236,8 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				data.getUser(), 
 				"wbem01smt", 
 				data.getHostname(), 
-				"" + data.getPort(), 
-				data.getNamespace(),
+				"" + data.getPort(),
+				"http",
 				data.getTreeConfigs(),
 				false
 				);
@@ -260,7 +260,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 						"wbem01smt", 
 						cimomNode.getCimomData().getHostname(), 
 						"" + cimomNode.getCimomData().getPort(), 
-						cimomNode.getCimomData().getNamespace(),
+						"http",
 						cimomNode.getCimomData().getTreeConfigs(),false));
 				
 				cimomNode.getCimomData().setUser(cimomNode.getCimomData().getUser());

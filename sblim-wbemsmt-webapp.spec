@@ -1,6 +1,6 @@
 %define name                    sblim-wbemsmt-webapp
 %define version                 0.5.1
-%define build_release           1
+%define build_release           CVS
 %define release                 %{build_release}jpp
 %define section                 free
 
@@ -187,6 +187,10 @@ fi
 
 ###############################################################################
 %changelog
+* Wed Aug 29 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.1-CVS
+  - Inclusion of fixes for the following issues:
+    o 1784067 wbemsmt-webapp: rework admin panels
+    
 * Mon Aug 27 2007 Wolfgang Taphorn <taphorn@de.ibm.com> 0.5.1-1
   - Inclusion of fixes for the following issues:
     o 1780048  wbemsmt-webapp: add protocol to login settings

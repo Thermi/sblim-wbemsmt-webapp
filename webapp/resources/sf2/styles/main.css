@@ -578,3 +578,13 @@ a:hover {
 {
 	border: 0px solid; 
 }
+
+.width0
+{
+  width:0%;
+}
+
+.width100
+{
+  width:100%;
+}

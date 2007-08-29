@@ -34,7 +34,7 @@
 				<h:inputHidden id="cimominfo" value="#{cimom.cimomData.info}"/>
 				<h:inputText id="username" value="#{cimom.cimomData.user}"/>
 				<h:outputLabel for="password" value="#{messages.password}"/>
-				<h:inputSecret id="password"  value="#{cimom.password}" redisplay="true" />
+				<h:inputSecret id="password"  value="#{cimom.cimomData.password}" redisplay="true" />
 				<h:panelGroup>
 					<h:selectBooleanCheckbox id="emptyPassword" value="#{cimom.emptyPassword}" />
 					<h:outputLabel value="#{messages.emptyPassword}"/>

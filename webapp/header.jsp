@@ -59,7 +59,7 @@
       </h:panelGroup>
 </h:panelGroup>
 <h:panelGroup rendered="#{!style.embedded}">
-			<h:outputText id="loggedInText" styleClass="fieldLabel" value="#{messages.loggedInAs} #{loginCheck.username}@#{loginCheck.hostname}#{loginCheck.namespace}" rendered="#{menueController.signedOnTextEnabled}"></h:outputText>
+			<h:outputText id="loggedInText" styleClass="fieldLabel" value="#{messages.loggedInAs} #{loginCheck.username}@#{loginCheck.hostname}" rendered="#{menueController.signedOnTextEnabled}"></h:outputText>
 			<f:verbatim>&nbsp;&nbsp;</f:verbatim>
 			<h:commandLink id="link_1_logout" value="#{messages.logout}" action="#{loginCheck.logoutAction}"  styleClass="treeTopLink" />
 			<f:verbatim><br></f:verbatim>

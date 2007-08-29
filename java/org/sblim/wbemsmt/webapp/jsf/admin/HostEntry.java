@@ -39,7 +39,6 @@ public class HostEntry
 	boolean delete;
 	boolean addToFile = false;
 	String hostname;
-	String namespace;
 	String user;
 	String protocol;
 	String port;
@@ -63,7 +62,6 @@ public class HostEntry
 		hostname = cimom.getHostname();
 		port = cimom.getPort() == -1 ? DEFAULT_TOKEN : "" + cimom.getPort();
 		user = cimom.getUser();
-		namespace = cimom.getNamespace();
 		protocol =  StringUtils.isNotEmpty(cimom.getProtocol()) ? cimom.getProtocol() : TaskLauncherConfig.DEFAULT_PROTOCOL;
 		
 		Map referencesByName = new HashMap();
@@ -127,7 +125,6 @@ public class HostEntry
 	{
 		isNew = true;
 		hostname = AdminBean.NEW_HOST;
-		namespace = TaskLauncherConfig.DEFAULT_NAMESPACE;
 		port = ""+TaskLauncherConfig.DEFAULT_PORT;
 		protocol = TaskLauncherConfig.DEFAULT_PROTOCOL;
 		user = TaskLauncherConfig.DEFAULT_USER;
@@ -139,7 +136,7 @@ public class HostEntry
 			serviceInHost.setEnabled(false);
 			serviceInHost.setConfigured(true);
 			
-			boolean installed = isServiceInstalled(config, configReference, new CimomData(hostname,getPortAsInt(),protocol,namespace,user));
+			boolean installed = isServiceInstalled(config, configReference, new CimomData(hostname,getPortAsInt(),protocol,user));
 			serviceInHost.setInstalled(installed);
 			
 			this.services.add(serviceInHost);
@@ -153,7 +150,7 @@ public class HostEntry
 		{
 			TreeConfigData treeConfigDataByTaskname = config.getTreeConfigDataByTaskname(service.getName());
 			installed = new Boolean(treeConfigDataByTaskname != null && 
-							new CustomTreeConfig(treeConfigDataByTaskname,cimomData).isLoaded());
+							CustomTreeConfig.isLoaded(treeConfigDataByTaskname));
 			serviceInstallationStates.put(service,installed);
 		}
 		return installed.booleanValue();
@@ -181,14 +178,6 @@ public class HostEntry
 		this.hostname = hostname;
 	}
 
-	public String getNamespace() {
-		return namespace;
-	}
-
-	public void setNamespace(String namespace) {
-		this.namespace = namespace;
-	}
-	
 	public String getPort() {
 		
 		if (TaskLauncherConfig.HTTP.equalsIgnoreCase(protocol) 
@@ -311,6 +300,24 @@ public class HostEntry
 		{
 			return Integer.parseInt(port);
 		}
+	}
+	
+	/**
+	 * Get the onBlur Javascript Eventhandler if the hostEntry is new
+	 * @return
+	 */
+	public String getOnBlur()
+	{
+		if (isNew)
+		{
+			return "if (this.value!='" +  AdminBean.NEW_HOST +"'){" + AdminBean.CLICK_BLIND_BUTTON_HANDLER + "};";
+		}
+		else
+		{
+			return "";
+		}
+		
+		
 	}
 	
 	
