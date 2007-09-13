@@ -286,13 +286,9 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 	}
 
 	public void reloadLoginSettings() throws WbemSmtException {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void setCimomData(CimomData data) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void cleanup() {
