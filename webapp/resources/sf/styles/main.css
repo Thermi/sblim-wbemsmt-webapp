@@ -573,6 +573,12 @@ a:hover {
 	overflow:auto;
 }
 
+
+.noBorder 
+{
+	border: 0px solid; 
+}
+
 .width0
 {
   width:0%;
