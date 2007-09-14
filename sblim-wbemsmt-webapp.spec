@@ -1,6 +1,6 @@
 %define name                    sblim-wbemsmt-webapp
-%define version                 0.5.1
-%define build_release           CVS
+%define version                 0.5.2
+%define build_release           1
 %define release                 %{build_release}jpp
 %define section                 free
 
@@ -187,7 +187,7 @@ fi
 
 ###############################################################################
 %changelog
-* Thu Sep 13 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.1-CVS
+* Thu Sep 13 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-1
   - Inclusion of fixes for the following issues:
     o 1793932 wbemsmt-webapp: noborder stylesheet class for main.css
     o 1784067 wbemsmt-webapp: rework admin panels
