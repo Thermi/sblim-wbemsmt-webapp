@@ -1,4 +1,43 @@
 // =========================================================================
+// new in version 0.5.2-1 :
+
+2007-09-14 18:24  taphorn
+
+	* NEWS, build.xml, sblim-wbemsmt-webapp.spec: Preparation of next
+	  release
+
+2007-09-13 16:01  mbauschert
+
+	* NEWS, sblim-wbemsmt-webapp.spec,
+	  webapp/resources/sf/styles/main.css: Fix 1793932  wbemsmt-webapp:
+	  noborder stylesheet class for main.css
+
+2007-09-13 15:58  mbauschert
+
+	* java/org/sblim/wbemsmt/webapp/jsf/embedded/LoginCheckBean.java:
+	  removed todos
+
+2007-08-29 16:20  mbauschert
+
+	* webapp/resources/sf2/styles/main.css,
+	  webapp/resources/sf2/styles/admin.css, sblim-wbemsmt-webapp.spec,
+	  java/org/sblim/wbemsmt/webapp/jsf/LoginCheckBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/LoginFileGenerator.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages.properties,
+	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_de.properties,
+	  java/org/sblim/wbemsmt/webapp/jsf/webapp_messages_en.properties,
+	  webapp/cimomLogin.jsp, webapp/header.jsp, webapp/login.jsp,
+	  webapp/admin/adminHost.jsp, webapp/admin/index.jsp, .project,
+	  NEWS, java/org/sblim/wbemsmt/webapp/jsf/admin/AdminBean.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/HostEntry.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/ServiceInHost.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/embedded/LoginCheckBean.java,
+	  webapp/META-INF/MANIFEST.MF,
+	  webapp/resources/sf/styles/admin.css,
+	  webapp/resources/sf/styles/main.css, .settings/.component: Fix
+	  1784067 wbemsmt-webapp: rework admin panels
+
+// =========================================================================
 // new in version 0.5.1-1 :
 
 2007-08-23 11:32  mbauschert
