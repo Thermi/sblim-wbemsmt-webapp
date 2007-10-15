@@ -35,6 +35,7 @@ import org.apache.myfaces.custom.navmenu.NavigationMenuItem;
 import org.apache.myfaces.custom.tree2.HtmlTree;
 import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
+import org.sblim.wbemsmt.bl.tree.ITreeBacker;
 import org.sblim.wbemsmt.bl.tree.ITreeSelector;
 import org.sblim.wbemsmt.exception.WbemSmtException;
 import org.sblim.wbemsmt.tasklauncher.ITaskLauncherUiTreeNode;
@@ -78,11 +79,16 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
         return this.menuItems;
     }
 
-    public TreeBacker getCurrentTreeBacker()
+    public ITreeBacker getCurrentTreeBacker()
     {
     	return getCurrentTreeBacker(false);
     }
     
+    public TreeBacker getCurrentTreeBackerImpl()
+    {
+    	return getCurrentTreeBacker(false);
+    }
+
     public TreeBacker getCurrentTreeBacker(boolean silent)
     {
         if(!this.treeBackerMap.isEmpty())
@@ -105,7 +111,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     {
         if(!this.treeBackerMap.isEmpty())
         {
-             HtmlTree tree = getCurrentTreeBacker().getTree();
+             HtmlTree tree = getCurrentTreeBackerImpl().getTree();
              tree.setId("_bla");
              return tree;
         }
@@ -183,9 +189,9 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     	{
     		JsfTreeNode jsfNode = (JsfTreeNode)uiTreeNode;
     		this.selectedNode = jsfNode;
-			String[] path = selectedNode.getPath(getCurrentTreeBacker().getTree());
-			getCurrentTreeBacker().getTree().expandPath(path);
-			getCurrentTreeBacker().getTreeModelDirect().getTreeState().setSelected(path[path.length-1]);
+			String[] path = selectedNode.getPath(getCurrentTreeBackerImpl().getTree());
+			getCurrentTreeBackerImpl().getTree().expandPath(path);
+			getCurrentTreeBackerImpl().getTreeModelDirect().getTreeState().setSelected(path[path.length-1]);
 			selectedTasklauncherTreeNode = selectedNode.getTaskLauncherTreeNode();
     	}
     	else if (uiTreeNode != null)
@@ -204,7 +210,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 	public void setSelectedTaskLauncherTreeNode(ITaskLauncherTreeNode node) {
 		if (node != null)
 		{
-			JsfTreeNode jsfNode = getCurrentTreeBacker().findJsfTreeNode(node);
+			JsfTreeNode jsfNode = getCurrentTreeBackerImpl().findJsfTreeNode(node);
 			if (jsfNode != null)
 			{
 				setSelectedNode(jsfNode);
@@ -298,7 +304,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 	}
 
 	public void expandAll() {
-		getCurrentTreeBacker().expandAll();
+		getCurrentTreeBackerImpl().expandAll();
 	}
 
 	public void cleanup()

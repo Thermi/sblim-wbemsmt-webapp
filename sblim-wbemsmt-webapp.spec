@@ -190,6 +190,8 @@ fi
 * Thu Oct 15 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
   - Inclusion of fixes for the following issues:
 	o 1813968 wbemsmt-webapp: utils for managing open ports
+	o 1813970 wbemsmt-webapp: update the tree if requested from BL
+	
 * Thu Sep 13 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-1
   - Inclusion of fixes for the following issues:
     o 1793932 wbemsmt-webapp: noborder stylesheet class for main.css

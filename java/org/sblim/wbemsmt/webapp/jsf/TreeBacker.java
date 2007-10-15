@@ -35,6 +35,7 @@ import org.apache.myfaces.custom.tree2.TreeModel;
 import org.apache.myfaces.custom.tree2.TreeModelBase;
 import org.sblim.wbemsmt.bl.help.HelpManager;
 import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
+import org.sblim.wbemsmt.bl.tree.ITreeBacker;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
 import org.sblim.wbemsmt.exception.WbemSmtException;
@@ -55,7 +56,7 @@ import org.sblim.wbemsmt.tools.resources.WbemSmtResourceBundle;
  *
  * Set the vm property TASKLAUNCHER_ADD_EXPAND_ALL to true to expand all Leafs of the Tree
  */
-public class TreeBacker implements TaskLauncherTreeNodeEventListener
+public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacker
 {
     private static final String SYSTEM_PROPERTY_TASKLAUNCHER_ADD_EXPAND_ALL = "tasklauncher.add.expand.all";
 
