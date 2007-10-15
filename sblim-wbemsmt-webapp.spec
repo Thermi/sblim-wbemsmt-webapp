@@ -1,6 +1,6 @@
 %define name                    sblim-wbemsmt-webapp
 %define version                 0.5.2
-%define build_release           1
+%define build_release           CVS
 %define release                 %{build_release}jpp
 %define section                 free
 
@@ -187,6 +187,9 @@ fi
 
 ###############################################################################
 %changelog
+* Thu Oct 15 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
+  - Inclusion of fixes for the following issues:
+	o 1813968 wbemsmt-webapp: utils for managing open ports
 * Thu Sep 13 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-1
   - Inclusion of fixes for the following issues:
     o 1793932 wbemsmt-webapp: noborder stylesheet class for main.css

@@ -349,6 +349,44 @@
     	session</managed-bean-scope>
     </managed-bean>    		
 
+    <managed-bean>
+    	<description>
+    	Manages Indication destinations and their presets</description>
+    	<managed-bean-name>destinationManager</managed-bean-name>
+    	<managed-bean-class>org.sblim.wbemsmt.cim.indication.jsf.DestinationManagerBean</managed-bean-class>
+    	<managed-bean-scope>application</managed-bean-scope>
+		<managed-property>
+			<property-name>presets</property-name>
+			<map-entries>
+				<value-class>org.sblim.wbemsmt.cim.indication.IndicationDestinationPresets</value-class>
+				<map-entry>
+					<key>*</key>
+					<value>#{preset1}</value>
+				</map-entry>
+			</map-entries>
+		</managed-property>    	
+    </managed-bean>
+    <managed-bean>
+    	<managed-bean-name>preset1</managed-bean-name>
+    	<managed-bean-class>org.sblim.wbemsmt.cim.indication.IndicationDestinationPresets</managed-bean-class>
+    	<managed-bean-scope>application</managed-bean-scope>
+    	<managed-property>
+    		<property-name>url</property-name>
+    		<property-class>java.lang.String</property-class>
+    		<value>http://&lt;hostname&gt;:&lt;port&gt;/0</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>portStart</property-name>
+    		<property-class>int</property-class>
+    		<value>1000</value>
+    	</managed-property>
+    	<managed-property>
+    		<property-name>portEnd</property-name>
+    		<property-class>int</property-class>
+    		<value>1100</value>
+    	</managed-property>
+    </managed-bean>    		
+
 	<navigation-rule>
 	    <navigation-case>
             <from-outcome>showproperties</from-outcome>

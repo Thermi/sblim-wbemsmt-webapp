@@ -1,3 +1,7 @@
+Changes in 0.5.2-CVS
+==============================================================================
+- 1813968 wbemsmt-webapp: utils for managing open ports
+
 Changes in 0.5.2-1
 ==============================================================================
 - 1793932 wbemsmt-webapp: noborder stylesheet class for main.css
