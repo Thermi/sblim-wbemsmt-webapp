@@ -207,6 +207,12 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     	}
     }
     
+    /**
+     * Tty to find the JSfTreeNode which contains the given node
+     * if the node was found this JsfTreeNode is set as the selected Node
+     * 
+     * @param node the node for which to search within the JSFTreeNodes 
+     */
 	public void setSelectedTaskLauncherTreeNode(ITaskLauncherTreeNode node) {
 		if (node != null)
 		{
