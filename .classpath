@@ -15,5 +15,8 @@
 	<classpathentry kind="var" path="JAR_REPO/commons-codec/commons-codec/current/commons-codec.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-cim-client/current/sblim-cim-client.jar"/>
 	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-slp-client/current/sblim-slp-client.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/commons-jexl/current/commons-jexl.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/commons-scxml/current/commons-scxml.jar"/>
+	<classpathentry kind="var" path="JAR_REPO/commons-logging/commons-logging/current/commons-logging.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>
