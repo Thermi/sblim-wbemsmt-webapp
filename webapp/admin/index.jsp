@@ -49,6 +49,8 @@
 	<f:verbatim><br><br></f:verbatim>
 	<h:outputText value="#{messages.welcomeAdmin}" styleClass="fieldLabel"/>
 	<f:verbatim><br><br></f:verbatim>
+	<%@ include file="/include_errorHandling.jsp" %>
+	<f:verbatim><br><br></f:verbatim>
 	<h:outputText value="#{messages.currentSettings}" styleClass="tableHeader"/>
 	<f:verbatim><br><hr class="tableHeaderHR"><br><br></f:verbatim>
 	<h:dataTable
@@ -145,10 +147,9 @@
 	
 </h:panelGroup>
 <h:outputText styleClass="error" value="#{admin.adminDisabledMsg}" rendered="#{!admin.adminEnabled}"/>
-<%@ include file="/include_errorHandling.jsp" %>
 </h:panelGrid>
 <h:panelGrid columns="1" width="80%" align="center" rendered="#{admin.adminEnabled}">
-<h:commandLink styleClass="adminLink" value="#{messages.edithost}" action="adminHost" actionListener="#{admin.selectAllHosts}"/>
+<h:commandLink styleClass="adminLink" value="#{messages.edithost}" action="#{admin.editHosts}" actionListener="#{admin.selectAllHosts}"/>
 <h:commandLink styleClass="adminLink" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode }"/>
 </h:panelGrid>
 </h:form>

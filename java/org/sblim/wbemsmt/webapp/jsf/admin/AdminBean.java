@@ -31,9 +31,11 @@ import javax.faces.model.SelectItem;
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.lang.StringUtils;
+import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
 import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.session.jsf.WebSessionManger;
 import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
@@ -51,7 +53,7 @@ import org.sblim.wbemsmt.tools.slp.SLPLoader;
 import org.sblim.wbemsmt.tools.slp.SLPUtil;
 import org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppBean;
 
-public class AdminBean extends WbemsmtWebAppBean {
+public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 
 	private static final String COOKIE_KEY_BULKCHANGES = "WBEMSMT-ADMIN-BULKCHANGES";
 	public static final String CLICK_BLIND_BUTTON_HANDLER = "if (document.getElementById('adminForm:bulkChanges').checked == false) {document.getElementById('adminForm:blindSubmit').click();};";
@@ -62,6 +64,8 @@ public class AdminBean extends WbemsmtWebAppBean {
     private TaskLauncherController taskLauncherController;
     private boolean welcomeSettingsEnabled;
     private boolean welcomeTasksEnabled;
+    
+    private static String activeSessionId = null;
     
     //true if the user wants no onBlur and onClick events
     private boolean bulkChanges = false;
@@ -96,8 +100,6 @@ public class AdminBean extends WbemsmtWebAppBean {
 		{
 			bulkChanges = "true".equalsIgnoreCase(cookie.getValue());			
 		}
-		
-		
 	}
 	
 	public SLPLoader getSlpLoader() {
@@ -520,7 +522,8 @@ public class AdminBean extends WbemsmtWebAppBean {
 		{
 			try {
 				TasklauncherconfigDocument document = TasklauncherconfigDocument.Factory.parse(f);
-				return document.getTasklauncherconfig() != null;
+				boolean result = document.getTasklauncherconfig() != null;
+				return result;
 			} catch (Exception e) {
 				return false;
 			}
@@ -553,8 +556,48 @@ public class AdminBean extends WbemsmtWebAppBean {
 		{
 			JsfBase.addMessage(new Message(ErrCodes.MSG_CANNOT_LOAD_SLP, Message.WARNING, bundle.getString(ErrCodes.MSG_CANNOT_LOAD_SLP,"cannot.load.slp.conf")));
 		}
-    	return "";
+		
+    	if (canEdit(true))
+    	{
+    		return "adminHost";
+    	}
+    	else
+    	{
+    		return "";
+    	}
+		
+    	
     }
+
+    /**
+     * checks id the current session is the only one
+     * @return true if the current session is the only one and the user can edit data
+     * 
+     * @param setActiveSessionId if this flag is true the methods marks the current session
+     * as the session which is able to edit the config. Other sessions will be blicked
+     */
+	private boolean canEdit(boolean setActiveSessionId) {
+
+		String sessionId = WebSessionManger.getCurrentWebSession().getId();
+		
+		if (activeSessionId == null)
+		{
+			if (setActiveSessionId)
+			{
+				activeSessionId = sessionId;
+			}
+			return true;
+		}
+		else if (activeSessionId.equals(sessionId))
+		{
+			return true;
+		}
+		else
+		{
+			JsfBase.addMessage(Message.create(ErrCodes.MSGDEF_EDITING_NOT_POSSIBLE,bundle));
+			return false;
+		}
+	}
 
 	public TaskLauncherController getTaskLauncherController() {
 		return taskLauncherController;
@@ -608,7 +651,35 @@ public class AdminBean extends WbemsmtWebAppBean {
 	{
 		return CLICK_BLIND_BUTTON_HANDLER;
 	}
+
 	
+	public void cleanup() {
+		
+		String sessionId = WebSessionManger.getCurrentWebSession().getId();
+		if (sessionId.equals(activeSessionId))
+		{
+			activeSessionId = null;
+			logger.info("User's session with session id " + sessionId + " was timed out. Admin console can be used to edit the configfuration by other users");
+		}
+	}
+	
+	public String editHosts()
+	{
+		if (canEdit(true))
+		{
+			return "adminHost";
+		}
+		else
+		{
+			return "adminIndex";
+		}
+	}
+	
+	public String showSummary()
+	{
+		activeSessionId = null;
+		return "adminIndex";
+	}
 
 }
 

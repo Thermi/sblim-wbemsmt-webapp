@@ -1,5 +1,6 @@
 Changes in 0.5.2-CVS
 ==============================================================================
+- 1819855 wbemsmt-webapp: no parallel admin sessions
 - 1819758 wbemsmt-webapp: wrong xml :overwrite local conf with slp
 - 1813970 wbemsmt-webapp: update the tree if requested from BL
 - 1813968 wbemsmt-webapp: utils for managing open ports

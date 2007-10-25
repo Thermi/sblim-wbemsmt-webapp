@@ -140,7 +140,7 @@
 <h:commandLink styleClass="adminLink" value="#{messages.reloadSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && admin.slpMode}"/>
 <h:commandLink styleClass="adminLink" value="#{messages.useAllSLPConfig}" action="#{admin.saveHost}" rendered="#{menueController.useSlp && admin.slpMode}"/>
 <h:commandLink styleClass="adminLink" value="#{messages.useOldConfig}" action="#{admin.reloadFromFile}" rendered="#{menueController.useSlp && admin.slpMode}"/>
-<h:commandLink styleClass="adminLink" value="#{messages.summary}" action="adminIndex" actionListener="#{admin.selectAllHosts}"/>
+<h:commandLink styleClass="adminLink" value="#{messages.summary}" action="#{admin.showSummary}" actionListener="#{admin.selectAllHosts}"/>
 <f:verbatim><br><br></f:verbatim>
 <h:outputText value="#{messages.not_configured_hint}"></h:outputText>
 <h:outputText value="#{messages.not_installed_hint}"></h:outputText>
