@@ -39,6 +39,7 @@ public class HostEntry
 	boolean delete;
 	boolean addToFile = false;
 	String hostname;
+	String namespace;
 	String user;
 	String protocol;
 	String port;
@@ -60,6 +61,15 @@ public class HostEntry
 		this.cimom = cimom;
 		isNew = false;
 		hostname = cimom.getHostname();
+		if (hostname.indexOf("@") > -1)
+		{
+			namespace=hostname.substring(0,hostname.indexOf("@"));
+			if (namespace.startsWith("/"))
+			{
+				namespace = namespace.substring(1);
+			}
+			hostname=hostname.substring(hostname.indexOf("@")+1);
+		}
 		port = cimom.getPort() == -1 ? DEFAULT_TOKEN : "" + cimom.getPort();
 		user = cimom.getUser();
 		protocol =  StringUtils.isNotEmpty(cimom.getProtocol()) ? cimom.getProtocol() : TaskLauncherConfig.DEFAULT_PROTOCOL;
@@ -174,6 +184,19 @@ public class HostEntry
 		return hostname;
 	}
 
+	public String getHostInfo() {
+		return (namespace != null ? namespace + "@" : "") + hostname;
+	}
+
+	/**
+	 * do nothing
+	 * @param s
+	 */
+	public void setHostInfo(String s)
+	{
+		//do nothing
+	}
+	
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
 	}

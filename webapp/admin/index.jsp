@@ -72,7 +72,7 @@
 		</h:panelGroup>
 		</f:facet>
 		
-		<h:commandLink styleClass="adminLink" value="#{host.protocol}://#{host.hostname}:#{host.portAsInt}" action="adminHost" actionListener="#{admin.selectSingleHost}"> 
+		<h:commandLink styleClass="adminLink" value="#{host.protocol}://#{host.hostInfo}:#{host.portAsInt}" action="adminHost" actionListener="#{admin.selectSingleHost}"> 
 			<f:param name="hostname" value="#{host}"/>
 		</h:commandLink>
 		

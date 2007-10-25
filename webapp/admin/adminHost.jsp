@@ -78,7 +78,7 @@
 			<f:selectItem itemValue="https" itemLabel="https"/>
 		</h:selectOneMenu>
 	</h:column>
-	<h:column><f:facet name="header"><h:outputText value="#{messages.hostname}"></h:outputText></f:facet><h:inputText value="#{host.hostname}" size="30" disabled="#{admin.slpMode}" onblur="#{host.onBlur}"></h:inputText></h:column>
+	<h:column><f:facet name="header"><h:outputText value="#{messages.hostname}"></h:outputText></f:facet><h:inputText value="#{host.hostInfo}" size="30" disabled="#{admin.slpMode}" onblur="#{host.onBlur}"></h:inputText></h:column>
 	<h:column><f:facet name="header"><h:outputText value="#{messages.port}"></h:outputText></f:facet><h:inputText value="#{host.port}" size="12" disabled="#{admin.slpMode}"></h:inputText></h:column>
 	<h:column><f:facet name="header"><h:outputText value="#{messages.user}"></h:outputText></f:facet><h:inputText value="#{host.user}" size="15" disabled="#{admin.slpMode}"></h:inputText></h:column>
 
