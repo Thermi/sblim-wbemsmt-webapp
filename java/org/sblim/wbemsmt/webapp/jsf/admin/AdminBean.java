@@ -539,6 +539,11 @@ public class AdminBean extends WbemsmtWebAppBean {
 		{
 	    	TasklauncherconfigDocument result = SLPUtil.readFromSlp(slpLoader,treeconfigArray);
 			
+	    	while (result.getTasklauncherconfig().getTreeconfigArray().length > 0)
+	    	{
+	    		result.getTasklauncherconfig().removeTreeconfig(0);
+	    	}
+	    	
 			//reload the displayed hosts
 			hostTable = null;
 			taskLauncherDoc = result;

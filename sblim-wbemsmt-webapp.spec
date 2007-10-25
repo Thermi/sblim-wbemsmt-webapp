@@ -187,8 +187,9 @@ fi
 
 ###############################################################################
 %changelog
-* Thu Oct 15 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
+* Thu Oct 25 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
   - Inclusion of fixes for the following issues:
+    o 1819758 wbemsmt-webapp: wrong xml :overwrite local conf with slp
 	o 1813968 wbemsmt-webapp: utils for managing open ports
 	o 1813970 wbemsmt-webapp: update the tree if requested from BL
 	
