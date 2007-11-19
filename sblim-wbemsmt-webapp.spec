@@ -187,8 +187,9 @@ fi
 
 ###############################################################################
 %changelog
-* Thu Oct 25 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
+* Mon Nov 19 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
   - Inclusion of fixes for the following issues:
+    o 1834438 wbemsmt-adminwebapp: hostnames are not saved
   	o 1819901 wbemsmt-webapp: show namespace in slp result
     o 1819855 wbemsmt-webapp: no parallel admin sessions
     o 1819758 wbemsmt-webapp: wrong xml :overwrite local conf with slp

@@ -194,7 +194,16 @@ public class HostEntry
 	 */
 	public void setHostInfo(String s)
 	{
-		//do nothing
+		int indexOf = s.indexOf("@");
+		if (indexOf > -1)
+		{
+			hostname = s.substring(0,indexOf);
+			namespace = s.substring(indexOf+1);
+		}
+		else
+		{
+			hostname = s;
+		}
 	}
 	
 	public void setHostname(String hostname) {
