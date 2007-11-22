@@ -98,7 +98,7 @@
 	</context-param>
     <context-param>
 	  <param-name>wbemsmt-version</param-name>
-	  <param-value>BETA_0_5_1_1</param-value>
+	  <param-value>@PACKAGE_VERSION@</param-value>
 	</context-param>
 	<!-- Extensions Filter -->
     <filter>
@@ -136,14 +136,14 @@
     </filter>
     <filter>
         <filter-name>authorizationFilter</filter-name>
-        <filter-class>org.sblim.wbemsmt.webapp.jsf.embedded.AuthorizationFilter</filter-class>
+        <filter-class>org.sblim.wbemsmt.webapp.jsf.AuthorizationFilter</filter-class>
         <!-- 
             For Standalone use: org.sblim.wbemsmt.webapp.jsf.AuthorizationFilter         
             For Embedded use: org.sblim.wbemsmt.webapp.jsf.embedded.AuthorizationFilter
          -->
         <init-param>
             <param-name>LoginView</param-name>
-            <param-value>/embeddedNoSession.jsf</param-value>
+            <param-value>/login.jsf</param-value>
             <!-- <param-value></param-value> -->
             <description>
             Sets the view id to which the AuthorizationFilter redirects unauthorized requests.
@@ -155,7 +155,7 @@
         </init-param>
         <init-param>
             <param-name>LoginCheckClass</param-name>
-            <param-value>org.sblim.wbemsmt.webapp.jsf.embedded.LoginCheckBean</param-value>
+            <param-value>org.sblim.wbemsmt.webapp.jsf.LoginCheckBean</param-value>
             <description>
             Defines the class of the bean doing the authorization.
             This class must implement the interface org.sblim.wbemsmt.tasklauncher.login.LoginCheck

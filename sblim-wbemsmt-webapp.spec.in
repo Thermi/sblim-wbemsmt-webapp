@@ -1,5 +1,5 @@
 %define name                    sblim-wbemsmt-webapp
-%define version                 0.5.2
+%define version                 @PACKAGE_VERSION@
 %define build_release           CVS
 %define release                 %{build_release}jpp
 %define section                 free
@@ -189,6 +189,7 @@ fi
 %changelog
 * Mon Nov 19 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
   - Inclusion of fixes for the following issues:
+    o 1836656 wbemsmt-webapp: Version replacement during build
     o 1834438 wbemsmt-adminwebapp: hostnames are not saved
   	o 1819901 wbemsmt-webapp: show namespace in slp result
     o 1819855 wbemsmt-webapp: no parallel admin sessions

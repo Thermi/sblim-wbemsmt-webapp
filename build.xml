@@ -119,6 +119,12 @@
                 <include name="sblim-${ant.project.name}.conf"/>
             </fileset>
         </copy>
+    	
+    	<move file="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/web.xml.embedded.in" tofile="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/web.xml.embedded" />
+    	<move file="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/web.xml.standalone.in" tofile="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/web.xml.standalone" />
+        <replace file="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/web.xml.embedded" token="@PACKAGE_VERSION@" value="${Manifest.version}"/>
+        <replace file="${dir.package.output}/sblim-${ant.project.name}/WEB-INF/web.xml.standalone" token="@PACKAGE_VERSION@" value="${Manifest.version}"/>
+    	
     </target>
 
 
@@ -133,7 +139,11 @@
          ================================= -->
     <target name="package-src-tar" description="--> Package a source TAR ball for ${ant.project.name}">
         <mkdir dir="${dir.release.output}"/>
-        <tar destfile="${dir.release.output}/sblim-${ant.project.name}-${Manifest.version}-src.tar.bz2"
+
+    	<copy file="${basedir}/sblim-wbemsmt-webapp.spec.in" tofile="${basedir}/sblim-wbemsmt-webapp.spec"/>
+        <replace file="${basedir}/sblim-wbemsmt-webapp.spec" token="@PACKAGE_VERSION@" value="${Manifest.version}"/>
+
+    	<tar destfile="${dir.release.output}/sblim-${ant.project.name}-${Manifest.version}-src.tar.bz2"
              compression="bzip2"
              longfile="${tar.longfile}">
           <tarfileset
@@ -157,6 +167,8 @@
             excludes=".settings/**, .ant-targets-build.xml, pom.xml, target/**"
             prefix="sblim-${ant.project.name}"/>
         </tar>
+    	
+    	<delete file="${basedir}/sblim-wbemsmt-webapp.spec"/>
     </target>
 
 
