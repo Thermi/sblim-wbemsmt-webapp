@@ -1,5 +1,6 @@
 Changes in 0.5.2-CVS
 ==============================================================================
+- 1845499 wbemsmt-webapp: Include proper group definition for RPM
 - 1836656 wbemsmt-webapp: Version replacement during build
 - 1834438 wbemsmt-adminwebapp: hostnames are not saved
 - 1819901 wbemsmt-webapp: show namespace in slp result

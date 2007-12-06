@@ -15,7 +15,7 @@ Version:        %{version}
 Release:        %{release}
 License:        Common Public License
 Url:            http://sblim.sourceforge.net/
-Group:          System Environment/Applications
+Group:          Systems Management/Web Application
 Vendor:         IBM
 Summary:        Provides a JSF-based task launcher and navigation tree for WBEM-SMT tasks
 SOURCE0:        %{name}-%{version}-src.tar.bz2
@@ -189,6 +189,7 @@ fi
 %changelog
 * Mon Nov 19 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
   - Inclusion of fixes for the following issues:
+    o 1845499 wbemsmt-webapp: Include proper group definition for RPM
     o 1836656 wbemsmt-webapp: Version replacement during build
     o 1834438 wbemsmt-adminwebapp: hostnames are not saved
   	o 1819901 wbemsmt-webapp: show namespace in slp result
