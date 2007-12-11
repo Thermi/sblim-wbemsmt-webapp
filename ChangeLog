@@ -1,3 +1,76 @@
+2007-12-11 10:14  skanan
+
+	* NEWS, build.xml, sblim-wbemsmt-webapp.spec.in: Maintenance
+	  release 0.5.3-1
+
+2007-12-06 08:49  taphorn
+
+	* NEWS, sblim-wbemsmt-webapp.spec.in: Fix for issue [ 1845499 ]
+	  wbemsmt-webapp: Include proper group definition for RPM
+
+2007-11-22 16:02  taphorn
+
+	* NEWS, build.xml, sblim-wbemsmt-webapp.spec,
+	  sblim-wbemsmt-webapp.spec.in, .settings/.component,
+	  webapp/WEB-INF/web.xml.standalone.in,
+	  webapp/WEB-INF/web.xml.embedded,
+	  webapp/WEB-INF/web.xml.embedded.in,
+	  webapp/WEB-INF/web.xml.standalone: Fix for issue [ 1836656 ]
+	  wbemsmt-webapp: Version replacement during build
+
+2007-11-19 04:48  mbauschert
+
+	* NEWS, sblim-wbemsmt-webapp.spec,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/HostEntry.java: Fix
+	  1834438 wbemsmt-adminwebapp: hostnames are not saved
+
+2007-10-25 06:37  mbauschert
+
+	* java/org/sblim/wbemsmt/webapp/jsf/admin/HostEntry.java,
+	  webapp/admin/index.jsp, NEWS, sblim-wbemsmt-webapp.spec,
+	  webapp/admin/adminHost.jsp: Fix 1819901  wbemsmt-webapp: show
+	  namespace in slp result
+
+2007-10-25 05:14  mbauschert
+
+	* NEWS, sblim-wbemsmt-webapp.spec, webapp/admin/adminHost.jsp,
+	  webapp/admin/index.jsp, .settings/.component,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/AdminBean.java: fix
+	  1819855	   wbemsmt-webapp: no parallel admin sessions
+
+2007-10-25 03:20  mbauschert
+
+	* sblim-wbemsmt-webapp.spec, NEWS,
+	  java/org/sblim/wbemsmt/webapp/jsf/admin/AdminBean.java: Fix
+	  1819758  wbemsmt-webapp: wrong xml :overwrite local conf with slp
+
+2007-10-24 11:49  mbauschert
+
+	* .classpath, .project, .settings/.component,
+	  .settings/org.eclipse.jdt.ui.prefs: added additional libraries
+
+2007-10-24 10:42  mbauschert
+
+	* java/org/sblim/wbemsmt/webapp/jsf/TreeSelectorBean.java: Docu
+
+2007-10-15 12:21  mbauschert
+
+	* NEWS, sblim-wbemsmt-webapp.spec,
+	  java/org/sblim/wbemsmt/webapp/jsf/TreeBacker.java,
+	  java/org/sblim/wbemsmt/webapp/jsf/TreeSelectorBean.java: Fix [
+	  1813970 ] wbemsmt-webapp: update the tree if requested from BL
+
+2007-10-15 12:20  mbauschert
+
+	* NEWS, sblim-wbemsmt-webapp.spec,
+	  webapp/WEB-INF/faces-config.xml.embedded,
+	  webapp/WEB-INF/faces-config.xml.standalone: Fix [ 1813968 ]
+	  wbemsmt-webapp: utils for managing open ports
+
+2007-10-15 12:16  mbauschert
+
+	* .project, .settings/.component: added new libraries
+
 // =========================================================================
 // new in version 0.5.2-1 :
 
