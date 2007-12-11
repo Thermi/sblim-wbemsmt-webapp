@@ -1,6 +1,6 @@
 %define name                    sblim-wbemsmt-webapp
 %define version                 @PACKAGE_VERSION@
-%define build_release           CVS
+%define build_release           @RELEASE_VERSION@
 %define release                 %{build_release}jpp
 %define section                 free
 
@@ -187,8 +187,8 @@ fi
 
 ###############################################################################
 %changelog
-* Mon Nov 19 2007 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.2-CVS
-  - Inclusion of fixes for the following issues:
+* Tue Dec 11 2007 Sam Kannan <samkannan@us.ibm.com> 0.5.3-1
+  - Inclusion of fixes for the following issues
     o 1845499 wbemsmt-webapp: Include proper group definition for RPM
     o 1836656 wbemsmt-webapp: Version replacement during build
     o 1834438 wbemsmt-adminwebapp: hostnames are not saved

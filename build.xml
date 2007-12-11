@@ -21,7 +21,7 @@
         Build file for SBLIM wbemsmt-webapp package
     </description>
 	
-    <property name="Manifest.version"    value="0.5.2"/>
+    <property name="Manifest.version"    value="0.5.3"/>
     <property name="Manifest.release"    value="1"/>
     <property name="Manifest.title"      value="WBEM-SMT: Web Based Task Launcher"/>
     <property name="Manifest.url"        value="http://sblim.sourceforge.net"/>
@@ -142,6 +142,7 @@
 
     	<copy file="${basedir}/sblim-wbemsmt-webapp.spec.in" tofile="${basedir}/sblim-wbemsmt-webapp.spec"/>
         <replace file="${basedir}/sblim-wbemsmt-webapp.spec" token="@PACKAGE_VERSION@" value="${Manifest.version}"/>
+    	<replace file="${basedir}/sblim-wbemsmt-webapp.spec" token="@RELEASE_VERSION@" value="${Manifest.release}"/>
 
     	<tar destfile="${dir.release.output}/sblim-${ant.project.name}-${Manifest.version}-src.tar.bz2"
              compression="bzip2"
