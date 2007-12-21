@@ -28,66 +28,66 @@
 <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-codec/commons-codec/current/commons-codec.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-samba/wbemsmt-samba">
-<dependency-type>uses</dependency-type>
-</dependent-module>
-<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-dns/wbemsmt-dns">
-<dependency-type>uses</dependency-type>
-</dependent-module>
 <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster-devel/wbemsmt-metacluster-devel">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-slp-client/current/sblim-slp-client.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-slp-client/current/sblim-slp-client.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-cim-client/current/sblim-cim-client.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/sblim-cim-client/current/sblim-cim-client.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-beanutils/commons-beanutils/current/commons-beanutils.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-beanutils/commons-beanutils/current/commons-beanutils.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-cli/commons-cli/current/commons-cli.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-cli/commons-cli/current/commons-cli.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-collections/commons-collections/current/commons-collections.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-collections/commons-collections/current/commons-collections.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-fileupload/commons-fileupload/current/commons-fileupload.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-fileupload/commons-fileupload/current/commons-fileupload.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-digester/commons-digester/current/commons-digester.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-digester/commons-digester/current/commons-digester.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-logging/commons-logging/current/commons-logging.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-logging/commons-logging/current/commons-logging.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xmlbeans/xmlbeans-jsr173-api/current/jsr173_1.0_api.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xmlbeans/xmlbeans-jsr173-api/current/jsr173_1.0_api.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xercesImpl/xercesImpl/current/xercesImpl.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xercesImpl/xercesImpl/current/xercesImpl.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xml-apis/xml-apis/current/xml-apis.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xml-apis/xml-apis/current/xml-apis.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/struts/struts/current/struts.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/struts/struts/current/struts.jar">
 <dependency-type>uses</dependency-type>
 </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-xen-devel/wbemsmt-xen-devel">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-scxml/current/commons-scxml.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-scxml/current/commons-scxml.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-jexl/current/commons-jexl.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/commons-jexl/current/commons-jexl.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xalan/xalan/current/xalan.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/xalan/xalan/current/xalan.jar">
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/portlet-api/portlet-api/current/portlet-api.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/portlet-api/portlet-api/current/portlet-api.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/jsr48-client/current/jsr48-client.jar">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster-test/wbemsmt-metacluster-test">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster-cim-schema/wbemsmt-metacluster-cim-schema">
+<dependency-type>uses</dependency-type>
+</dependent-module>
         
         <property name="java-output-path" value="/target/classes/"/>
         <property name="context-root" value="wbemsmt-webapp"/>
