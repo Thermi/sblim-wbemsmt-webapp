@@ -79,13 +79,10 @@
 <dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/portlet-api/portlet-api/current/portlet-api.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/var/JAR_REPO/sblim/jsr48-client/current/jsr48-client.jar">
-<dependency-type>uses</dependency-type>
-</dependent-module>
-<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster-test/wbemsmt-metacluster-test">
-<dependency-type>uses</dependency-type>
-</dependent-module>
 <dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster-cim-schema/wbemsmt-metacluster-cim-schema">
+<dependency-type>uses</dependency-type>
+</dependent-module>
+<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/wbemsmt-metacluster/wbemsmt-metacluster">
 <dependency-type>uses</dependency-type>
 </dependent-module>
         

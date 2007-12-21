@@ -9,7 +9,6 @@
 		<project>wbemsmt-metacluster-devel</project>
 		<project>wbemsmt-metacluster-cim-schema</project>
 		<project>wbemsmt-dhcp</project>
-		<project>wbemsmt-metacluster-test</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
