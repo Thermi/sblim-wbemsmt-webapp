@@ -7,6 +7,7 @@
 	<f:verbatim><br></f:verbatim>
 	<h:outputText value="#{msg.messageText}" styleClass="errorMessageText" escape="false"/>
 	<f:verbatim><br><br></f:verbatim>
+	<%@ include file="include_messageInputButtons.jsp" %>
 </h:column>
 </h:dataTable>
 <f:facet name="footer">
@@ -22,6 +23,7 @@
 	<f:verbatim><br></f:verbatim>
 	<h:outputText value="#{msg.messageText}" styleClass="warningMessageText" escape="false"/>
 	<f:verbatim><br><br></f:verbatim>
+	<%@ include file="include_messageInputButtons.jsp" %>
 </h:column>
 </h:dataTable>
 <f:facet name="footer">
@@ -37,6 +39,7 @@
 	<f:verbatim><br></f:verbatim>
 	<h:outputText value="#{msg.messageText}" styleClass="infoMessageText" escape="false"/>
 	<f:verbatim><br><br></f:verbatim>
+	<%@ include file="include_messageInputButtons.jsp" %>
 </h:column>
 </h:dataTable>
 <f:facet name="footer">
@@ -52,6 +55,7 @@
 	<f:verbatim><br></f:verbatim>
 	<h:outputText value="#{msg.messageText}" styleClass="successMessageText" escape="false"/>
 	<f:verbatim><br><br></f:verbatim>
+	<%@ include file="include_messageInputButtons.jsp" %>
 </h:column>
 </h:dataTable>
 <f:facet name="footer">

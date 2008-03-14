@@ -187,6 +187,10 @@ fi
 
 ###############################################################################
 %changelog
+* Fri Mar 14 2008 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.3-CVS
+  - Inclusion of fixes for the following issues
+    o 1914204 wbemsmt-webapp: input controls in message panels
+
 * Tue Dec 11 2007 Sam Kannan <samkannan@us.ibm.com> 0.5.3-1
   - Inclusion of fixes for the following issues
     o 1845499 wbemsmt-webapp: Include proper group definition for RPM
