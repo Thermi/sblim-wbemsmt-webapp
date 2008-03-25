@@ -21,6 +21,7 @@
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-tiles" prefix="tiles" %>
+<%@ taglib uri="http://sourceforge.net/projects/sblim/wbemsmt" prefix="w" %>
 
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
 <f:view>

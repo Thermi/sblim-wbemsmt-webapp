@@ -189,6 +189,7 @@ fi
 %changelog
 * Fri Mar 14 2008 Michael Bauschert <michael.bauschert@de.ibm.com> 0.5.3-CVS
   - Inclusion of fixes for the following issues
+    o 1925438 wbemsmt-webapp: async message display
     o 1914204 wbemsmt-webapp: input controls in message panels
 
 * Tue Dec 11 2007 Sam Kannan <samkannan@us.ibm.com> 0.5.3-1

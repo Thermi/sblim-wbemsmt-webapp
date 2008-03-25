@@ -140,6 +140,9 @@ DIV.menu
     line-height:180%;
 }
 
+.bold {
+	font-weight: bold; 
+}
 .selected
 {
 	font-weight: bold; 

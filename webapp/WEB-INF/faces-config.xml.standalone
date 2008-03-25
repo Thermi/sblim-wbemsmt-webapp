@@ -99,6 +99,14 @@
 			<property-name>style</property-name>
 			<value>#{style}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>
+			asynchronousMessageUpdateInterval</property-name>
+			<property-class>
+			java.lang.String</property-class>
+			<value>
+			5.0</value>
+		</managed-property>
     </managed-bean>
     
     <managed-bean>

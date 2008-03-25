@@ -47,6 +47,24 @@
 </f:facet>
 </h:panelGrid>
 
+      <w:ajaxPanel id="showAsyncMessages" periodicalUpdate="#{messageHandler.asynchronousMessageUpdateInterval}">
+		<h:panelGrid rendered="#{messageHandler.asynchronousMessages}" columns="2" columnClasses="messagePanelColumnIcon,messagePanelColumnText" id="asyncMessagePanel" styleClass="messagePanel"> 
+			<h:graphicImage value="#{style.resourceDir}/images/inline-messages-info.gif" alt="#{messages.info}" title="#{messages.info}"/>
+			<h:panelGrid border="0" cellspacing="0" width="100%" columns="1" style="height:0%">
+				<h:commandLink actionListener="#{messageHandler.showAsynchronousMessages}">
+					<h:outputText value="#{messageHandler.newMessagesCode}" styleClass="treeLink bold" escape="false"/>
+			    </h:commandLink>
+				<h:commandLink actionListener="#{messageHandler.showAsynchronousMessages}" styleClass="treeLink">
+					<h:outputText value="#{messageHandler.newMessagesText}" escape="false"/>
+			    </h:commandLink>
+				<f:facet name="footer">
+					<h:commandLink value="#{messages.close}" styleClass="messageCloseLink" onclick="hidePanel(this);return;"/>
+				</f:facet>
+			</h:panelGrid>
+		</h:panelGrid>
+      </w:ajaxPanel>
+
+
 <h:panelGrid rendered="#{messageHandler.success}" columns="2" columnClasses="messagePanelColumnIcon,messagePanelColumnText" id="successMessagePanel" styleClass="messagePanel"> 
 <h:graphicImage value="#{style.resourceDir}/images/inline-messages-success.gif" alt="#{messages.success}" title="#{messages.success}"/>
 <h:dataTable value="#{messageHandler.successMessages}" var="msg" border="0" cellspacing="2" width="100%" columnClasses="messagesImage,messagesSummary">
