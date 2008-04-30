@@ -1,3 +1,41 @@
+2008-04-30 16:44  skanan
+
+	* NEWS, build.xml: Maintenance release 0.5.4-1
+
+2008-03-25 15:08  mbauschert
+
+	* webapp/WEB-INF/faces-config.xml.embedded,
+	  webapp/WEB-INF/faces-config.xml.standalone, NEWS,
+	  sblim-wbemsmt-webapp.spec.in, webapp/editPage.jsp,
+	  webapp/include_errorHandling.jsp, webapp/include_status.jsp,
+	  webapp/welcome.jsp, webapp/wizardPage.jsp,
+	  webapp/resources/sf/styles/edit.css,
+	  webapp/resources/sf2/styles/edit.css: Fix 1925438 wbemsmt-webapp:
+	  async message display
+
+2008-03-14 06:52  mbauschert
+
+	* NEWS, sblim-wbemsmt-webapp.spec.in,
+	  webapp/include_errorHandling.jsp,
+	  webapp/include_messageInputButtons.jsp: fixed 1914204
+	  wbemsmt-webapp: input controls in message panels
+
+2007-12-21 03:30  mbauschert
+
+	* .project, .settings/.component: added metacluser as j2ee
+	  dependency
+
+2007-12-21 02:58  mbauschert
+
+	* .settings/: org.eclipse.jdt.core.prefs, org.eclipse.jdt.ui.prefs:
+	  project specific compiler settings
+
+2007-12-21 02:54  mbauschert
+
+	* .project, .settings/.component,
+	  .settings/org.eclipse.jdt.core.prefs,
+	  .settings/org.eclipse.jdt.ui.prefs: reference to jsr48-client.jar
+
 2007-12-11 10:14  skanan
 
 	* NEWS, build.xml, sblim-wbemsmt-webapp.spec.in: Maintenance
