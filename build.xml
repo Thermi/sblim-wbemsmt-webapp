@@ -21,7 +21,7 @@
         Build file for SBLIM wbemsmt-webapp package
     </description>
 	
-    <property name="Manifest.version"    value="0.5.3"/>
+    <property name="Manifest.version"    value="0.5.4"/>
     <property name="Manifest.release"    value="1"/>
     <property name="Manifest.title"      value="WBEM-SMT: Web Based Task Launcher"/>
     <property name="Manifest.url"        value="http://sblim.sourceforge.net"/>
