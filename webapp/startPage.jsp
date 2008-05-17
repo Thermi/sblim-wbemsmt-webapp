@@ -1,7 +1,7 @@
 <%-- 
   
   /** 
-  * cimomLogout.jsp.java
+  * startPage.jsp.java
   *
   * 
   * © Copyright IBM Corp. 2006,2007
@@ -14,7 +14,7 @@
   * http://www.opensource.org/licenses/cpl1.0.php
   *
   * @author: org.sblim.wbemsmt.webapp.templates.generator.JspGenerator
-  * @template: org/sblim/wbemsmt/webapp/templates/cimomLogout.vm
+  * @template: org/sblim/wbemsmt/webapp/templates/startPage.vm
   *
   * Contributors: 
   *   michael.bauschert@de.ibm.com
@@ -58,15 +58,9 @@
       
       
 
-	<h:panelGrid id="loginPanel" columns="2" styleClass="mainTable" headerClass="left">
-		   <f:facet name="header">
-			      <h:outputText value="#{messages.logoutFrom} #{loginCheck.cimomName}"/>
-		   </f:facet>
-	</h:panelGrid>
-	<h:commandButton value="#{messages.logout}" action="#{loginCheck.logoutActionEmbedded}"/>
+<h:panelGrid id="content" binding="#{objectActionController.welcomePanel}"/>
 
-
-</h:form>
+	</h:form>
 
    </h:panelGroup>
 </h:panelGrid>

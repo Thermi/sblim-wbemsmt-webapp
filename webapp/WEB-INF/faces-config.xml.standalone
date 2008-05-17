@@ -20,9 +20,15 @@
 -->
 <faces-config>
     <application>
-    	<message-bundle>org.sblim.wbemsmt.webapp.jsf.webapp_messages</message-bundle>
-		<navigation-handler>org.sblim.wbemsmt.webapp.jsf.NavigationHandler</navigation-handler>
-        <view-handler>org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppViewHandlerImpl</view-handler>
+		<message-bundle>
+			org.sblim.wbemsmt.webapp.jsf.webapp_messages
+		</message-bundle>
+		<navigation-handler>
+			org.sblim.wbemsmt.webapp.jsf.NavigationHandler
+		</navigation-handler>
+		<view-handler>
+			org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppViewHandlerImpl
+		</view-handler>
         
 		<locale-config>
 			<default-locale>en</default-locale>
@@ -40,23 +46,37 @@
 	</lifecycle>
 
 	<component>
-		<component-type>org.sblim.wbemsmt.AjaxPanelGroup</component-type>
-		<component-class>org.sblim.wbemsmt.ajax.panel.AjaxPanelGroup</component-class>
+		<component-type>
+			org.sblim.wbemsmt.AjaxPanelGroup
+		</component-type>
+		<component-class>
+			org.sblim.wbemsmt.ajax.panel.AjaxPanelGroup
+		</component-class>
 	</component>
 	<component>
 		<component-type>org.sblim.wbemsmt.StopRefresh</component-type>
-		<component-class>org.sblim.wbemsmt.ajax.panel.StopRefresh</component-class>
+		<component-class>
+			org.sblim.wbemsmt.ajax.panel.StopRefresh
+		</component-class>
 	</component>
 	
 	
 	<render-kit>
 	    <renderer>
-		    <component-family>org.sblim.wbemsmt.AjaxPanelGroup</component-family>
-		    <renderer-type>org.sblim.wbemsmt.AjaxPanelGroup</renderer-type>
-		    <renderer-class>org.sblim.wbemsmt.ajax.panel.AjaxPanelGroupRenderer</renderer-class>
+			<component-family>
+				org.sblim.wbemsmt.AjaxPanelGroup
+			</component-family>
+			<renderer-type>
+				org.sblim.wbemsmt.AjaxPanelGroup
+			</renderer-type>
+			<renderer-class>
+				org.sblim.wbemsmt.ajax.panel.AjaxPanelGroupRenderer
+			</renderer-class>
 		</renderer>		
 	    <renderer>
-		    <component-family>org.sblim.wbemsmt.StopRefresh</component-family>
+			<component-family>
+				org.sblim.wbemsmt.StopRefresh
+			</component-family>
 		    <renderer-type>org.sblim.wbemsmt.StopRefresh</renderer-type>
 		    <renderer-class>org.sblim.wbemsmt.ajax.panel.StopRefreshRenderer</renderer-class>
 		</renderer>		
@@ -64,7 +84,9 @@
 
     <managed-bean>
         <managed-bean-name>taskLauncherController</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.tasklauncher.TaskLauncherController</managed-bean-class>
+		<managed-bean-class>
+			org.sblim.wbemsmt.tasklauncher.TaskLauncherController
+		</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>slpLoader</property-name>
@@ -79,7 +101,9 @@
 
     <managed-bean>
         <managed-bean-name>treeSelector</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.TreeSelectorBean</managed-bean-class>
+		<managed-bean-class>
+			org.sblim.wbemsmt.webapp.jsf.TreeSelectorBean
+		</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>taskLauncherController</property-name>
@@ -93,7 +117,9 @@
 		
     <managed-bean>
         <managed-bean-name>messageHandler</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.MessageHandlerBean</managed-bean-class>
+		<managed-bean-class>
+			org.sblim.wbemsmt.webapp.jsf.MessageHandlerBean
+		</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>style</property-name>
@@ -111,41 +137,26 @@
     
     <managed-bean>
         <managed-bean-name>objectActionController</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean</managed-bean-class>
+		<managed-bean-class>
+			org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean
+		</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>treeSelector</property-name>
 			<value>#{treeSelector}</value>
 		</managed-property>
 		<managed-property>
-			<!-- Defines the default update interval for the ajax panels -->
-			<property-name>
-			defaultUpdateInterval</property-name>
-			<property-class>
-			java.lang.String</property-class>
-			<value>
-			1.0</value>
-		</managed-property>
-		<managed-property>
-		    <!-- 
-		    The Max age for the Cookies saving the updateInterval
-		    65 years as default should be enough for every user :-)
-		    
-		    Provides values in seconds (86400 = one day)
-		    
-		     -->
-			<property-name>
-			updateIntervalCookieMaxAge</property-name>
-			<property-class>
-			int</property-class>
-			<value>
-			86400</value>
+			<property-name>defaultUpdateInterval</property-name>
+			<property-class>java.lang.String</property-class>
+			<value>0</value>
 		</managed-property>
     </managed-bean>
 
     <managed-bean>
         <managed-bean-name>menueController</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.MenueControllerBean</managed-bean-class>
+		<managed-bean-class>
+			org.sblim.wbemsmt.webapp.jsf.MenueControllerBean
+		</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>treeSelector</property-name>
@@ -159,7 +170,6 @@
 			<property-name>testMode</property-name>
 			<value>false</value>
 		</managed-property>
-		
     </managed-bean>
     
 	<!-- LoginCheck for Standalone Mode-->
@@ -167,7 +177,8 @@
     <managed-bean>
         <managed-bean-name>loginCheck</managed-bean-name>
         <managed-bean-class>
-        org.sblim.wbemsmt.webapp.jsf.LoginCheckBean</managed-bean-class>
+			org.sblim.wbemsmt.webapp.jsf.LoginCheckBean
+		</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>taskLauncherController</property-name>
@@ -179,7 +190,8 @@
 		</managed-property>
 		<managed-property>
 			<property-name>startView</property-name>
-			<value>start</value>
+			<property-class>java.lang.String</property-class>
+			<value>startPage</value>
 		</managed-property>
 		<managed-property>
 			<property-name>logoutView</property-name>
@@ -187,19 +199,18 @@
 		</managed-property>
 		<managed-property>
 			<property-name>loginFilename</property-name>
-			<value>/workspace-intern/login.bin</value>
+			<value>/login.bin</value>
 		</managed-property>
 		<managed-property>
 			<property-name>treeSelector</property-name>
 			<value>#{treeSelector}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>
-			objectActionController</property-name>
+			<property-name>objectActionController</property-name>
 			<property-class>
-			org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean</property-class>
-			<value>
-			#{objectActionController}</value>
+				org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean
+			</property-class>
+			<value>#{objectActionController}</value>
 		</managed-property>
     </managed-bean>
     <!--  -->
@@ -248,7 +259,9 @@
     
     <managed-bean>
         <managed-bean-name>localeManager</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.LocaleManagerBean</managed-bean-class>
+		<managed-bean-class>
+			org.sblim.wbemsmt.webapp.jsf.LocaleManagerBean
+		</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 				<!-- 
 		<managed-property>
@@ -265,7 +278,9 @@
 
     <managed-bean>
         <managed-bean-name>admin</managed-bean-name>
-        <managed-bean-class>org.sblim.wbemsmt.webapp.jsf.admin.AdminBean</managed-bean-class>
+		<managed-bean-class>
+			org.sblim.wbemsmt.webapp.jsf.admin.AdminBean
+		</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>slpLoader</property-name>
@@ -276,85 +291,68 @@
 			<value>#{taskLauncherController}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>
-			welcomeSettingsEnabled</property-name>
-			<property-class>
-			boolean</property-class>
-			<value>
-			true</value>
+			<property-name>welcomeSettingsEnabled</property-name>
+			<property-class>boolean</property-class>
+			<value>true</value>
 		</managed-property>
 		<managed-property>
-			<property-name>
-			welcomeTasksEnabled</property-name>
-			<property-class>
-			boolean</property-class>
-			<value>
-			true</value>
+			<property-name>welcomeTasksEnabled</property-name>
+			<property-class>boolean</property-class>
+			<value>true</value>
 		</managed-property>
     </managed-bean>
     <managed-bean>
     	<description>Responsible for Managing Styles</description>
     	<managed-bean-name>style</managed-bean-name>
-    	<managed-bean-class>org.sblim.wbemsmt.webapp.jsf.style.StyleBean</managed-bean-class>
+		<managed-bean-class>
+			org.sblim.wbemsmt.webapp.jsf.style.StyleBean
+		</managed-bean-class>
     	<managed-bean-scope>application</managed-bean-scope>
     	<managed-property>
-    		<property-name>
-    		resourceDir</property-name>
-    		<property-class>
-    		java.lang.String</property-class>
-    		<value>
-    		resources/sf2</value>
+			<property-name>resourceDir</property-name>
+			<property-class>java.lang.String</property-class>
+			<value>/resources/sf2</value>
     	</managed-property>
     	<managed-property>
-    		<property-name>
-    		embedded</property-name>
-    		<property-class>
-    		boolean</property-class>
-    		<value>
-    		false</value>
+			<property-name>embedded</property-name>
+			<property-class>boolean</property-class>
+			<value>false</value>
     	</managed-property>
     	<managed-property>
-    		<property-name>
-    		resourceBundle</property-name>
-    		<property-class>
-    		java.lang.String</property-class>
+			<property-name>resourceBundle</property-name>
+			<property-class>java.lang.String</property-class>
     		<value>
-    		org.sblim.wbemsmt.webapp.jsf.webapp_sf2_messages</value>
+				org.sblim.wbemsmt.webapp.jsf.webapp_sf2_messages
+			</value>
     	</managed-property>
     </managed-bean>    		
-
     <managed-bean>
     	<managed-bean-name>
     	helpManager</managed-bean-name>
     	<managed-bean-class>
-    	org.sblim.wbemsmt.webapp.jsf.HelpManagerBean</managed-bean-class>
-    	<managed-bean-scope>
-    	session</managed-bean-scope>
+			org.sblim.wbemsmt.webapp.jsf.HelpManagerBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
     	<managed-property>
-    		<property-name>
-    		objActionController</property-name>
+			<property-name>objActionController</property-name>
     		<property-class>
-    		org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean</property-class>
-    		<value>
-    		#{objectActionController}</value>
+				org.sblim.wbemsmt.webapp.jsf.ObjectActionControllerBean
+			</property-class>
+			<value>#{objectActionController}</value>
     	</managed-property>
     	<managed-property>
-    		<property-name>
-    		defaultLanguage</property-name>
-    		<property-class>
-    		java.lang.String</property-class>
-    		<value>
-    		en</value>
+			<property-name>defaultLanguage</property-name>
+			<property-class>java.lang.String</property-class>
+			<value>en</value>
     	</managed-property>
     </managed-bean>    		
     		
     <managed-bean>
-    	<managed-bean-name>
-    	wbemsmtSessionBean</managed-bean-name>
+		<managed-bean-name>wbemsmtSessionBean</managed-bean-name>
     	<managed-bean-class>
-    	org.sblim.wbemsmt.session.jsf.WbemsmtSessionBean</managed-bean-class>
-    	<managed-bean-scope>
-    	session</managed-bean-scope>
+			org.sblim.wbemsmt.session.jsf.WbemsmtSessionBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
     </managed-bean>    		
 
     <managed-bean>
@@ -394,60 +392,44 @@
     		<value>1100</value>
     	</managed-property>
     </managed-bean>    		
-
 	<navigation-rule>
 	    <navigation-case>
-            <from-outcome>showproperties</from-outcome>
-            <to-view-id>/properties.tiles</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-	
-	<navigation-rule>
-	    <navigation-case>
-            <from-outcome>showcustomtree</from-outcome>
-            <to-view-id>/customtree.tiles</to-view-id>
+			<from-outcome>startPage</from-outcome>
+			<to-view-id>/startPage.jsp</to-view-id>
         </navigation-case>
     </navigation-rule>	
-	
 	<navigation-rule>
 	    <navigation-case>
             <from-outcome>start</from-outcome>
-            <to-view-id>/index.tiles</to-view-id>
+			<to-view-id>/startPage.jsp</to-view-id>
         </navigation-case>
     </navigation-rule>
 	
 	<navigation-rule>
 	    <navigation-case>
             <from-outcome>wizardPage</from-outcome>
-            <to-view-id>/wizardPage.tiles</to-view-id>
+			<to-view-id>/wizardPage.jsf</to-view-id>
         </navigation-case>
     </navigation-rule>
     
 	<navigation-rule>
 	    <navigation-case>
             <from-outcome>cimomLogin</from-outcome>
-            <to-view-id>/cimomLogin.tiles</to-view-id>
+			<to-view-id>/cimomLogin.jsf</to-view-id>
         </navigation-case>
     </navigation-rule>
     
 	<navigation-rule>
 	    <navigation-case>
             <from-outcome>cimomLogout</from-outcome>
-            <to-view-id>/cimomLogout.tiles</to-view-id>
+			<to-view-id>/cimomLogout.jsf</to-view-id>
         </navigation-case>
     </navigation-rule>
     
    	<navigation-rule>
 	    <navigation-case>
             <from-outcome>editPage</from-outcome>
-            <to-view-id>/editPage.tiles</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    
-   	<navigation-rule>
-	    <navigation-case>
-            <from-outcome>help</from-outcome>
-            <to-view-id>/helpPage.tiles</to-view-id>
+			<to-view-id>/editPage.jsf</to-view-id>
         </navigation-case>
     </navigation-rule>
 

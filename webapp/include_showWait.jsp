@@ -1,5 +1,5 @@
 <h:panelGrid id="waitDlg" 
-         style="visibility:hidden" 
+         style="visibility:hidden; position:absolute; top:0px; left:0px;" 
          columns="1" 
          styleClass="waitDlg" rowClasses="waitDlgMsgRow,waitDlgCloseRow"
          cellpadding="0" cellspacing="0">
@@ -17,7 +17,7 @@
 </h:panelGrid>
 
 <h:panelGrid id="updateIntervalToolbox" 
-         style="visibility:hidden" 
+         style="visibility:hidden; position:absolute; top:0px; left:0px;" 
          columns="1" 
          styleClass="waitDlg" rowClasses="waitDlgMsgRow,waitDlgCloseRow"
          cellpadding="0" cellspacing="0">
@@ -39,3 +39,7 @@
 	</h:panelGroup>
 </h:panelGrid>
 
+<h:panelGroup id="tooltipPanel" 
+         style="visibility:hidden; position:absolute; top:0px; left:0px; maxWidth:300px; "
+         styleClass="waitDlg">
+</h:panelGroup>

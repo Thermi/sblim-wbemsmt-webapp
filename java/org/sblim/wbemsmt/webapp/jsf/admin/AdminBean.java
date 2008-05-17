@@ -34,7 +34,7 @@ import org.apache.commons.lang.StringUtils;
 import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
-import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.exception.WbemsmtException;
 import org.sblim.wbemsmt.session.jsf.WebSessionManger;
 import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
@@ -87,10 +87,10 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 	private boolean allHosts = true;
 	private HostEntry selectedHost;
 	/**
-	 * @throws WbemSmtException 
+	 * @throws WbemsmtException 
 	 * 
 	 */
-	public AdminBean() throws WbemSmtException
+	public AdminBean() throws WbemsmtException
 	{
 		super();
 		init();
@@ -120,7 +120,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		this.slpMode = slpMode;
 	}
 
-	public void init() throws WbemSmtException {
+	public void init() throws WbemsmtException {
 		
 		if (taskLauncherController != null)
 		{
@@ -134,19 +134,19 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 					taskLauncherDoc = TasklauncherconfigDocument.Factory.parse(loadedFile);
 					treeconfigArray = taskLauncherController.getTaskLauncherConfig().getTasklauncherConfigDoc().getTasklauncherconfig().getTreeconfigArray();
 				} catch (Exception e) {
-					throw new WbemSmtException("Cannot load config from " + loadedFile.getAbsolutePath(),e);
+					throw new WbemsmtException(WbemsmtException.ERR_FAILED, "Cannot load config from " + loadedFile.getAbsolutePath(),e);
 				} 
 			}
 			else
 			{
-				throw new WbemSmtException("Cannot load config from " + loadedFile.getAbsolutePath() + " File doesn't exist");
+				throw new WbemsmtException(WbemsmtException.ERR_FAILED,"Cannot load config from " + loadedFile.getAbsolutePath() + " File doesn't exist");
 			}
 			hostTable = null;
 			slpMode = false;
 		}
 	}
 	
-	public String reloadFromFile() throws WbemSmtException
+	public String reloadFromFile() throws WbemsmtException
 	{
 		init();
 		return "";
@@ -269,13 +269,11 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 			{
 				if ( refInCimom == null )
 				{
-					TreeconfigReference reference = cimom.addNewTreeconfigReference();
-					reference.set(serviceInHost.getReference().copy());
+					refInCimom = cimom.addNewTreeconfigReference();
+					refInCimom.set(serviceInHost.getReference().copy());
 				}
-				else
-				{
-					refInCimom.setNamespace(serviceInHost.getNamespace());
-				}
+			
+				refInCimom.setNamespace(serviceInHost.getNamespace());
 			}
 			//If checkbox was not selected but reference exists -> delete the ref from the cimom
 			else if (!serviceInHost.isEnabled() && refInCimom != null)
@@ -359,7 +357,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 				{
 					hostTable.add(new HostEntry(this,taskLauncherController.getTaskLauncherConfig(),getTreeconfigReferences()));
 				}
-			} catch (WbemSmtException e) {
+			} catch (WbemsmtException e) {
 				JsfUtil.handleException(e);
 			}
 		}
@@ -374,6 +372,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 				HostEntry entry = (HostEntry) iterator.next();
 				if (entry.getHostname().equals(selectedHost.getHostname()))
 				{
+				    selectedHost = entry;
 					List result = new ArrayList();
 					result.add(entry);
 					return result;
@@ -400,7 +399,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		return result;
 	}
 	
-	public String[] getServices() throws WbemSmtException
+	public String[] getServices() throws WbemsmtException
 	{
 		 String[] result = new String[treeconfigArray.length];
 		 for (int i = 0; i < treeconfigArray.length; i++) {
@@ -413,9 +412,9 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 	/**
 	 * Get new Treeconfig references with all the the configuation values
 	 * @return
-	 * @throws WbemSmtException
+	 * @throws WbemsmtException
 	 */
-	public TreeconfigReference[] getTreeconfigReferences() throws WbemSmtException
+	public TreeconfigReference[] getTreeconfigReferences() throws WbemsmtException
 	{
 		TreeconfigReference[] result = new TreeconfigReference[treeconfigArray.length];
 		 for (int i = 0; i < treeconfigArray.length; i++) {
@@ -436,7 +435,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 	/**
 	 * Get the Configuration Definitions for a specific task
 	 * @return
-	 * @throws WbemSmtException
+	 * @throws WbemsmtException
 	 */
 	public ConfigurationDefinition[] getConfigDefinitionsByTaskname(String taskname)
 	{
@@ -452,7 +451,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 	/**
 	 * Get the Configuration Definitions for a specific task
 	 * @return
-	 * @throws WbemSmtException
+	 * @throws WbemsmtException
 	 */
 	public Treeconfig getTreeconfigByTaskname(String taskname)
 	{
@@ -465,7 +464,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		 return null;
 	}	
 	
-	public List getTasks() throws WbemSmtException
+	public List getTasks() throws WbemsmtException
 	{
 		 List result = new ArrayList();
 		 for (int i = 0; i < treeconfigArray.length; i++) {
@@ -515,7 +514,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		this.serviceXmls = serviceXmls;
 	}
 
-	public boolean isAdminEnabled() throws WbemSmtException
+	public boolean isAdminEnabled() throws WbemsmtException
 	{
 		File f = new File (taskLauncherController.getTaskLauncherConfig().getConfigFile());
 		if (f.exists())
@@ -531,7 +530,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		return false;
 	}
 	
-    public String getAdminDisabledMsg() throws WbemSmtException {
+    public String getAdminDisabledMsg() throws WbemsmtException {
 		String msg = bundle.getString("adminDisabled", new Object[]{new File(taskLauncherController.getTaskLauncherConfig().getConfigFile()).getAbsolutePath()});
 		return msg;
 	}
@@ -604,7 +603,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 	}
 
 	public void setTaskLauncherController (
-		TaskLauncherController taskLauncherController) throws WbemSmtException {
+		TaskLauncherController taskLauncherController) throws WbemsmtException {
 		this.taskLauncherController = taskLauncherController;
 		init();
 	}

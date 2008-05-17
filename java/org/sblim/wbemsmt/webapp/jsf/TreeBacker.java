@@ -38,7 +38,7 @@ import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.ITreeBacker;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEventListener;
-import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.exception.WbemsmtException;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherContextMenu;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherDelegaterTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeFactory;
@@ -128,7 +128,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
         addListener();
     }
 
-    public TreeModel getTreeModel() throws WbemSmtException
+    public TreeModel getTreeModel() throws WbemsmtException
     {
     	// update only at the first time
     	if(this.treeUpdated == false)
@@ -154,7 +154,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
 		}
     }
     
-	public String updateTree() throws WbemSmtException
+	public String updateTree() throws WbemsmtException
     {        
 		
 		//Reset the Help
@@ -212,9 +212,9 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
 	 * Restores the old selection within the tree and the previous selected tab in the corresponding editPanel
 	 * @param result
 	 * @return
-	 * @throws WbemSmtException 
+	 * @throws WbemsmtException 
 	 */
-	private String restoreOldSelection() throws WbemSmtException {
+	private String restoreOldSelection() throws WbemsmtException {
 		
 		String result = "start";
 		
@@ -337,7 +337,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
 		try {
 			String result = restoreOldSelection();
 			return result;
-		} catch (WbemSmtException e) {
+		} catch (WbemsmtException e) {
 			JsfUtil.handleException(e);
 		}
 		return "";

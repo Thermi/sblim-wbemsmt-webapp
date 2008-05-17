@@ -23,13 +23,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.wbem.client.WBEMClient;
+
 import org.apache.commons.lang.StringUtils;
-import org.sblim.wbem.client.CIMClient;
 import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
-import org.sblim.wbemsmt.exception.LoginException;
-import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.exception.WbemsmtException;
+import org.sblim.wbemsmt.exception.impl.LoginException;
+import org.sblim.wbemsmt.exception.impl.userobject.LoginUserObject;
 import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherDelegaterTreeNode;
@@ -62,7 +64,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     private Map targetsForTasks = new HashMap();
     private Map namespacesForTasks = new HashMap();
     
-	private CIMClient cimClient;
+	private WBEMClient cimClient;
 
 	private boolean loggedIn;
 
@@ -74,50 +76,16 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     	super();
     }
     
-    private CIMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String protocol, List treeconfigs,boolean useSlp) throws LoginException
+    private WBEMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String protocol, List treeconfigs,boolean useSlp) throws WbemsmtException
     {
-//        CIMClient cimClient = null;
-//        try
-//        {
-//        	username = username == null ? "" : username; 
-//        	password = StringUtils.isEmpty(password) ? " " : password; 
-//        	hostname = hostname == null ? "" : hostname; 
-//        	port = port == null ? "" : port; 
-//        	namespace = namespace == null ? "" : namespace.trim(); 
-//        	
-//        	String url = "HTTP://" + hostname + ":" + port.trim();
-//        	
-//        	logger.info("Coonecting to " + url + " with user " + username);
-//        	
-//        	WbemsmtSession.getSession().createCIMClientPool(hostname,port,username,password);
-//        	cimClient = WbemsmtSession.getSession().getCIMClientPool(hostname).getCIMClient(namespace);
-//
-//            Enumeration enumeration = cimClient.enumerateClasses();
-//            
-//            loggedIn = true;
-//            if(enumeration == null)
-//            {
-//            	throw new LoginException(bundle.getString("cannot.connect.noElementsFound"),cimClient);
-//            }
-//        }
-//        catch(Exception e)
-//        {
-//            if (e instanceof LoginException) {
-//            	LoginException exception = (LoginException) e;
-//            	throw exception;
-//			}
-//            else
-//            {
-//            	throw new LoginException(bundle.getString("internal.error"),e,cimClient);
-//            }
-//        }
         if (initModel)
         {
         	try {
 				this.taskLauncherController.init(hostname, port,protocol,username,password,useSlp,treeconfigs	);
 				treeSelector.setTaskLauncherController(hostname,taskLauncherController);
-			}catch (WbemSmtException e) {
-				throw new LoginException(bundle.getString("internal.error"),e,cimClient);
+			}catch (WbemsmtException e) {
+	            WbemsmtException e1 = new LoginException(e, new LoginUserObject(username + "@" + protocol + "://" + hostname + ":" + port));
+				throw e1;
 			}
         }
         return null;
@@ -230,7 +198,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		return startView;
     }
 
-	private void buildSingleTarget(CimomData data) throws LoginException
+	private void buildSingleTarget(CimomData data) throws WbemsmtException
 	{
 		createCIMClient(true,
 				data.getUser(), 
@@ -243,7 +211,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 				);
 	}
 
-	private void buildMultiTarget(CimomData[] datas) throws WbemSmtException {
+	private void buildMultiTarget(CimomData[] datas) throws WbemsmtException {
 
 		taskLauncherController.createTreeFactoriesMultiHost(datas);
 		treeSelector.setTaskLauncherController(TaskLauncherController.NAME_FOR_MULTI_CIMOM_TREE,taskLauncherController);
@@ -277,7 +245,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		
 	}
 
-	public CIMClient getCimClient() {
+	public WBEMClient getCimClient() {
 		return cimClient;
 	}
 
@@ -285,7 +253,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		return loggedIn;
 	}
 
-	public void reloadLoginSettings() throws WbemSmtException {
+	public void reloadLoginSettings() throws WbemsmtException {
 	}
 
 	public void setCimomData(CimomData data) {

@@ -37,16 +37,17 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
+import javax.wbem.client.WBEMClient;
 
 import org.apache.commons.lang.StringUtils;
-import org.sblim.wbem.client.CIMClient;
 import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.ErrCodes;
 import org.sblim.wbemsmt.bl.adapter.Message;
 import org.sblim.wbemsmt.bl.adapter.MessageUtil;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
-import org.sblim.wbemsmt.exception.LoginException;
-import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.exception.WbemsmtException;
+import org.sblim.wbemsmt.exception.impl.LoginException;
+import org.sblim.wbemsmt.exception.impl.userobject.LoginUserObject;
 import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
@@ -81,7 +82,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     
     private boolean loggedIn,loginDisabled = false;
     private String loginView = "login",
-                   startView = "start",
+                   startView = "startPage",
                    logoutView = "login",
                    username,
                    port,
@@ -105,7 +106,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 	private List presetValues = new ArrayList();
 
 
-	private CIMClient cimClient;
+	private WBEMClient cimClient;
 
 
 	private CimomData cimomData;
@@ -198,7 +199,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			{
 				loginDisabled = true;
 			}
-		} catch (WbemSmtException e) {
+		} catch (WbemsmtException e) {
 			logger.log(Level.SEVERE,"Cannot load Config ",e);
 			loginDisabled = true;
 		}
@@ -209,7 +210,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		return loginDisabled;
 	}
 
-    public String getLoginDisabledMsg() throws WbemSmtException {
+    public String getLoginDisabledMsg() throws WbemsmtException {
 		String msg = bundle.getString("loginDisabled", new Object[]{new File(taskLauncherController.getTaskLauncherConfig().getConfigFile()).getAbsolutePath()});
 		return msg;
 	}
@@ -263,12 +264,12 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     	this.port = ""+data.getPort();
     }
     
-    private CIMClient createCIMClient(boolean setCimClient) throws LoginException
+    private WBEMClient createCIMClient(boolean setCimClient) throws WbemsmtException
     {
     	return createCIMClient(setCimClient,hostname,""+getPortAsInt(), protocol,  username,password,useSlp);
     }
     
-    private CIMClient createCIMClient(boolean setCimClient, String hostname, String port, String protocol, String username, String password, boolean useSlp) throws LoginException
+    private WBEMClient createCIMClient(boolean setCimClient, String hostname, String port, String protocol, String username, String password, boolean useSlp) throws WbemsmtException
     {
 //        CIMClient cimClient = null;
 //        try
@@ -310,8 +311,9 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         	try {
 				this.taskLauncherController.init(hostname, port, protocol, username,password ,useSlp);
 				treeSelector.setTaskLauncherController(hostname,taskLauncherController);
-			}catch (WbemSmtException e) {
-				throw new LoginException(bundle.getString("internal.error"),e,cimClient);
+			}catch (WbemsmtException e) {
+	            WbemsmtException e1 = new LoginException(e, new LoginUserObject(username + "@" + protocol + "://" + hostname + ":" + port));
+	            throw e1;
 			}
         }
         return null;
@@ -329,12 +331,12 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			RuntimeUtil.getInstance().setMode(RuntimeUtil.MODE_SINGLE);
 			logger.log(Level.INFO, "Runtime mode: " + RuntimeUtil.MODE_SINGLE);
 			login();
-		} catch (WbemSmtException e) {
+		} catch (WbemsmtException e) {
 			JsfUtil.handleException(e);
 		}
     }
     
-    public void login() throws LoginException
+    public void login() throws WbemsmtException
     {
     	
     	//first do a cleanup so that there is no old tree if the login failes
@@ -492,7 +494,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 			JsfBase.addMessage(Message.create(ErrCodes.MSG_LOGGED_OUT, Message.INFO, bundle, "loggedOutFrom",new Object[]{treeNode.getCimomData().getInfo()}));
 			//do the same as if the user has clicked on the treeNode...
 			return new CimomLoginLogoutListener().processEvent(new TaskLauncherTreeNodeEvent(this,treeNode,this,TaskLauncherTreeNodeEvent.TYPE_CLICKED));
-		} catch (WbemSmtException e) {
+		} catch (WbemsmtException e) {
 			JsfUtil.handleException(e);
 			return "";
 		}
@@ -617,7 +619,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
         this.logoutView = logoutView;
     }
 
-    public void setTaskLauncherController(TaskLauncherController controller) throws WbemSmtException
+    public void setTaskLauncherController(TaskLauncherController controller) throws WbemsmtException
     {
         this.taskLauncherController = controller;
         fillPresets();
@@ -706,7 +708,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     	}
     }
 
-	public void reloadLoginSettings() throws WbemSmtException {
+	public void reloadLoginSettings() throws WbemsmtException {
 		fillPresets();
 	}
 
@@ -715,11 +717,11 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 	 * @return
 	 * @see RuntimeUtil#MODE_SINGLE
 	 */
-	public CIMClient getCimClient() {
+	public WBEMClient getCimClient() {
 		return cimClient;
 	}
 	
-	public void setCimClient(CIMClient cimClient) {
+	public void setCimClient(WBEMClient cimClient) {
 		this.cimClient = cimClient;
 	}
 

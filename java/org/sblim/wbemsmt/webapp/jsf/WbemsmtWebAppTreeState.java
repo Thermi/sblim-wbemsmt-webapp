@@ -24,7 +24,7 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.apache.myfaces.custom.tree2.TreeState;
-import org.sblim.wbemsmt.exception.WbemSmtException;
+import org.sblim.wbemsmt.exception.WbemsmtException;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
 
 public class WbemsmtWebAppTreeState implements TreeState {
@@ -128,12 +128,12 @@ public class WbemsmtWebAppTreeState implements TreeState {
 		return state.isSelected(nodeId);
 	}
 
-	public String translate(String nodePathArray) throws WbemSmtException
+	public String translate(String nodePathArray) throws WbemsmtException
 	{
 		return translate(new String[]{nodePathArray})[0];
 	}
 	
-	public String[] translate(String nodePathArray[]) throws WbemSmtException
+	public String[] translate(String nodePathArray[]) throws WbemsmtException
 	{
 		String[] result = new String[nodePathArray.length];
 		

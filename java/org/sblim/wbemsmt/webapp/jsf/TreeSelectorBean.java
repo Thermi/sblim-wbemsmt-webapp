@@ -37,12 +37,9 @@ import org.sblim.wbemsmt.bl.Cleanup;
 import org.sblim.wbemsmt.bl.tree.ITaskLauncherTreeNode;
 import org.sblim.wbemsmt.bl.tree.ITreeBacker;
 import org.sblim.wbemsmt.bl.tree.ITreeSelector;
-import org.sblim.wbemsmt.exception.WbemSmtException;
-import org.sblim.wbemsmt.tasklauncher.ITaskLauncherUiTreeNode;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherContextMenu;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeFactory;
-import org.sblim.wbemsmt.tasklauncher.TreeSelector;
+import org.sblim.wbemsmt.exception.ExceptionUtil;
+import org.sblim.wbemsmt.exception.WbemsmtException;
+import org.sblim.wbemsmt.tasklauncher.*;
 import org.sblim.wbemsmt.tools.jsf.JsfUtil;
 import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 
@@ -255,12 +252,17 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
         else return "";
     }
 
-    public void setTaskLauncherController(String cimClientName, TaskLauncherController controller) throws WbemSmtException
+    public void setTaskLauncherController(String cimClientName, TaskLauncherController controller)
     {
-        super.setTaskLauncherController(controller);
-        this.createMenuAndTreebacker();
-    	setCurrentTreeBacker(cimClientName);
-    	getCurrentTreeBacker().updateTree();
+        try {
+            super.setTaskLauncherController(controller);
+            this.createMenuAndTreebacker();
+            setCurrentTreeBacker(cimClientName);
+            getCurrentTreeBacker().updateTree();
+        }
+        catch (Exception e) {
+            ExceptionUtil.handleException(e);
+        }
         
     }
     
@@ -287,7 +289,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 			super.reloadConfig(runtimeMode);
 			getCurrentTreeBacker().updateTree();
 			FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Configuration was reloaded using SLP",""));
-		} catch (WbemSmtException e) {
+		} catch (WbemsmtException e) {
 			JsfUtil.handleException(e);
 		}
     	return "start";
@@ -298,6 +300,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 	 * @see org.sblim.wbemsmt.webapp.jsf.ITreeSelector#getCurrentOutcome()
 	 */
 	public String getCurrentOutcome() {
+	    
 		return currentOutcome == null ? "start" : currentOutcome;
 	}
 
