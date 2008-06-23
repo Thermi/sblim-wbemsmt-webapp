@@ -237,26 +237,32 @@
     </managed-bean>
     <!-- -->
 
-    <managed-bean>
-        <managed-bean-name>slpLoader</managed-bean-name>
-	    <managed-bean-class>org.sblim.wbemsmt.tools.slp.SLPDummyLoader</managed-bean-class>
-		<!--<managed-bean-class>org.sblim.wbemsmt.tools.slp.SblimSLPClientSLPLoader</managed-bean-class> -->
-        <managed-bean-scope>application</managed-bean-scope>
+	<managed-bean>
+		<managed-bean-name>slpLoader</managed-bean-name>
+		<managed-bean-class>org.sblim.wbemsmt.tools.slp.SLPDummyLoader</managed-bean-class>
+		<!-- 
+		<managed-bean-class>
+			org.sblim.wbemsmt.tools.slp.SblimSLPClientSLPLoader
+		</managed-bean-class>
+		 -->
+		<managed-bean-scope>application</managed-bean-scope>
 		<managed-property>
 			<property-name>sleepInterval</property-name>
 			<value>1000</value>
 		</managed-property>
-	    <!-- A List of Strings for InetAddress.getByName
-	    that specify the directory agents to look for. -->
+		<!-- A List of Strings for InetAddress.getByName
+			that specify the directory agents to look for. -->
+		<!-- 
 		<managed-property>
 			<property-name>directoryAgentAdresses</property-name>
 			<list-entries>
-				<value-class>java.lang.String</value-class>
-				<value>9.152.5.16</value>
+				<value>95.5.4.4</value>
+				<value>95.6.5.5</value>
 			</list-entries>
 		</managed-property>
-    </managed-bean>
-    
+		 -->
+	</managed-bean>
+
     <managed-bean>
         <managed-bean-name>localeManager</managed-bean-name>
 		<managed-bean-class>

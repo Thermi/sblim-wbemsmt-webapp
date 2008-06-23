@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
-import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
+import org.sblim.wbemsmt.bl.tree.CustomTreeConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.CimomData;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.TreeConfigData;

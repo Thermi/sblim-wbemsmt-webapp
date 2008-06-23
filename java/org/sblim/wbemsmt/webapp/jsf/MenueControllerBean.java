@@ -22,7 +22,7 @@ package org.sblim.wbemsmt.webapp.jsf;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import org.sblim.wbemsmt.bl.Cleanup;
+import org.sblim.wbemsmt.bl.cleanup.Cleanup;
 import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 
 public class MenueControllerBean  implements Cleanup {

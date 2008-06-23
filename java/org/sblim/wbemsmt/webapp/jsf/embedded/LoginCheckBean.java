@@ -14,6 +14,8 @@
  *
  * Contributors:
  *
+ * Backing Bean for embeddedLogin.jsp - can be used for USMi
+ * 
  */
 
 package org.sblim.wbemsmt.webapp.jsf.embedded;
@@ -26,15 +28,15 @@ import java.util.Map;
 import javax.wbem.client.WBEMClient;
 
 import org.apache.commons.lang.StringUtils;
-import org.sblim.wbemsmt.bl.Cleanup;
-import org.sblim.wbemsmt.bl.ErrCodes;
-import org.sblim.wbemsmt.bl.adapter.Message;
+import org.sblim.wbemsmt.bl.cleanup.Cleanup;
+import org.sblim.wbemsmt.bl.messages.ErrCodes;
+import org.sblim.wbemsmt.bl.messages.Message;
+import org.sblim.wbemsmt.bl.tree.CimomTreeNode;
+import org.sblim.wbemsmt.bl.tree.TaskLauncherDelegaterTreeNode;
 import org.sblim.wbemsmt.exception.WbemsmtException;
 import org.sblim.wbemsmt.exception.impl.LoginException;
 import org.sblim.wbemsmt.exception.impl.userobject.LoginUserObject;
-import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherDelegaterTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.CimomData;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.TreeConfigData;
 import org.sblim.wbemsmt.tasklauncher.login.LoginCheck;
@@ -44,7 +46,9 @@ import org.sblim.wbemsmt.webapp.jsf.TreeSelectorBean;
 import org.sblim.wbemsmt.webapp.jsf.WbemsmtWebAppBean;
 
 
-
+/**
+ * Backing Bean for embeddedLogin.jsp - can be used for USMi
+ */
 public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Cleanup
 {
 	/**
@@ -200,6 +204,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 
 	private void buildSingleTarget(CimomData data) throws WbemsmtException
 	{
+	    //TODO for USMi retrieve the CIMClient from a USMi context
 		createCIMClient(true,
 				data.getUser(), 
 				"wbem01smt", 

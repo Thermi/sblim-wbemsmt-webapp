@@ -13,6 +13,8 @@
  * @author: Marius Kreis <mail@nulldevice.org>
  *
  * Contributors:
+ * 
+ * Login Backing Bean for regular logins - not used from within USMi
  *
  */
 
@@ -40,15 +42,15 @@ import javax.servlet.http.HttpSession;
 import javax.wbem.client.WBEMClient;
 
 import org.apache.commons.lang.StringUtils;
-import org.sblim.wbemsmt.bl.Cleanup;
-import org.sblim.wbemsmt.bl.ErrCodes;
-import org.sblim.wbemsmt.bl.adapter.Message;
-import org.sblim.wbemsmt.bl.adapter.MessageUtil;
+import org.sblim.wbemsmt.bl.cleanup.Cleanup;
+import org.sblim.wbemsmt.bl.messages.ErrCodes;
+import org.sblim.wbemsmt.bl.messages.Message;
+import org.sblim.wbemsmt.bl.messages.MessageUtil;
+import org.sblim.wbemsmt.bl.tree.CimomTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNodeEvent;
 import org.sblim.wbemsmt.exception.WbemsmtException;
 import org.sblim.wbemsmt.exception.impl.LoginException;
 import org.sblim.wbemsmt.exception.impl.userobject.LoginUserObject;
-import org.sblim.wbemsmt.tasklauncher.CimomTreeNode;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.CimomData;
@@ -69,6 +71,9 @@ import org.sblim.wbemsmt.webapp.jsf.admin.HostEntry;
 
 
 
+/**
+ * Login Backing Bean for regular logins - not used from within USMi
+ */
 public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Cleanup
 {
     public static final String SESSION_ATTRIBUTE_USE_SLP = "useSlp";

@@ -31,12 +31,12 @@ import javax.faces.model.SelectItem;
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.lang.StringUtils;
-import org.sblim.wbemsmt.bl.Cleanup;
-import org.sblim.wbemsmt.bl.ErrCodes;
-import org.sblim.wbemsmt.bl.adapter.Message;
+import org.sblim.wbemsmt.bl.cleanup.Cleanup;
+import org.sblim.wbemsmt.bl.messages.ErrCodes;
+import org.sblim.wbemsmt.bl.messages.Message;
+import org.sblim.wbemsmt.bl.tree.CustomTreeConfig;
 import org.sblim.wbemsmt.exception.WbemsmtException;
 import org.sblim.wbemsmt.session.jsf.WebSessionManger;
-import org.sblim.wbemsmt.tasklauncher.CustomTreeConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.TreeConfigData;

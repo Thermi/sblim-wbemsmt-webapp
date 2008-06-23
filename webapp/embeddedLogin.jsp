@@ -15,6 +15,8 @@
  *
  * Contributors:
  *
+ * Used for Usmi related login - without displaying the login fields
+ 
  */
 --%>
 

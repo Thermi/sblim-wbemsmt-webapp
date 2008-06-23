@@ -20,7 +20,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
-<%@ taglib uri="http://jakarta.apache.org/struts/tags-tiles" prefix="tiles" %>
 
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
 <f:loadBundle basename="#{style.resourceBundle}" var="styleMessages"/>

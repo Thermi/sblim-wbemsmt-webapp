@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.sblim.wbemsmt.bl.Cleanup;
+import org.sblim.wbemsmt.bl.cleanup.Cleanup;
 import org.sblim.wbemsmt.tools.beans.BeanNameConstants;
 
 public class SessionInvalidationListener implements HttpSessionListener {

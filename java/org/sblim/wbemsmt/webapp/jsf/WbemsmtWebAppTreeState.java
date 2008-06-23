@@ -24,8 +24,8 @@ import java.util.Vector;
 import java.util.logging.Logger;
 
 import org.apache.myfaces.custom.tree2.TreeState;
+import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNode;
 import org.sblim.wbemsmt.exception.WbemsmtException;
-import org.sblim.wbemsmt.tasklauncher.TaskLauncherTreeNode;
 
 public class WbemsmtWebAppTreeState implements TreeState {
 

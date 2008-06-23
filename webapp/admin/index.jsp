@@ -15,12 +15,12 @@
  *
  * Contributors:
  *
+ * Called after the redirect by index.html
  */
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
-<%@ taglib uri="http://jakarta.apache.org/struts/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
 
 <f:loadBundle basename="org.sblim.wbemsmt.webapp.jsf.webapp_messages" var="messages"/>
@@ -53,6 +53,7 @@
 	<f:verbatim><br><br></f:verbatim>
 	<h:outputText value="#{messages.currentSettings}" styleClass="tableHeader"/>
 	<f:verbatim><br><hr class="tableHeaderHR"><br><br></f:verbatim>
+	<!--  var host is an instance of HostEntry -->
 	<h:dataTable
 		styleClass="multiLineTable" 
 		cellpadding="0"
@@ -87,6 +88,12 @@
 					<f:verbatim>&nbsp;&nbsp;</f:verbatim>
 				</h:panelGroup>
 			</f:facet>
+			
+			<!--  
+				var host is an instance of HostEntry 
+				service is an instance of ServiceInHost which represents a task of a cim server
+			-->
+			
 			<h:dataTable var="service" value="#{host.enabledServices}" width="100%" columnClasses="width200px topAlignment,width0 topAlignment" cellpadding="0" cellspacing="0" width="100%">
 				<h:column>
 						<h:outputText value="#{service.reference.name}" style="white-space:no-wrap;padding-right:5px"/>
