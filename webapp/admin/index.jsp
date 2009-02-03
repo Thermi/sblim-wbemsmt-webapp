@@ -37,7 +37,7 @@
 <body>
 <h:form>
 <f:verbatim><br><br></f:verbatim>
-<h:panelGrid columns="1" width="80%" align="center" headerClass="left">
+<h:panelGrid columns="1" width="80%" headerClass="left">
 <f:facet name="header">
 <h:panelGroup>
 	<f:verbatim><br></f:verbatim>
@@ -58,7 +58,6 @@
 		styleClass="multiLineTable" 
 		cellpadding="0"
 		cellspacing="0"
-		align="center" 
 		width="100%" 
 		value="#{admin.hostTableForDisplay}" var="host" 
 		columnClasses="multiLineContentFirst left topAlignment topPadding,multiLineContent left topAlignment topPadding,multiLineContentLast left nopadding topAlignment topPadding" 
@@ -123,7 +122,6 @@
 		styleClass="multiLineTable" 
 		cellpadding="0"
 		cellspacing="0"
-		align="center" 
 		width="100%" 
 		value="#{admin.tasks}" var="task" 
 		columnClasses="multiLineContentFirst left,multiLineContent left,multiLineContentLast left" 
@@ -155,7 +153,7 @@
 </h:panelGroup>
 <h:outputText styleClass="error" value="#{admin.adminDisabledMsg}" rendered="#{!admin.adminEnabled}"/>
 </h:panelGrid>
-<h:panelGrid columns="1" width="80%" align="center" rendered="#{admin.adminEnabled}">
+<h:panelGrid columns="1" width="80%" rendered="#{admin.adminEnabled}">
 <h:commandLink styleClass="adminLink" value="#{messages.edithost}" action="#{admin.editHosts}" actionListener="#{admin.selectAllHosts}"/>
 <h:commandLink styleClass="adminLink" value="#{messages.showSLPConfig}" action="#{admin.loadSlpConfiguration}" rendered="#{menueController.useSlp && !admin.slpMode }"/>
 </h:panelGrid>

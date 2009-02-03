@@ -37,7 +37,7 @@
 
 <h:form id="adminForm">
 <f:verbatim><br><br></f:verbatim>
-<h:panelGrid columns="1" width="80%" align="center" headerClass="left" >
+<h:panelGrid columns="1" width="80%" headerClass="left" >
 <f:facet name="header">
 <h:panelGroup>
 	<f:verbatim><br></f:verbatim>

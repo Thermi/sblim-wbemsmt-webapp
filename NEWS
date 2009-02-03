@@ -2,6 +2,7 @@ Changes on top of 0.5.5-1
 ==============================================================================
 - 1992943 wbemsmt-client: code cleanup
 - 1965982 wbemsmt-webapp: migrate to jsr48
+- 2545040 wbemsmt-webapp: Attribute align invalid for tag panelGrid
 
 Changes in 0.5.4-1
 ==============================================================================
