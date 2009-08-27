@@ -1,21 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="java"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v5.5"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="JAR_REPO/commons-collections/commons-collections/3.1/commons-collections-3.1.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/commons-lang/commons-lang/current/commons-lang.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/myfaces/tomahawk/current/tomahawk.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/wbemsmt-commons"/>
-	<classpathentry kind="var" path="JAR_REPO/javax/servlet/servlet-api/current/servlet-api.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-wbemsmt-commons-launcher-config/current/sblim-wbemsmt-commons-launcher-config.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/xmlbeans/xbean/current/xbean.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-impl/current/myfaces-impl.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-api/current/myfaces-api.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/commons-codec/commons-codec/current/commons-codec.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/commons-jexl/current/commons-jexl.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/commons-scxml/current/commons-scxml.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/commons-logging/commons-logging/current/commons-logging.jar"/>
-	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-cim-client/current/sblim-cim-client.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v5.5"/>
+	<classpathentry kind="var" path="JAR_REPO/commons-collections/commons-collections/current/commons-collections.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/commons-lang/commons-lang/current/commons-lang.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/myfaces/tomahawk/current/tomahawk.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/javax/servlet/servlet-api/current/servlet-api.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-wbemsmt-commons-launcher-config/current/sblim-wbemsmt-commons-launcher-config.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/xmlbeans/xbean/current/xbean.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-impl/current/myfaces-impl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/myfaces/myfaces-api/current/myfaces-api.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/commons-codec/commons-codec/current/commons-codec.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/commons-jexl/current/commons-jexl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/commons-scxml/current/commons-scxml.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/commons-logging/commons-logging/current/commons-logging.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/sblim/sblim-cim-client/current/sblim-cim-client.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="JAR_REPO/commons-el-1.0/commons-el.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/wbemsmt-jar-repository/jsp-api/jsp-api/current/jsp-api.jar"/>
+	<classpathentry kind="lib" path="/wbemsmt-jar-repository/javax/servlet/servlet-api/current/servlet-api.jar"/>
 	<classpathentry kind="output" path="webapp/WEB-INF/classes"/>
 </classpath>

@@ -7,18 +7,18 @@ If you want to support more than host in a PortletContainer take a look PortletC
 The default behavior when starting the client is to connect to one host. To 
 connect to multiple hosts simultaneously, do the following:
 
-1) Add the following to /usr/share/tomcat5/conf/tomcat-users.xml :
+1) Add the following to /opt/apache-tomcat-6.0.18/conf/tomcat-users.xml :
    <role rolename="tasklauncher-admin"/> 
    before any <user username=...> statement.
 
-2) Edit /usr/share/tomcat5/conf/tomcat-users.xml and add the tasklauncher-admin
+2) Edit /opt/apache-tomcat-6.0.18/conf/tomcat-users.xml and add the tasklauncher-admin
    role to a user to grant admin authority, such as:
    <user username="admin" password="admin" roles="admin,manager,tasklauncher-admin"/> 
 
 3) If Tomcat does not run as user tomcat, change the file access properties of all the files and directories
    in the /etc/sblim-wbemsmt so that the non-tomcat user has write access to it 
 
-4) start Tomcat via /etc/init.d/tomcat5 start
+4) start Tomcat via /opt/apache-tomcat-6.0.18/bin/catalina.sh start
 
 5) In order to map the task with multiple target hosts containing the server
    code, go to:

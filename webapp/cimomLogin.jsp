@@ -4,14 +4,14 @@
   * cimomLogin.jsp.java
   *
   * 
-  * © Copyright IBM Corp. 2006,2007
+  * © Copyright IBM Corp.  2009,2006,2007
   *
-  * THIS FILE IS PROVIDED UNDER THE TER	MS OF THE COMMON PUBLIC LICENSE
+  * THIS FILE IS PROVIDED UNDER THE TER	MS OF THE ECLIPSE PUBLIC LICENSE
   * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
   * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
   *
-  * You can obtain a current copy of the Common Public License from
-  * http://www.opensource.org/licenses/cpl1.0.php
+  * You can obtain a current copy of the Eclipse Public License from
+  * http://www.opensource.org/licenses/eclipse-1.0.php
   *
   * @author: org.sblim.wbemsmt.webapp.templates.generator.JspGenerator
   * @template: org/sblim/wbemsmt/webapp/templates/cimomLogin.vm
@@ -58,7 +58,7 @@
       
       
 
-<h:panelGrid id="loginPanel1" columns="1" width="100%" align="center">
+<h:panelGrid id="loginPanel1" columns="1" width="100%" >
 
    <h:dataTable var="cimom" value="#{objectActionController.cimomTreeNodesForLogin}">
       

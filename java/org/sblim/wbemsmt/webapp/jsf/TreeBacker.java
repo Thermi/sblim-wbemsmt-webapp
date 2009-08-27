@@ -1,14 +1,14 @@
 /**
  *  TreeBacker.java
  *
- * © Copyright IBM Corp. 2005
+ * © Copyright IBM Corp.  2009,2005
  *
- * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+ * THIS FILE IS PROVIDED UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
  * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
  *
- * You can obtain a current copy of the Common Public License from
- * http://www.opensource.org/licenses/cpl1.0.php
+ * You can obtain a current copy of the Eclipse Public License from
+ * http://www.opensource.org/licenses/eclipse-1.0.php
  *
  * Author:     Marius Kreis
  *
@@ -75,14 +75,14 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
 
 
 
-	private ArrayList menuList = new ArrayList();
+	private ArrayList<TaskLauncherContextMenu> menuList = new ArrayList<TaskLauncherContextMenu>();
 
 
 	protected WbemSmtResourceBundle bundle = ResourceBundleManager.getResourceBundle(FacesContext.getCurrentInstance(),getClass().getClassLoader());
 
 
 
-	private Set menuIds = new HashSet();
+	private Set<String> menuIds = new HashSet<String>();
 
 	
     public TreeBacker()
@@ -176,8 +176,8 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
         	if (expandAll || 
         		"true".equalsIgnoreCase(System.getProperty(TreeBacker.SYSTEM_PROPERTY_TASKLAUNCHER_ADD_EXPAND_ALL,"false")))
         	{
-        		List childs = taskLauncherRootNode.getSubnodes(false);
-        		for (Iterator iter = childs.iterator(); iter.hasNext();) {
+        		List<ITaskLauncherTreeNode> childs = taskLauncherRootNode.getSubnodes(false);
+        		for (Iterator<ITaskLauncherTreeNode> iter = childs.iterator(); iter.hasNext();) {
 					TaskLauncherTreeNode child = (TaskLauncherTreeNode) iter.next();
 					ExpandAllListener listener = new ExpandAllListener();
 					child.addEventListener(listener);
@@ -254,7 +254,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
     	
     	ILocaleManager manager = (ILocaleManager) BeanNameConstants.LOCALE_MANAGER.getBoundValue(FacesContext.getCurrentInstance());
     	
-    	for (Iterator iter = menuList.iterator(); iter.hasNext();) {
+    	for (Iterator<TaskLauncherContextMenu> iter = menuList.iterator(); iter.hasNext();) {
 			TaskLauncherContextMenu menu = (TaskLauncherContextMenu) iter.next();
 			menu.initI18n(manager);
 		}
@@ -269,7 +269,7 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
 		return (JsfTreeNode) treeModel.getNodeById("0");
 	}
 
-	private void addMenue(List menues, JsfTreeNode nodeById) {
+	private void addMenue(List<TaskLauncherContextMenu> menues, JsfTreeNode nodeById) {
 		
 		nodeById.getTaskLauncherTreeNode().addEventListener(this);
 		
@@ -287,8 +287,8 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
 				menues.add(menu);
 			}
 		}
-		List children = nodeById.getChildren();
-		for (Iterator iter = children.iterator(); iter.hasNext();) {
+		List<JsfTreeNode> children =  nodeById.getChildren();
+		for (Iterator<JsfTreeNode> iter = children.iterator(); iter.hasNext();) {
 			JsfTreeNode childNode = (JsfTreeNode) iter.next();
 			addMenue(menues,childNode);
 		}
@@ -337,8 +337,8 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
 		String[] pathToExpand = node.getPath(getTree());
 		treeModel.getTreeState().expandPath(pathToExpand);
 		
-		List children = node.getChildren();
-		for (Iterator iter = children.iterator(); iter.hasNext();) {
+		List<JsfTreeNode> children = node.getChildren();
+		for (Iterator<JsfTreeNode> iter = children.iterator(); iter.hasNext();) {
 			JsfTreeNode childNode = (JsfTreeNode) iter.next();
 			expandNode(treeModel,childNode);
 		}
@@ -359,8 +359,8 @@ public class TreeBacker implements TaskLauncherTreeNodeEventListener, ITreeBacke
 		String[] pathToExpand = node.getPath(getTree());
 		treeModel.getTreeState().collapsePath(pathToExpand);
 		
-		List children = node.getChildren();
-		for (Iterator iter = children.iterator(); iter.hasNext();) {
+		List<JsfTreeNode> children = node.getChildren();
+		for (Iterator<JsfTreeNode> iter = children.iterator(); iter.hasNext();) {
 			JsfTreeNode childNode = (JsfTreeNode) iter.next();
 			collapseNode(treeModel,childNode);
 		}

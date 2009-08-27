@@ -1,14 +1,14 @@
  /** 
   * HostEntry.java
   *
-  * © Copyright IBM Corp. 2005
+  * © Copyright IBM Corp.  2009,2005
   *
-  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE
   * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
   * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
   *
-  * You can obtain a current copy of the Common Public License from
-  * http://www.opensource.org/licenses/cpl1.0.php
+  * You can obtain a current copy of the Eclipse Public License from
+  * http://www.opensource.org/licenses/eclipse-1.0.php
   *
   * @author: Michael Bauschert <Michael.Bauschert@de.ibm.com>
   *
@@ -43,12 +43,12 @@ public class HostEntry
 	String user;
 	String protocol;
 	String port;
-	List services = new ArrayList();
+	List<ServiceInHost> services = new ArrayList<ServiceInHost>();
 	boolean isNew = false;
 	boolean changePassword;
 	private Cimom cimom;
 	private String servicesAsString;
-	private static Map serviceInstallationStates = new HashMap();
+	private static Map<TreeconfigReference, Boolean> serviceInstallationStates = new HashMap<TreeconfigReference, Boolean>();
 	
 	/**
 	 * Entry for an existing host
@@ -74,9 +74,9 @@ public class HostEntry
 		user = cimom.getUser();
 		protocol =  StringUtils.isNotEmpty(cimom.getProtocol()) ? cimom.getProtocol() : TaskLauncherConfig.DEFAULT_PROTOCOL;
 		
-		Map referencesByName = new HashMap();
-		Set installedServices = new HashSet();
-		Set referencedServices = new HashSet();
+		Map<String,TreeconfigReference> referencesByName = new HashMap<String,TreeconfigReference>();
+		Set<String> installedServices = new HashSet<String>();
+		Set<String> referencedServices = new HashSet<String>();
 
 		/**
 		 * first get all tasks which are installed on a server
@@ -249,7 +249,7 @@ public class HostEntry
 	 * return a list of Service in Host objects
 	 * @return
 	 */
-	public List getServices() {
+	public List<ServiceInHost> getServices() {
 		return services;
 	}
 
@@ -258,10 +258,10 @@ public class HostEntry
 	 * Return only the enabled services
 	 * @return
 	 */
-	public List getEnabledServices() {
-		List result = new ArrayList();
+	public List<ServiceInHost> getEnabledServices() {
+		List<ServiceInHost> result = new ArrayList<ServiceInHost>();
 		
-		for (Iterator iter = services.iterator(); iter.hasNext();) {
+		for (Iterator<ServiceInHost> iter = services.iterator(); iter.hasNext();) {
 			ServiceInHost serviceInHost = (ServiceInHost) iter.next();
 			if (serviceInHost.isEnabled())
 			{
@@ -278,7 +278,7 @@ public class HostEntry
 	public void setServicesAsString(String servicesAsString) {
 		this.servicesAsString = servicesAsString;
 	}
-	public void setServices(List services) {
+	public void setServices(List<ServiceInHost> services) {
 		this.services = services;
 	}
 	public boolean isNew() {

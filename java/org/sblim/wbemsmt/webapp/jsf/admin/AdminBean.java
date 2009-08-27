@@ -1,14 +1,14 @@
  /** 
   * AdminBean.java
   *
-  * © Copyright IBM Corp. 2005
+  * © Copyright IBM Corp.  2009,2005
   *
-  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE
   * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
   * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
   *
-  * You can obtain a current copy of the Common Public License from
-  * http://www.opensource.org/licenses/cpl1.0.php
+  * You can obtain a current copy of the Eclipse Public License from
+  * http://www.opensource.org/licenses/eclipse-1.0.php
   *
   * @author: Michael Bauschert <Michael.Bauschert@de.ibm.com>
   *
@@ -21,10 +21,15 @@ package org.sblim.wbemsmt.webapp.jsf.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
@@ -57,8 +62,8 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 
 	private static final String COOKIE_KEY_BULKCHANGES = "WBEMSMT-ADMIN-BULKCHANGES";
 	public static final String CLICK_BLIND_BUTTON_HANDLER = "if (document.getElementById('adminForm:bulkChanges').checked == false) {document.getElementById('adminForm:blindSubmit').click();};";
-	private List hostTable;
-	private List serviceXmls;
+	private List<HostEntry> hostTable;
+	private List<SelectItem> serviceXmls;
 	private TasklauncherconfigDocument taskLauncherDoc;
 	private File loadedFile;
     private TaskLauncherController taskLauncherController;
@@ -216,7 +221,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 	{
 		try {
 			
-			List newHosts = new ArrayList();
+			List<HostEntry> newHosts = new ArrayList<HostEntry>();
 			
 			for (int i=hostTable.size()-1; i >= 0 ; i--)
 			{
@@ -232,8 +237,8 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 			init();
 			//add the hosts
 			//the last element is the "enter a new host" - host. Add the newHosts before that one
-			List hosts = getHostTable();
-			Object addNewHostItem = hosts.remove(hosts.size()-1);
+			List<HostEntry> hosts = getHostTable();
+			HostEntry addNewHostItem = hosts.remove(hosts.size()-1);
 			hosts.addAll(newHosts);
 			hosts.add(addNewHostItem);
 			
@@ -253,14 +258,14 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		cimom.setProtocol(StringUtils.isNotEmpty(hostEntry.protocol) ? hostEntry.protocol : TaskLauncherConfig.DEFAULT_PROTOCOL );
 
 		TreeconfigReference[] treeconfigReferenceArray = cimom.getTreeconfigReferenceArray();
-		Map referencesByName = new HashMap();
+		Map<String,TreeconfigReference> referencesByName = new HashMap<String,TreeconfigReference>();
 		
 		for (int i = 0; i < treeconfigReferenceArray.length; i++) {
 			TreeconfigReference reference = treeconfigReferenceArray[i];
 			referencesByName.put(reference.getName(), reference);
 		}
-		List services = hostEntry.getServices();
-		for (Iterator iter = services.iterator(); iter.hasNext();) {
+		List<ServiceInHost> services = hostEntry.getServices();
+		for (Iterator<ServiceInHost> iter = services.iterator(); iter.hasNext();) {
 			ServiceInHost serviceInHost = (ServiceInHost) iter.next();
 			TreeconfigReference refInCimom = (TreeconfigReference) referencesByName.get(serviceInHost.getReference().getName());
 			
@@ -342,11 +347,11 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		taskLauncherDoc.save(loadedFile);
 	}
 
-	public List getHostTable()
+	public List<HostEntry> getHostTable()
 	{
 		if (hostTable == null)
 		{
-			hostTable = new ArrayList();
+			hostTable = new ArrayList<HostEntry>();
 			try {
 				Cimom[] cimomArray = taskLauncherDoc.getTasklauncherconfig().getCimomArray();
 				for (int i = 0; i < cimomArray.length; i++) {
@@ -368,12 +373,12 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		}
 		else
 		{
-			for (Iterator iterator = hostTable.iterator(); iterator.hasNext();) {
+			for (Iterator<HostEntry> iterator = hostTable.iterator(); iterator.hasNext();) {
 				HostEntry entry = (HostEntry) iterator.next();
 				if (entry.getHostname().equals(selectedHost.getHostname()))
 				{
 				    selectedHost = entry;
-					List result = new ArrayList();
+					List<HostEntry> result = new ArrayList<HostEntry>();
 					result.add(entry);
 					return result;
 				}
@@ -384,9 +389,9 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		
 	}
 
-	public List getHostTableForDisplay()
+	public List<HostEntry> getHostTableForDisplay()
 	{
-		List result = getHostTable();
+		List<HostEntry> result = getHostTable();
 		if (result.size() > 0)
 		{
 			HostEntry entry = (HostEntry) result.get(result.size()-1);
@@ -464,9 +469,9 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		 return null;
 	}	
 	
-	public List getTasks() throws WbemsmtException
+	public List<Task> getTasks() throws WbemsmtException
 	{
-		 List result = new ArrayList();
+		 List<Task> result = new ArrayList<Task>();
 		 for (int i = 0; i < treeconfigArray.length; i++) {
 			Treeconfig treeconfig = treeconfigArray[i];
 
@@ -492,10 +497,10 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 	}
 	
 	
-	public List getServiceXmls() {
+	public List<SelectItem> getServiceXmls() {
 		if (serviceXmls == null || serviceXmls.size() == 0)
 		{
-			serviceXmls = new ArrayList();
+			serviceXmls = new ArrayList<SelectItem>();
 			
 			try {
 				File[] taskXMLs = taskLauncherController.getTaskLauncherConfig().getTaskXMLs();
@@ -510,7 +515,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 		return serviceXmls;
 	}
 
-	public void setServiceXmls(List serviceXmls) {
+	public void setServiceXmls(List<SelectItem> serviceXmls) {
 		this.serviceXmls = serviceXmls;
 	}
 
@@ -626,7 +631,7 @@ public class AdminBean extends WbemsmtWebAppBean implements Cleanup {
 	
 	public void selectSingleHost(ActionEvent event)
 	{
-		List children = event.getComponent().getChildren();
+		List<UIComponent> children = event.getComponent().getChildren();
 		UIParameter parameter = (UIParameter) children.get(0);
 		allHosts = false;
 		selectedHost = (HostEntry)parameter.getValue();

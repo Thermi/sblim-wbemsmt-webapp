@@ -1,14 +1,14 @@
 /**
  *  TreeSelectorBean.java
  *
- * © Copyright IBM Corp. 2005
+ * © Copyright IBM Corp.  2009,2005
  *
- * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+ * THIS FILE IS PROVIDED UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
  * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
  *
- * You can obtain a current copy of the Common Public License from
- * http://www.opensource.org/licenses/cpl1.0.php
+ * You can obtain a current copy of the Eclipse Public License from
+ * http://www.opensource.org/licenses/eclipse-1.0.php
  *
  * @author: Marius Kreis <mail@nulldevice.org>
  *
@@ -43,6 +43,9 @@ import org.sblim.wbemsmt.tasklauncher.TaskLauncherController;
 import org.sblim.wbemsmt.tools.jsf.JsfUtil;
 import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 
+import javax.faces.event.MethodExpressionActionListener;
+
+
 
 
 public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cleanup
@@ -51,7 +54,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     
     public static final Logger logger = Logger.getLogger(TreeSelectorBean.class.getName());
     
-    private HashMap treeBackerMap;
+    private HashMap<String, TreeBacker> treeBackerMap;
     private NavigationMenuItem[] menuItems;
     
     private JsfTreeNode clipboard;
@@ -67,7 +70,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     public TreeSelectorBean()
     {
         this.menuItems = new NavigationMenuItem[0];
-        this.treeBackerMap = new HashMap();
+        this.treeBackerMap = new HashMap<String, TreeBacker>();
     }
 
 
@@ -270,7 +273,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
     {
         this.menuItems = new NavigationMenuItem[factories.size()];
         int i=0;
-        for (Iterator iter = factories.keySet().iterator(); iter.hasNext();) {
+        for (Iterator<String> iter = factories.keySet().iterator(); iter.hasNext();) {
 			String name = (String) iter.next();
             menuItems[i] = new NavigationMenuItem(name, TreeSelectorBean.TREE_SELECTION_ACTION + name);
             i++;
@@ -331,6 +334,12 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 		this.expandAll = expandAll;
 	}
 
+	public void setContextMenuTable(HtmlPanelGrid grid){
+    	//do nothing but fullfil the lwc wanted definition of a setter method
+    	//even if its not used...
+
+	}
+	
 	public HtmlPanelGrid getContextMenuTable()
 	{
 		HtmlPanelGrid result = (HtmlPanelGrid) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlPanelGrid.COMPONENT_TYPE);
@@ -342,24 +351,24 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 		result.setColumnClasses("actionsPopupItem");
 
 		HtmlCommandLink link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
-		link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.currentTreeBacker.updateTree}", new Class[]{}));
-		link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{messages.updateTree}"));
+		link.setActionExpression(FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createMethodExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.currentTreeBacker.updateTree}", Object.class, new Class[]{}));
+		link.setValueExpression("value",FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createValueExpression(FacesContext.getCurrentInstance().getELContext(), "#{messages.updateTree}", Object.class));
 		link.setStyleClass("treeTopLink");
 		result.getChildren().add(link);
 		
 		link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
-		link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.currentTreeBacker.expandAll}", new Class[]{}));
-		link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{messages.menu_expandAll}"));
+		link.setActionExpression(FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createMethodExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.currentTreeBacker.expandAll}", Object.class, new Class[]{}));
+		link.setValueExpression("value",FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createValueExpression(FacesContext.getCurrentInstance().getELContext(), "#{messages.menu_expandAll}", Object.class));
 		link.setStyleClass("treeTopLink");
 		result.getChildren().add(link);
 
 		link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
-		link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.currentTreeBacker.collapseAll}", new Class[]{}));
-		link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{messages.menu_collapseAll}"));
+		link.setActionExpression(FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createMethodExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.currentTreeBacker.collapseAll}", Object.class, new Class[]{}));
+		link.setValueExpression("value",FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createValueExpression(FacesContext.getCurrentInstance().getELContext(), "#{messages.menu_collapseAll}", Object.class));
 		link.setStyleClass("treeTopLink");
 		result.getChildren().add(link);
 
-		List menues = getCurrentTreeFactory().getCommonContextMenues();
+		List<TaskLauncherContextMenu> menues = getCurrentTreeFactory().getCommonContextMenues();
 		for (int menueCount = 0; menueCount < menues.size(); menueCount++) {
 			TaskLauncherContextMenu contextMenu = (TaskLauncherContextMenu) menues.get(menueCount);
 			int items = contextMenu.getItemCount();
@@ -371,9 +380,9 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 				}
 				
 				link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
-				link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.getCurrentOutcome}", new Class[]{}));
-				link.setActionListener(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.contextMenues[" + menueCount +"].menuItems[" + i +"].processEvent}", new Class[]{javax.faces.event.ActionEvent.class}));
-				link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{treeSelector.contextMenues[" + menueCount +"].menuItems[" + i +"].description}"));
+				link.setActionExpression(FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createMethodExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.getCurrentOutcome}", Object.class, new Class[]{}));
+				link.addActionListener( new MethodExpressionActionListener(FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createMethodExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.contextMenues[" + menueCount +"].menuItems[" + i +"].processEvent}", Object.class, new Class[]{javax.faces.event.ActionEvent.class})));
+				link.setValueExpression("value",FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createValueExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.contextMenues[" + menueCount +"].menuItems[" + i +"].description}", Object.class));
 				link.setOnclick("hideActionMenue();" + contextMenu.getItem(i).getJavaScriptConfirmStatement() + " " + contextMenu.getItem(i).getJavaScriptWaitStatement());
 				link.setStyleClass("treeTopLink");
 				result.getChildren().add(link);
@@ -392,9 +401,9 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 					addHr(result);
 				}
 				link = (HtmlCommandLink) FacesContext.getCurrentInstance().getApplication().createComponent(HtmlCommandLink.COMPONENT_TYPE);
-				link.setAction(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.getCurrentOutcome}", new Class[]{}));
-				link.setActionListener(FacesContext.getCurrentInstance().getApplication().createMethodBinding("#{treeSelector.selectedNode.contextMenu.menuItems[" + i +"].processEvent}", new Class[]{javax.faces.event.ActionEvent.class}));
-				link.setValueBinding("value",FacesContext.getCurrentInstance().getApplication().createValueBinding("#{treeSelector.selectedNode.contextMenu.menuItems[" + i +"].description}"));
+				link.setActionExpression(FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createMethodExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.getCurrentOutcome}", Object.class, new Class[]{}));
+				link.addActionListener( new MethodExpressionActionListener(FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createMethodExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.selectedNode.contextMenu.menuItems[" + i +"].processEvent}", Object.class, new Class[]{javax.faces.event.ActionEvent.class})));
+				link.setValueExpression("value",FacesContext.getCurrentInstance().getApplication().getExpressionFactory().createValueExpression(FacesContext.getCurrentInstance().getELContext(), "#{treeSelector.selectedNode.contextMenu.menuItems[" + i +"].description}", Object.class));
 				link.setOnclick("hideActionMenue();" + contextMenu.getItem(i).getJavaScriptConfirmStatement() + " " + contextMenu.getItem(i).getJavaScriptWaitStatement());
 				link.setStyleClass("treeTopLink");
 				result.getChildren().add(link);
@@ -417,7 +426,7 @@ public class TreeSelectorBean extends TreeSelector implements ITreeSelector, Cle
 		result.getChildren().add(hr);
 	}
 	
-	public List getContextMenues() {
+	public List<TaskLauncherContextMenu> getContextMenues() {
 		return getCurrentTreeFactory().getCommonContextMenues();
 	}
 	

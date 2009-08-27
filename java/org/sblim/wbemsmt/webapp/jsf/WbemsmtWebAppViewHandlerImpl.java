@@ -1,14 +1,14 @@
  /** 
   * WbemsmtWebAppViewHandlerImpl.java
   *
-  * © Copyright IBM Corp. 2005
+  * © Copyright IBM Corp.  2009,2005
   *
-  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+  * THIS FILE IS PROVIDED UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE
   * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
   * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
   *
-  * You can obtain a current copy of the Common Public License from
-  * http://www.opensource.org/licenses/cpl1.0.php
+  * You can obtain a current copy of the Eclipse Public License from
+  * http://www.opensource.org/licenses/eclipse-1.0.php
   *
   * @author: Michael Bauschert <Michael.Bauschert@de.ibm.com>
   *
@@ -37,7 +37,7 @@ import org.sblim.wbemsmt.tools.resources.ILocaleManager;
 public class WbemsmtWebAppViewHandlerImpl extends JspViewHandlerImpl {
 	
 	public void renderView(FacesContext fc, UIViewRoot viewToRender) throws IOException, FacesException {
-		ILocaleManager localeManager = (ILocaleManager) BeanNameConstants.LOCALE_MANAGER.asValueBinding(fc).getValue(fc);
+		ILocaleManager localeManager = (ILocaleManager) BeanNameConstants.LOCALE_MANAGER.asValueExpression(fc).getValue(fc.getELContext());
 		Locale currentLocale = localeManager.getCurrentLocale();
 		
 		viewToRender.setLocale(currentLocale);
@@ -60,11 +60,11 @@ public class WbemsmtWebAppViewHandlerImpl extends JspViewHandlerImpl {
 	}
 
 	private void addMessagesFromSession(FacesContext fc) {
-		Iterator it = fc.getExternalContext().getSessionMap().entrySet().iterator();
-		List remove = new ArrayList();
+		Iterator<Entry<String,Object>> it = fc.getExternalContext().getSessionMap().entrySet().iterator();
+		List<Object> remove = new ArrayList<Object>();
 		while (it.hasNext())
 		{
-			Map.Entry entry = (Entry) it.next();
+			Map.Entry<String,Object> entry = (Entry<String,Object>) it.next();
 			if (entry.getValue() instanceof Message)
 			{
 				Message msg = (Message) entry.getValue();
@@ -73,7 +73,7 @@ public class WbemsmtWebAppViewHandlerImpl extends JspViewHandlerImpl {
 			}
 		}
 		
-		for (Iterator iter = remove.iterator(); iter.hasNext();) {
+		for (Iterator<Object> iter = remove.iterator(); iter.hasNext();) {
 			Object key = (Object) iter.next();
 			fc.getExternalContext().getSessionMap().remove(key);
 		}

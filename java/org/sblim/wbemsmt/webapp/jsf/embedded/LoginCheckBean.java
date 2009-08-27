@@ -1,14 +1,14 @@
 /**
  *  LoginCheckBean.java
  *
- * © Copyright IBM Corp. 2005
+ * © Copyright IBM Corp.  2009,2005
  *
- * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+ * THIS FILE IS PROVIDED UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
  * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
  *
- * You can obtain a current copy of the Common Public License from
- * http://www.opensource.org/licenses/cpl1.0.php
+ * You can obtain a current copy of the Eclipse Public License from
+ * http://www.opensource.org/licenses/eclipse-1.0.php
  *
  * @author: Michael.Bauschert@de.ibm.com
  *
@@ -33,6 +33,7 @@ import org.sblim.wbemsmt.bl.messages.ErrCodes;
 import org.sblim.wbemsmt.bl.messages.Message;
 import org.sblim.wbemsmt.bl.tree.CimomTreeNode;
 import org.sblim.wbemsmt.bl.tree.TaskLauncherDelegaterTreeNode;
+import org.sblim.wbemsmt.bl.tree.TaskLauncherTreeNode;
 import org.sblim.wbemsmt.exception.WbemsmtException;
 import org.sblim.wbemsmt.exception.impl.LoginException;
 import org.sblim.wbemsmt.exception.impl.userobject.LoginUserObject;
@@ -65,11 +66,10 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     private TaskLauncherController taskLauncherController;
     private TreeSelectorBean treeSelector;
     
-    private Map targetsForTasks = new HashMap();
-    private Map namespacesForTasks = new HashMap();
+    private Map<String,String> targetsForTasks = new HashMap<String,String>();
+    private Map<String,String> namespacesForTasks = new HashMap<String,String>();
     
 	private WBEMClient cimClient;
-
 	private boolean loggedIn;
 
 	private boolean useSlp;
@@ -80,7 +80,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     	super();
     }
     
-    private WBEMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String protocol, List treeconfigs,boolean useSlp) throws WbemsmtException
+    private WBEMClient createCIMClient(boolean initModel,String username, String password, String hostname, String port, String protocol, List<TreeConfigData> treeconfigs,boolean useSlp) throws WbemsmtException
     {
         if (initModel)
         {
@@ -223,8 +223,8 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		//neded to get a standard tree with all the CIMOMs
 		treeSelector.setCurrentTreeBacker(TaskLauncherController.NAME_FOR_MULTI_CIMOM_TREE);
 		
-		List rootNodes = treeSelector.getCurrentTreeFactory().getRootNodes();
-		for (Iterator iter = rootNodes.iterator(); iter.hasNext();) {
+		List<TaskLauncherTreeNode> rootNodes = treeSelector.getCurrentTreeFactory().getRootNodes();
+		for (Iterator<TaskLauncherTreeNode> iter = rootNodes.iterator(); iter.hasNext();) {
 			TaskLauncherDelegaterTreeNode delegaterNode = (TaskLauncherDelegaterTreeNode) iter.next();
 			CimomTreeNode cimomNode = (CimomTreeNode) delegaterNode.getSubnodes().get(0);
 			try {
@@ -308,19 +308,19 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		this.startView = startView;
 	}
 
-	public Map getTargetsForTasks() {
+	public Map<String,String> getTargetsForTasks() {
 		return targetsForTasks;
 	}
 
-	public void setTargetsForTasks(Map targetsForTasks) {
+	public void setTargetsForTasks(Map<String,String> targetsForTasks) {
 		this.targetsForTasks = targetsForTasks;
 	}
 	
-	public Map getNamespacesForTasks() {
+	public Map<String,String> getNamespacesForTasks() {
 		return namespacesForTasks;
 	}
 
-	public void setNamespacesForTasks(Map namespacesForTasks) {
+	public void setNamespacesForTasks(Map<String,String> namespacesForTasks) {
 		this.namespacesForTasks = namespacesForTasks;
 	}
 

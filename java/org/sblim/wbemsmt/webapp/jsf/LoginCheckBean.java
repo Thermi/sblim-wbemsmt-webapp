@@ -1,14 +1,14 @@
 /**
  *  LoginCheckBean.java
  *
- * © Copyright IBM Corp. 2005
+ * © Copyright IBM Corp.  2009,2005
  *
- * THIS FILE IS PROVIDED UNDER THE TERMS OF THE COMMON PUBLIC LICENSE
+ * THIS FILE IS PROVIDED UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE
  * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
  * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
  *
- * You can obtain a current copy of the Common Public License from
- * http://www.opensource.org/licenses/cpl1.0.php
+ * You can obtain a current copy of the Eclipse Public License from
+ * http://www.opensource.org/licenses/eclipse-1.0.php
  *
  * @author: Marius Kreis <mail@nulldevice.org>
  *
@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,7 +69,7 @@ import org.sblim.wbemsmt.tools.runtime.RuntimeUtil;
 import org.sblim.wbemsmt.tools.slp.SLPLoader;
 import org.sblim.wbemsmt.tools.slp.SLPUtil;
 import org.sblim.wbemsmt.webapp.jsf.admin.HostEntry;
-
+import org.sblim.wbemsmt.tasklauncher.TaskLauncherConfig.TreeConfigData;
 
 
 /**
@@ -94,7 +95,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
                    password,
                    hostname,
                    protocol;
-    private Vector presets;
+    private Vector<CimomData> presets;
     public boolean useSlp;
     private boolean remindLoginData;
     
@@ -108,8 +109,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 
 	private int selectedValue = 0;
 
-	private List presetValues = new ArrayList();
-
+	private List<SelectItem> presetValues = new ArrayList<SelectItem>();
 
 	private WBEMClient cimClient;
 
@@ -124,7 +124,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 	 */
 	private LoginData loginDataFromCookie;
 
-    public LoginCheckBean()
+	public LoginCheckBean()
     {
     	super();
     	final FacesContext fc = FacesContext.getCurrentInstance();
@@ -138,24 +138,24 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
 		}
 		remindLoginData = loginDataFromCookie != null;
     	
-		Iterator requestLocales = fc.getExternalContext().getRequestLocales();
+		Iterator<Locale> requestLocales = fc.getExternalContext().getRequestLocales();
     	while (requestLocales.hasNext())
     	{
 			System.err.println(requestLocales.next().toString());
 		}
     	
     	UISelectItems items = (UISelectItems) fc.getApplication().createComponent(UISelectItems.COMPONENT_TYPE);
-		items.setValueBinding("value", fc.getApplication().createValueBinding("#{loginCheck.presetValues}"));
+    	items.setValueExpression("value",fc.getApplication().getExpressionFactory().createValueExpression(FacesContext.getCurrentInstance().getELContext(), "#{loginCheck.presetValues}", Object.class));
 		presetSelection.getChildren().add(items);
     }
     
 
-	public List getPresetValues()
+	public List<SelectItem> getPresetValues()
     {
     	return presetValues;    	
     }
 
-    public void setPresetValues(List presets) {
+    public void setPresetValues(List<CimomData> presets) {
     	//do nothing but fullfill the java beans convention for use with lwc
 	}
 
@@ -426,9 +426,9 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
     public String loginActionEmbedded()
     {
     		
-    		List nodes = objectActionController.getCimomTreeNodesForLogin();
+    		List<CimomTreeNode> nodes = objectActionController.getCimomTreeNodesForLogin();
     		
-    		for (Iterator iter = nodes.iterator(); iter.hasNext();) {
+    		for (Iterator<CimomTreeNode> iter = nodes.iterator(); iter.hasNext();) {
     			try {
 					CimomTreeNode treeNode = (CimomTreeNode) iter.next();
 					String host = treeNode.getCimomData().getHostname();
@@ -664,7 +664,7 @@ public class LoginCheckBean extends WbemsmtWebAppBean implements LoginCheck,Clea
                        new FileInputStream(f)));
  	        TaskLauncherConfig.CimomData data = (TaskLauncherConfig.CimomData)d.readObject();
 			
-			Vector configs = taskLauncherController.getTaskLauncherConfig().getTreeConfigDataByHostname(data.getHostname());
+			Vector<TreeConfigData> configs = taskLauncherController.getTaskLauncherConfig().getTreeConfigDataByHostname(data.getHostname());
 			data.setTreeConfigs(configs);
 			setValuesFromCimomData(data,true);
 			this.password = (String) d.readObject();

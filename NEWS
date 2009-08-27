@@ -1,5 +1,6 @@
-Changes in 0.5.6-1
+Changes in 1.0-1
 ==============================================================================
+- Updated libraries, java version to 1.6, and tomcat version to 6.0.18.
 - Maintenance release
 
 Changes on top of 0.5.5-1

@@ -13,7 +13,7 @@
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}
-License:        Common Public License
+License:        Eclipse Public License
 Url:            http://sblim.sourceforge.net/
 Group:          Systems Management/Web Application
 Vendor:         IBM
@@ -24,44 +24,57 @@ BuildArch:      noarch
 
 BuildRequires: jpackage-utils >= 1.5.32
 BuildRequires: ant >= 1.6
-BuildRequires: sblim-cim-client >= 1.3
-BuildRequires: sblim-wbemsmt-commons => 0.5.0
-BuildRequires: tomcat5-servlet-2.4-api >= 5.5.15
-BuildRequires: jakarta-commons-lang >= 2.0
-BuildRequires: jakarta-commons-collections >= 3.1
-#BuildRequires: jakarta-commons-cli >= 1.0
-#BuildRequires:  myfaces >= 1.1.5
-#BuildRequires:  tomahawk >= 1.1.3
+BuildRequires: sblim-wbemsmt-commons => 1.0
+
+#BuildRequires: jakarta-commons-lang >= 2.0
+#BuildRequires: jakarta-commons-collections >= 3.1
+#BuildRequires: sblim-cim-client >= 2.1.0
+#BuildRequires: tomcat-servlet-api >= 6.0.18
+#BuildRequires: servlet-api >= 2.5
+#BuildRequires: jsp-api >= 2.1
+#BuildRequires: jakarta-commons-lang >= 2.4
+#BuildRequires: jakarta-commons-collections >= 3.2.1
+#BuildRequires: jakarta-commons-cli >= 1.1
+#BuildRequires:  myfaces >= 1.2.6
+#BuildRequires:  myfaces-impl >= 1.2.6
+#BuildRequires:  tomahawk >= 1.1.8
 #BuildRequires:  xmlBeans >= 2.2.0
+#BuildRequires:  jsr173-1.0-api >= 1.0?
 
 ###############################################################################
 
 Requires: jpackage-utils >= 1.5.32
-Requires: sblim-cim-client >= 1.3
-Requires: sblim-wbemsmt-commons >= 0.5.0
-Requires: xerces-j2 >= 2.7.1
-Requires: xalan-j2 >= 2.7.0
-Requires: jakarta-commons-beanutils >= 1.7.0
-Requires: jakarta-commons-codec >= 1.3
-Requires: jakarta-commons-collections >= 3.1
-Requires: jakarta-commons-digester >= 1.7
-Requires: jakarta-commons-el >= 1.0
-Requires: jakarta-commons-fileupload >= 1.0
-Requires: jakarta-commons-lang >= 2.1
-Requires: jakarta-commons-logging >= 1.0.4
-Requires: jakarta-commons-validator >= 1.1.4
-Requires: jakarta-taglibs-standard >= 1.1.1
-Requires: tomcat5 >= 5.5.17
-Requires: tomcat5-servlet-2.4-api >= 5.5.17
-Requires: tomcat5-jsp-2.0-api >= 5.5.17
-Requires: xml-commons >= 1.3.02
-Requires: xml-commons-apis >= 1.3
-Requires: xml-commons-resolver >= 1.1
-Requires: struts >= 1.2.9
-#Requires: jakarta-commons-cli >= 1.0
-#Requires:  myfaces >= 1.1.5
-#Requires:  tomahawk >= 1.1.3
+Requires: sblim-wbemsmt-commons >= 1.0
+#Requires: xalan-j2 >= 2.7.0
+#Requires: jakarta-commons-codec >= 1.3
+#Requires: jakarta-commons-logging >= 1.0.4
+#Requires: xml-commons >= 1.3.02
+#Requires: xml-commons-apis >= 1.3
+
+# Installed separately from package manager:
+#Requires: jakarta-commons-beanutils >= 1.7.0
+#Requires: xerces-j2 >= 2.7.1
+#Requires: jakarta-commons-digester >= 1.7
+#Requires: jakarta-commons-el >= 1.0
+#Requires: jakarta-commons-fileupload >= 1.0
+#Requires: xml-commons-resolver >= 1.1
+#Requires: struts >= 1.2.9
+#Requires: jakarta-commons-validator >= 1.1.4
+#Requires: jakarta-taglibs-standard >= 1.1.1
+#Requires: tomcat6 >= 6.0.18
+#Requires: tomcat6-servlet-2.5-api >= 6.0.18
+#Requires: tomcat6-jsp-2.1-api >= 6.0.18
+####Requires: jakarta-commons-lang >= 2.4
+####Requires: jakarta-commons-collections >= 3.2.1
+####Requires: sblim-cim-client >= 2.1.0
+#Requires: servlet-api >= 2.5
+#Requires: jsp-api >= 2.1
+#Requires: jakarta-commons-cli >= 1.1
+#Requires:  myfaces >= 1.2.6
+#Requires:  myfaces-impl >= 1.2.6
+#Requires:  tomahawk >= 1.1.8
 #Requires:  xmlBeans >= 2.2.0
+#Requires:  jsr173-1.0-api >= 1.0?
 
 ###############################################################################
 
@@ -82,7 +95,8 @@ other tasks.
 
 %build
 CLASSPATH=$(build-classpath sblim-cim-client sblim-slp-client)
-CLASSPATH=$(build-classpath tomcat5-servlet-2.4-api tomcat5-jsp-2.0-api):$CLASSPATH
+# CLASSPATH=$(build-classpath tomcat5-servlet-2.4-api tomcat5-jsp-2.0-api):$CLASSPATH
+CLASSPATH=$(build-classpath jsp-api servlet-api):$CLASSPATH
 CLASSPATH=$(build-classpath commons-collections commons-lang):$CLASSPATH
 CLASSPATH=$(build-classpath xbean jsr173_1.0_api myfaces-api myfaces-impl tomahawk):$CLASSPATH
 CLASSPATH=$(build-classpath sblim-wbemsmt/sblim-wbemsmt-commons sblim-wbemsmt/sblim-wbemsmt-commons-launcher-config):$CLASSPATH
@@ -126,36 +140,39 @@ install $RPM_BUILD_ROOT%{wbemsmt_webapp_dir}/WEB-INF/faces-config.xml.standalone
 
 %post
 unset JAVA_HOME
-[ -r %{_sysconfdir}/tomcat5/tomcat5.conf ] && . %{_sysconfdir}/tomcat5/tomcat5.conf
-[ -z "$CATALINA_HOME" ] && CATALINA_HOME=/var/lib/tomcat5
+#[ -r %{_sysconfdir}/tomcat5/tomcat5.conf ] && . %{_sysconfdir}/tomcat5/tomcat5.conf
+[ -z "$CATALINA_HOME" ] && CATALINA_HOME=/opt/apache-tomcat-6.0.18/
 ln -sf %{wbemsmt_webapp_dir} $CATALINA_HOME/webapps/%{name}
 
-[ -r %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-commons.conf ] && . %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-commons.conf
-[ -z "$WBEMSMT_HELPDIR" ] && WBEMSMT_HELPDIR=/var/lib/sblim-wbemsmt/help
-ln -sf $WBEMSMT_HELPDIR %{wbemsmt_webapp_dir}/help
+#[ -r %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-commons.conf ] && . %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-commons.conf
+#[ -z "$WBEMSMT_HELPDIR" ] && WBEMSMT_HELPDIR=/var/lib/sblim-wbemsmt/help
+ln -s /var/lib/sblim-wbemsmt/help %{wbemsmt_webapp_dir}/help
 
-[ -z "$JAVA_HOME" ] && [ -r %{_sysconfdir}/java/java.conf ] && . %{_sysconfdir}/java/java.conf
-[ -z "$JAVA_HOME" ] && JAVA_HOME=%{_jvmdir}/java
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-cim-client sblim-slp-client
+#[ -z "$JAVA_HOME" ] && [ -r %{_sysconfdir}/java/java.conf ] && . %{_sysconfdir}/java/java.conf
+#[ -z "$JAVA_HOME" ] && JAVA_HOME=%{_jvmdir}/java
+
 build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons 
 build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-wbemsmt/sblim-wbemsmt-commons-launcher-config
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib commons-collections commons-lang commons-logging commons-digester 
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib commons-beanutils commons-codec commons-el commons-fileupload commons-validator
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib taglibs-core taglibs-standard
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib tomcat5-servlet-2.4-api tomcat5-jsp-2.0-api servletapi5
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib xerces-j2 xml-commons-resolver xml-commons-apis
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib xalan-j2 xalan-j2-serializer 
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib myfaces-api myfaces-impl tomahawk xbean jsr173_1.0_api
-build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib struts
-%{_bindir}/rebuild-gcj-db
+
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib sblim-cim-client sblim-slp-client
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib commons-collections commons-lang commons-logging commons-digester 
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib commons-beanutils commons-codec commons-el commons-fileupload commons-validator
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib taglibs-core taglibs-standard
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib tomcat5-servlet-2.4-api tomcat5-jsp-2.0-api servletapi5
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib servlet-api jsp-api
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib xerces-j2 xml-commons-resolver xml-commons-apis
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib xalan-j2 xalan-j2-serializer 
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib myfaces-api myfaces-impl tomahawk xbean jsr173_1.0_api
+#build-jar-repository %{wbemsmt_webapp_dir}/WEB-INF/lib struts
+#%{_bindir}/rebuild-gcj-db
 
 
 
 ###############################################################################
 
 %preun
-[ -r %{_sysconfdir}/tomcat5/tomcat5.conf ] && . %{_sysconfdir}/tomcat5/tomcat5.conf
-[ -z "$CATALINA_HOME" ] && CATALINA_HOME=/var/lib/tomcat5
+#[ -r %{_sysconfdir}/tomcat5/tomcat5.conf ] && . %{_sysconfdir}/tomcat5/tomcat5.conf
+[ -z "$CATALINA_HOME" ] && CATALINA_HOME=/opt/apache-tomcat-6.0.18/
 unlink $CATALINA_HOME/webapps/%{name}
 
 unlink %{wbemsmt_webapp_dir}/help
